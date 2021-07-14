@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class Industry
+    public class Category
     {
         public int Id { get; init; }
 

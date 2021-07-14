@@ -9,6 +9,7 @@ namespace BoostUp
     using Microsoft.Extensions.DependencyInjection;
 
     using BoostUp.Data;
+    using BoostUp.Infrastructure;
 
     public class Startup
     {
@@ -40,6 +41,8 @@ namespace BoostUp
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.PrepareDatabase();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -58,10 +61,10 @@ namespace BoostUp
                 .UseAuthentication()
                 .UseAuthorization()
                 .UseEndpoints(endpoints =>
-            {
-                endpoints.MapDefaultControllerRoute();
-                endpoints.MapRazorPages();
-            });
+                {
+                    endpoints.MapDefaultControllerRoute();
+                    endpoints.MapRazorPages();
+                });
         }
     }
 }
