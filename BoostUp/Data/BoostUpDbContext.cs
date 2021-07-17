@@ -28,6 +28,13 @@
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder
+                .Entity<Company>()
+                .HasOne(c => c.Address)
+                .WithMany(a => a.Companies)
+                .HasForeignKey(c => c.AddressId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
                 .Entity<Job>()
                 .HasOne(j => j.Company)
                 .WithMany(c => c.Jobs)
@@ -44,5 +51,7 @@
         public DbSet<Category> Categories { get; init; }
 
         public DbSet<Job> Jobs { get; init; }
+
+        public DbSet<Address> Addresses { get; init; }
     }
 }
