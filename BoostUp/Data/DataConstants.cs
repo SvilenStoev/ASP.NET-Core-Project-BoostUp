@@ -12,5 +12,8 @@
         public const int CompanyMinYearFounded = 1900;
         public int CompanyMaxYearFounded = DateTime.UtcNow.Year;
 
+        public const int JobTitleMaxLength = 60;
+
+
     }
 }

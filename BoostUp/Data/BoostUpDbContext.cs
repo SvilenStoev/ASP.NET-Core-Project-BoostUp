@@ -27,6 +27,13 @@
                 .HasForeignKey(c => c.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder
+                .Entity<Job>()
+                .HasOne(j => j.Company)
+                .WithMany(c => c.Jobs)
+                .HasForeignKey(j => j.CompanyId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             base.OnModelCreating(builder);
         }
 
@@ -35,5 +42,7 @@
         public DbSet<Industry> Industries { get; init; }
 
         public DbSet<Category> Categories { get; init; }
+
+        public DbSet<Job> Jobs { get; init; }
     }
 }

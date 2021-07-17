@@ -1,5 +1,6 @@
 ﻿namespace BoostUp.Data.Models
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using static DataConstants;
@@ -30,5 +31,7 @@
         public int CategoryId { get; set; }
 
         public Category Category { get; init; }
+
+        public IEnumerable<Job> Jobs { get; set; } = new List<Job>();
     }
 }
