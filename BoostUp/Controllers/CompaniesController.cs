@@ -1,21 +1,15 @@
 ﻿namespace BoostUp.Controllers
 {
-    using BoostUp.Models.Company;
+    using BoostUp.Models.Companies;
     using Microsoft.AspNetCore.Mvc;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
 
-    public class CompanyController : Controller
+    public class CompaniesController : Controller
     {
         public IActionResult Add() => View();
 
         [HttpPost]
         public IActionResult Add(AddCompanyViewModel company)
         {
-
-
 
             return View(company);
         }
