@@ -1,8 +1,8 @@
 ﻿namespace BoostUp.Controllers
 {
     using System.Linq;
-    using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
+    using Microsoft.AspNetCore.Mvc;
 
     using BoostUp.Data;
     using BoostUp.Data.Models;
