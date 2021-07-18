@@ -3,7 +3,9 @@
 
 ## :eyeglasses: Project Introduction
 
-**BoostUp Website** is started as defense project for **ASP.NET Core MVC** course at [SoftUni](https://softuni.bg/ "SoftUni") (June 2021). BoostUp website is a professional community for companies, employees and recruiters. Place for connecting professionals and engaging them on topics they care about.
+**BoostUp Website** is created as defense project for **ASP.NET Core MVC** course at [SoftUni](https://softuni.bg/ "SoftUni") (June 2021).
+
+BoostUp website is a professional community for companies, employees and recruiters. Place for connecting professionals and engaging them on topics they care about.
 
 ## :pencil2: Overview
 
