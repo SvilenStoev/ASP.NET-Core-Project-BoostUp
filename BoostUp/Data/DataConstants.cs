@@ -11,6 +11,7 @@
         public const int JobTitleMaxLength = 60;
 
         public const int AddressCityMaxLength = 50;
+        public const int AddressCountryMaxLength = 50;
         public const int AddressTextMaxLength = 100;
     }
 }

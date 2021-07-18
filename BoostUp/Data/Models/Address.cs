@@ -14,6 +14,10 @@
         public string City { get; set; }
 
         [Required]
+        [MaxLength(AddressCountryMaxLength)]
+        public string Country { get; set; }
+
+        [Required]
         [MaxLength(AddressTextMaxLength)]
         public string AddressText { get; set; }
 

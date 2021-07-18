@@ -1,67 +1,71 @@
 ﻿@model AddCompanyViewModel
 
 @{
-    ViewData["Title"] = "Add";
+    ViewData["Title"] = "Register Company";
 }
 
-
-<form method="post">
-    <div class="form-group col-md-6">
-        <label asp-for="Name"></label>
-        <input class="form-control" placeholder="Company name">
-    </div>
-    <div class="form-group col-md-6">
-        <label asp-for="Founded">Founded</label>
-        <input class="form-control"  placeholder="Year of establishment">
-    </div>
-    <div class="form-group">
-        <label for="exampleFormControlSelect1">Example select</label>
-        <select class="form-control" id="exampleFormControlSelect1">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="inputAddress">Address</label>
-        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-    </div>
-    <div class="form-group">
-        <label for="inputAddress2">Address 2</label>
-        <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="inputCity">City</label>
-            <input type="text" class="form-control" id="inputCity">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 offset-md-1 col-md-10 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+            <h4 class="heading-margin-h4 text-center">Make the most of your professional community</h4>
+            <h6 class="heading-margin-h6 text-center">Good company profile helps you find the right candidates</h6>
         </div>
-        <div class="form-group col-md-4">
-            <label for="inputState">State</label>
-            <select id="inputState" class="form-control">
-                <option selected>Choose...</option>
-                <option>...</option>
-            </select>
-        </div>
-        <div class="form-group col-md-2">
-            <label for="inputZip">Zip</label>
-            <input type="text" class="form-control" id="inputZip">
+        <div class="offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-3 col-lg-6 offset-xl-4 col-xl-4">
+            <form method="post">
+                <div class="form-group">
+                    <label class="required" asp-for="Name">Company name</label>
+                    <input asp-for="Name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="required" asp-for="Founded">Year of establishment</label>
+                    <input asp-for="Founded" class="form-control" placeholder="@DateTime.UtcNow.Year">
+                </div>
+                <div class="form-group">
+                    <label class="required" asp-for="Overview">Overview</label>
+                    <textarea rows="4" asp-for="Overview" class="form-control" placeholder="TODO: Something here"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="required" asp-for="CategoryId">Category</label>
+                    <select asp-for="CategoryId" class="form-control">
+                        @foreach (var category in Model.Categories)
+                        {
+                            <option value="@category.Id">@category.Value</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="required" asp-for="IndustryId">Industry</label>
+                    <select asp-for="IndustryId" class="form-control">
+                        @foreach (var industry in Model.Industries)
+                        {
+                            <option value="@industry.Id">@industry.Value</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LogoUrl">Logo Url</label>
+                    <input asp-for="LogoUrl" class="form-control" placeholder="Your logo URL here...">
+                </div>
+                <div class="form-group">
+                    <label asp-for="WebsiteUrl">Website</label>
+                    <input asp-for="WebsiteUrl" class="form-control" placeholder="Your website URL here...">
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-6">
+                        <label class="required" asp-for="Address.Country">Country</label>
+                        <input asp-for="Address.Country" class="form-control" placeholder="England, USA...">
+                    </div>
+                    <div class="form-group col-6">
+                        <label class="required" asp-for="Address.City">City</label>
+                        <input asp-for="Address.City" class="form-control" placeholder="London, New York...">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="required" asp-for="Address.AddressText">Address</label>
+                    <input type="text" class="form-control" id="inputAddress" placeholder="Street, apartment, studio, or floor...">
+                </div>
+                <input type="submit" class="btn btn-primary" value="Save" />
+            </form>
         </div>
     </div>
-    <div class="form-group">
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="gridCheck">
-            <label class="form-check-label" for="gridCheck">
-                Check me out
-            </label>
-        </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Sign in</button>
-</form>
-
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
