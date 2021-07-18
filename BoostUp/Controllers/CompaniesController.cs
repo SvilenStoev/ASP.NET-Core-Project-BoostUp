@@ -5,6 +5,7 @@
     using BoostUp.Models.Companies;
     using BoostUp.Data;
     using System.Linq;
+    using BoostUp.Data.Models;
 
     public class CompaniesController : Controller
     {
@@ -21,10 +22,45 @@
         [HttpPost]
         public IActionResult Add(AddCompanyViewModel company)
         {
+            if (!this.data.Categories.Any(c => c.Id == company.CategoryId))
+            {
+                this.ModelState.AddModelError(nameof(company.CategoryId), "Category does not exist.");
+            }
+            else if (!this.data.Industries.Any(i => i.Id == company.IndustryId))
+            {
+                this.ModelState.AddModelError(nameof(company.IndustryId), "Industry does not exist.");
+            }
 
+            if (!ModelState.IsValid)
+            {
+                company.Categories = this.GetCompanyCategories();
+                company.Industries = this.GetCompanyIndustries();
 
+                return View(company);
+            }
 
-            return View(company);
+            var companyToAdd = new Company
+            {
+                Name = company.Name,
+                Founded = company.Founded,
+                Overview = company.Overview,
+                IndustryId = company.IndustryId,
+                CategoryId = company.CategoryId,
+                Address = new Address
+                {
+                    Country = company.Address.Country,
+                    City = company.Address.City,
+                    AddressText = company.Address.AddressText
+                },
+                LogoUrl = company.LogoUrl == null ? "https://www.market-research-companies.in//images/default.jpg" : company.LogoUrl,
+                WebsiteUrl = company.WebsiteUrl
+            };
+
+            this.data.Companies.Add(companyToAdd);
+
+            this.data.SaveChanges();
+
+            return Redirect("/Home/Index");
         }
 
         private IEnumerable<CompanyIndustryViewModel> GetCompanyIndustries()

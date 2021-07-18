@@ -10,59 +10,69 @@
             <h4 class="heading-margin-h4 text-center">Make the most of your professional community</h4>
             <h6 class="heading-margin-h6 text-center">Good company profile helps you find the right candidates</h6>
         </div>
-        <div class="offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-3 col-lg-6 offset-xl-4 col-xl-4">
+        <div class="offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-3 col-lg-6">
             <form method="post">
                 <div class="form-group">
-                    <label class="required" asp-for="Name">Company name</label>
+                    <label asp-for="Name" class="required" ></label>
                     <input asp-for="Name" class="form-control">
+                    <span asp-validation-for="Name" class="small text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label class="required" asp-for="Founded">Year of establishment</label>
+                    <label asp-for="Founded" class="required"></label>
                     <input asp-for="Founded" class="form-control" placeholder="@DateTime.UtcNow.Year">
+                    <span asp-validation-for="Founded" class="small text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label class="required" asp-for="Overview">Overview</label>
-                    <textarea rows="4" asp-for="Overview" class="form-control" placeholder="TODO: Something here"></textarea>
+                    <label asp-for="Overview" class="required"></label>
+                    <textarea asp-for="Overview" class="form-control" rows="3" placeholder="TODO: Something here"></textarea>
+                    <span asp-validation-for="Overview" class="small text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label class="required" asp-for="CategoryId">Category</label>
+                    <label asp-for="CategoryId" class="required">Category</label>
                     <select asp-for="CategoryId" class="form-control">
                         @foreach (var category in Model.Categories)
                         {
                             <option value="@category.Id">@category.Value</option>
                         }
                     </select>
+                    <span asp-validation-for="CategoryId" class="small text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label class="required" asp-for="IndustryId">Industry</label>
+                    <label asp-for="IndustryId" class="required">Industry</label>
                     <select asp-for="IndustryId" class="form-control">
                         @foreach (var industry in Model.Industries)
                         {
                             <option value="@industry.Id">@industry.Value</option>
                         }
                     </select>
+                    <span asp-validation-for="IndustryId" class="small text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="LogoUrl">Logo Url</label>
+                    <label asp-for="LogoUrl"></label>
                     <input asp-for="LogoUrl" class="form-control" placeholder="Your logo URL here...">
+                    <span asp-validation-for="LogoUrl" class="small text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="WebsiteUrl">Website</label>
+                    <label asp-for="WebsiteUrl"></label>
                     <input asp-for="WebsiteUrl" class="form-control" placeholder="Your website URL here...">
+                    <span asp-validation-for="WebsiteUrl" class="small text-danger"></span>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-6">
-                        <label class="required" asp-for="Address.Country">Country</label>
+                        <label asp-for="Address.Country" class="required"></label>
                         <input asp-for="Address.Country" class="form-control" placeholder="England, USA...">
+                        <span asp-validation-for="Address.Country" class="small text-danger"></span>
                     </div>
                     <div class="form-group col-6">
-                        <label class="required" asp-for="Address.City">City</label>
+                        <label asp-for="Address.City" class="required"></label>
                         <input asp-for="Address.City" class="form-control" placeholder="London, New York...">
+                        <span asp-validation-for="Address.City" class="small text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="required" asp-for="Address.AddressText">Address</label>
-                    <input type="text" class="form-control" id="inputAddress" placeholder="Street, apartment, studio, or floor...">
+                    <label asp-for="Address.AddressText" class="required"></label>
+                    <input asp-for="Address.AddressText" class="form-control" placeholder="Street, apartment, studio, or floor...">
+                    <span asp-validation-for="Address.AddressText" class="small text-danger"></span>
                 </div>
                 <input type="submit" class="btn btn-primary" value="Save" />
             </form>
