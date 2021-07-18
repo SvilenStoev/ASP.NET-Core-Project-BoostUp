@@ -1,11 +1,12 @@
 ﻿namespace BoostUp.Controllers
 {
+    using System.Linq;
     using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
-    using BoostUp.Models.Companies;
+
     using BoostUp.Data;
-    using System.Linq;
     using BoostUp.Data.Models;
+    using BoostUp.Models.Companies;
 
     public class CompaniesController : Controller
     {
