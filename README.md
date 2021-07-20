@@ -44,7 +44,7 @@ TODO:
 - Facebook: [@Svilen Stoev](https://www.facebook.com/svilen.stoev.3)
 - LinkedIn: [@svilenstoev](https://www.linkedin.com/in/svilenstoev/?fbclid=IwAR3__rQn3sR4rxJKEL6FK4QV1aR9tnF6vnOwMWsBghXz3xZPx-lYOc66gtU)
 
-## :v: You opition is important for me
+## :v: Your opition is important for me
 
 Give a :star: if you like this project!
 
