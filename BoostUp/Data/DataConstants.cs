@@ -1,9 +1,9 @@
 ﻿namespace BoostUp.Data
 {
-    using System;
-
     public class DataConstants
     {
+        public const string DefaultCompanyLogoPath = "~/default pictures/Company Logo.jpg";
+
         public const int CompanyNameMinLength = 2;
         public const int CompanyNameMaxLength = 40;
         public const int CompanyMinYearFounded = 1900;

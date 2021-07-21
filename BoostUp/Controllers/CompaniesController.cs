@@ -8,20 +8,22 @@
     using BoostUp.Data.Models;
     using BoostUp.Models.Companies;
 
+    using static Data.DataConstants;
+
     public class CompaniesController : Controller
     {
         private readonly BoostUpDbContext data;
 
         public CompaniesController(BoostUpDbContext data) => this.data = data;
 
-        public IActionResult Add() => View(new AddCompanyViewModel
+        public IActionResult Add() => View(new CompanyInputModel
         {
             Categories = this.GetCompanyCategories(),
             Industries = this.GetCompanyIndustries()
         });
 
         [HttpPost]
-        public IActionResult Add(AddCompanyViewModel company)
+        public IActionResult Add(CompanyInputModel company)
         {
             if (!this.data.Categories.Any(c => c.Id == company.CategoryId))
             {
@@ -53,7 +55,7 @@
                     City = company.Address.City,
                     AddressText = company.Address.AddressText
                 },
-                LogoUrl = company.LogoUrl == null ? "https://www.market-research-companies.in//images/default.jpg" : company.LogoUrl,
+                LogoUrl = company.LogoUrl == null ? $"{DefaultCompanyLogoPath}" : company.LogoUrl,
                 WebsiteUrl = company.WebsiteUrl
             };
 
@@ -62,6 +64,28 @@
             this.data.SaveChanges();
 
             return Redirect("/Home/Index");
+        }
+
+        public IActionResult All()
+        {
+            var companies = this.data
+                .Companies
+                .Select(c => new CompanyViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Founded = c.Founded,
+                    LogoUrl = c.LogoUrl,
+                    WebsiteUrl = c.WebsiteUrl,
+                    AddressCity = c.Address.City,
+                    AddressCountry = c.Address.Country,
+                    AddressText = c.Address.AddressText,
+                    CategoryName = c.Category.Value,
+                    IndustryName = c.Industry.Value
+                })
+                .ToList();
+
+            return View(companies);
         }
 
         private IEnumerable<CompanyIndustryViewModel> GetCompanyIndustries()

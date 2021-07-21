@@ -7,7 +7,7 @@
 
     using static Data.DataConstants;
 
-    public class CompanyAddressViewModel : IValidatableObject
+    public class AddressInputModel : IValidatableObject
     {
         [Required(ErrorMessage = "{0} is required.")]
         [StringLength(AddressCityMaxLength, MinimumLength = AddressCityMinLength, ErrorMessage = "{0} must be with a minimum length of {2} and a maximum length of {1}.")]

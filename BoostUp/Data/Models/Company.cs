@@ -13,7 +13,7 @@
         [MaxLength(CompanyNameMaxLength)]
         public string Name { get; set; }
 
-        public int Founded { get; set; }
+        public int? Founded { get; set; }
         
         [Required]
         public string Overview { get; set; }
