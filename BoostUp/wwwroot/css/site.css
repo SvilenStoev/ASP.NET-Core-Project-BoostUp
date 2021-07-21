@@ -23,7 +23,7 @@ a.navbar-brand {
 }
 
     a.navbar-brand img {
-        border-radius: 15px;
+        border-radius: 25px;
     }
 
 /* Provide sufficient contrast against white background */
@@ -102,4 +102,3 @@ html {
     margin-bottom: 30px;
     font-style: italic;
 }
-

@@ -1,5 +1,6 @@
 ﻿namespace BoostUp.Controllers
 {
+    using System;
     using System.Linq;
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
@@ -65,12 +66,29 @@
 
             return RedirectToAction(nameof(All));
         }
-        
 
-        public IActionResult All()
+        public IActionResult All(string city, string industry, string searchTerm)
         {
-            var companies = this.data
-                .Companies
+            var companiesQuery = this.data.Companies.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(city))
+            {
+                companiesQuery = companiesQuery.Where(c => c.Address.City == city);
+            }
+
+            if (!string.IsNullOrWhiteSpace(industry))
+            {
+                companiesQuery = companiesQuery.Where(c => c.Industry.Value.ToLower() == industry);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                companiesQuery = companiesQuery.Where(c =>
+                    c.Name.ToLower().Contains(searchTerm.ToLower()) ||
+                    c.Founded.ToString() == searchTerm);
+            }
+
+            var companies = companiesQuery
                 .OrderByDescending(c => c.Id)
                 .Select(c => new CompanyViewModel
                 {
@@ -87,7 +105,22 @@
                 })
                 .ToList();
 
-            return View(companies);
+            var companyCities = this.data
+                .Companies
+                .Select(c => c.Address.City)
+                .OrderBy(c => c)
+                .Distinct()
+                .ToList();
+
+            var companyIndustries = GetCompanyIndustries();
+
+            return View(new CompaniesQueryModel
+            {
+                Companies = companies,
+                SearchTerm = searchTerm,
+                Cities = companyCities,
+                Industries = companyIndustries
+            });
         }
 
         private IEnumerable<CompanyIndustryViewModel> GetCompanyIndustries()
