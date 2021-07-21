@@ -3,7 +3,9 @@
 
 ## :eyeglasses: Project Introduction
 
-**BoostUp Website** is started as defense project for **ASP.NET Core MVC** course at [SoftUni](https://softuni.bg/ "SoftUni") (June 2021). BoostUp website is a professional community for companies, employees and recruiters. Place for connecting professionals and engaging them on topics they care about.
+**BoostUp Website** is created as defense project for **ASP.NET Core MVC** course at [SoftUni](https://softuni.bg/ "SoftUni") (June 2021).
+
+BoostUp website is a professional community for companies, employees and recruiters. Place for connecting professionals and engaging them on topics they care about.
 
 ## :pencil2: Overview
 
@@ -33,19 +35,19 @@ TODO:
 ## :floppy_disk: Database Diagram
 ![DataBase - Diagram](https://user-images.githubusercontent.com/64086041/126074109-52bf9f6d-9f4e-4c1b-ad00-075aee24adec.png)
 
-## "link" Website Link
+## :link: Website Link
 TODO:
 
-## Author
+## 🧑 Author
 
 [Svilen Stoev](https://github.com/SvilenStoev)
-- Facebook: [@Svilen Stoev](https://www.facebook.com/svilen.stoev.3/)
+- Facebook: [@Svilen Stoev](https://www.facebook.com/svilen.stoev.3)
 - LinkedIn: [@svilenstoev](https://www.linkedin.com/in/svilenstoev/?fbclid=IwAR3__rQn3sR4rxJKEL6FK4QV1aR9tnF6vnOwMWsBghXz3xZPx-lYOc66gtU)
 
-## :v: You opition is important for me
+## :v: Your opition is important for me
 
 Give a :star: if you like this project!
 
-## License
+## 💵 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
