@@ -4,7 +4,7 @@
     ViewData["Title"] = "Companies";
 }
 <form method="get">
-    <div class="row mb-2">
+    <div class="row mb-1">
         <div class="form-group col-md-6">
             <label asp-for="City"></label>
             <select asp-for="City" class="form-control form-inline">
@@ -25,9 +25,20 @@
                 }
             </select>
         </div>
-        <div class="form-group col-12">
+        <div class="form-group col-6">
             <label asp-for="SearchTerm"></label>
             <input asp-for="SearchTerm" class="form-control" type="text" placeholder="Search" aria-label="Search">
+        </div>
+        <div class="form-group col-6">
+            <div class="form-group">
+                <label asp-for="Sorting"></label>
+                <select asp-for="Sorting" class="form-control">
+                    <option value="0" selected>Date created</option>
+                    <option value="1">Year established</option>
+                    <option value="2">Company name</option>
+                    <option value="3">Employees count</option>
+                </select>
+            </div>
         </div>
     </div>
     <div class="d-flex justify-content-center mb-4">

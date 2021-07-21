@@ -11,16 +11,19 @@
         [Display(Name = "Filter by industry")]
         public string Industry { get; init; }
 
-        public IEnumerable<CompanyIndustryViewModel> Industries { get; init; }
+        public IEnumerable<CompanyIndustryViewModel> Industries { get; set; }
 
         [Display(Name = "Filter by city")]
         public string City { get; init; }
 
-        public IEnumerable<string> Cities { get; init; }
+        public IEnumerable<string> Cities { get; set; }
 
-        [Display(Name = "Search by name or year")]            
+        [Display(Name = "Search by name or year")]
         public string SearchTerm { get; init; }
 
-        public IEnumerable<CompanyViewModel> Companies { get; init; }
+        public CompanySorting Sorting { get; init; }
+
+        public IEnumerable<CompanyViewModel> Companies { get; set; }
+
     }
 }

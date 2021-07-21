@@ -7,8 +7,9 @@
 
     public enum CompanySorting
     {
-        YearFounded = 0,
-        Name = 1,
-        EmployeesCount = 2,
+        DateCreated = 0,
+        YearFounded = 1,
+        Name = 2,
+        EmployeesCount = 3,
     }
 }

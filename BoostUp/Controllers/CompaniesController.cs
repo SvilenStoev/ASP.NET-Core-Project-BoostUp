@@ -67,29 +67,37 @@
             return RedirectToAction(nameof(All));
         }
 
-        public IActionResult All(string city, string industry, string searchTerm)
+        public IActionResult All([FromQuery]CompaniesQueryModel query)
         {
             var companiesQuery = this.data.Companies.AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(city))
+            if (!string.IsNullOrWhiteSpace(query.City))
             {
-                companiesQuery = companiesQuery.Where(c => c.Address.City == city);
+                companiesQuery = companiesQuery.Where(c => c.Address.City == query.City);
             }
 
-            if (!string.IsNullOrWhiteSpace(industry))
+            if (!string.IsNullOrWhiteSpace(query.Industry))
             {
-                companiesQuery = companiesQuery.Where(c => c.Industry.Value.ToLower() == industry);
+                companiesQuery = companiesQuery.Where(c => c.Industry.Value.ToLower() == query.Industry);
             }
 
-            if (!string.IsNullOrWhiteSpace(searchTerm))
+            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
             {
                 companiesQuery = companiesQuery.Where(c =>
-                    c.Name.ToLower().Contains(searchTerm.ToLower()) ||
-                    c.Founded.ToString() == searchTerm);
+                    c.Name.ToLower().Contains(query.SearchTerm.ToLower()) ||
+                    c.Founded.ToString() == query.SearchTerm);
             }
 
+            companiesQuery = query.Sorting switch
+            {
+                CompanySorting.DateCreated => companiesQuery.OrderByDescending(c => c.Id),
+                CompanySorting.YearFounded => companiesQuery.OrderByDescending(c => c.Founded),
+                CompanySorting.Name => companiesQuery.OrderByDescending(c => c.Name),
+                CompanySorting.EmployeesCount => companiesQuery.OrderByDescending(c => c.Id), //TODO Employees count!!
+                _ => companiesQuery.OrderByDescending(c => c.Id)
+            };
+
             var companies = companiesQuery
-                .OrderByDescending(c => c.Id)
                 .Select(c => new CompanyViewModel
                 {
                     Id = c.Id,
@@ -114,13 +122,11 @@
 
             var companyIndustries = GetCompanyIndustries();
 
-            return View(new CompaniesQueryModel
-            {
-                Companies = companies,
-                SearchTerm = searchTerm,
-                Cities = companyCities,
-                Industries = companyIndustries
-            });
+            query.Industries = GetCompanyIndustries();
+            query.Cities = companyCities;
+            query.Companies = companies;
+
+            return View(query);
         }
 
         private IEnumerable<CompanyIndustryViewModel> GetCompanyIndustries()
