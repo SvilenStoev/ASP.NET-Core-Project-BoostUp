@@ -55,7 +55,7 @@
                     City = company.Address.City,
                     AddressText = company.Address.AddressText
                 },
-                LogoUrl = company.LogoUrl == null ? $"{DefaultCompanyLogoPath}" : company.LogoUrl,
+                LogoUrl = company.LogoUrl,
                 WebsiteUrl = company.WebsiteUrl
             };
 

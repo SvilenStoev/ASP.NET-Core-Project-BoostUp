@@ -7,13 +7,15 @@
 
     using static Data.DataConstants;
 
-    public class AddressInputModel : IValidatableObject
+    public class AddressInputModel
     {
         [Required(ErrorMessage = "{0} is required.")]
+        [RegularExpression(@"[a-z A-Z]+", ErrorMessage = "{0} should not contains any digits.")]
         [StringLength(AddressCityMaxLength, MinimumLength = AddressCityMinLength, ErrorMessage = "{0} must be with a minimum length of {2} and a maximum length of {1}.")]
         public string City { get; init; }
 
         [Required(ErrorMessage = "{0} is required.")]
+        [RegularExpression(@"[a-z A-Z]+", ErrorMessage = "{0} should not contains any digits.")]
         [StringLength(AddressCountryMaxLength, MinimumLength = AddressCountryMinLength, ErrorMessage = "{0} must be with a minimum length of {2} and a maximum length of {1}.")]
         public string Country { get; init; }
 
@@ -21,18 +23,5 @@
         [Required(ErrorMessage = "{0} is required.")]
         [StringLength(AddressTextMaxLength, MinimumLength = AddressTextMinLength, ErrorMessage = "{0} must be with a minimum length of {2} and a maximum length of {1}.")]
         public string AddressText { get; init; }
-
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            if (this.City.Any(Char.IsDigit))
-            {
-                yield return new ValidationResult("City should not contains any digits.");
-            }
-
-            if (this.Country.Any(Char.IsDigit))
-            {
-                yield return new ValidationResult("Country should not contains any digits.");
-            }
-        }
     }
 }

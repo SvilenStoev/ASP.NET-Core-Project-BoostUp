@@ -10,13 +10,22 @@
         <div class="col-md-4 col-lg-3">
             <div class="card bg-light mb-3" style="max-width: 16rem;">
                 <div class="card-header">
-                    <a asp-action="Details" asp-controller="Companies" asp-route-id="@company.Id">
-                        <img class="card-img-top" src="@company.LogoUrl" alt="@company.Name - Logo">
-                    </a>
+                    <div>
+                        <a asp-action="Details" asp-controller="Companies" asp-route-id="@company.Id">
+                            @if (company.LogoUrl != null)
+                            {
+                                <img class="card-img-top" src="@company.LogoUrl" alt="@company.Name - Logo">
+                            }
+                            else
+                            {
+                                <img class="card-img-top" src="~/default pictures/Company Logo.jpg" alt="@company.Name - Logo">
+                            }
+                        </a>
+                    </div>
                 </div>
                 <div class="card-body">
                     <h5 class="card-title text-center">@company.Name</h5>
-                    <p class="card-text">Category: @company.IndustryName</p>
+                    <p class="card-text">Industry: @company.IndustryName</p>
                     <p class="card-text">Category: @company.CategoryName</p>
                     <p class="card-text">Location: @company.AddressCity, @company.AddressCountry</p>
                     <p class="card-text">Founded: @company.Founded</p>
