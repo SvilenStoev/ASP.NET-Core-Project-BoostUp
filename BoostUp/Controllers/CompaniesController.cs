@@ -63,7 +63,7 @@
 
             this.data.SaveChanges();
 
-            return Redirect("/Home/Index");
+            return RedirectToAction(nameof(All));
         }
         
 
@@ -71,6 +71,7 @@
         {
             var companies = this.data
                 .Companies
+                .OrderByDescending(c => c.Id)
                 .Select(c => new CompanyViewModel
                 {
                     Id = c.Id,
