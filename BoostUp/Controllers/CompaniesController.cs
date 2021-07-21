@@ -65,6 +65,7 @@
 
             return Redirect("/Home/Index");
         }
+        
 
         public IActionResult All()
         {
