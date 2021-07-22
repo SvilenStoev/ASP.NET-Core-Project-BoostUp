@@ -92,12 +92,14 @@
             {
                 CompanySorting.DateCreated => companiesQuery.OrderByDescending(c => c.Id),
                 CompanySorting.YearFounded => companiesQuery.OrderByDescending(c => c.Founded),
-                CompanySorting.Name => companiesQuery.OrderByDescending(c => c.Name),
+                CompanySorting.Name => companiesQuery.OrderBy(c => c.Name),
                 CompanySorting.EmployeesCount => companiesQuery.OrderByDescending(c => c.Id), //TODO Employees count!!
                 _ => companiesQuery.OrderByDescending(c => c.Id)
             };
 
             var companies = companiesQuery
+                .Skip((query.CurrentPage - 1) * CompaniesQueryModel.companiesPerPage)
+                .Take(CompaniesQueryModel.companiesPerPage)
                 .Select(c => new CompanyViewModel
                 {
                     Id = c.Id,
@@ -121,10 +123,12 @@
                 .ToList();
 
             var companyIndustries = GetCompanyIndustries();
+            var totalCompanies = companiesQuery.Count();
 
             query.Industries = GetCompanyIndustries();
             query.Cities = companyCities;
             query.Companies = companies;
+            query.TotalCompanies = totalCompanies;
 
             return View(query);
         }

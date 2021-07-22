@@ -3,11 +3,29 @@
 @{
     ViewData["Title"] = "Companies";
 }
+
+@{ 
+    var previousPage = Model.CurrentPage - 1;
+    var currentPage = Model.CurrentPage;
+
+    if (previousPage < 1)
+    {
+        previousPage = 1;
+    }
+
+    var lastPage = (int)Math.Ceiling((double)Model.TotalCompanies / CompaniesQueryModel.companiesPerPage);
+
+    if (currentPage > lastPage)
+    {
+        currentPage = lastPage;
+    }
+}
+
 <form method="get">
-    <div class="row mb-1">
-        <div class="form-group col-md-6">
+    <div class="row">
+        <div class="form-group col-md-4">
             <label asp-for="City"></label>
-            <select asp-for="City" class="form-control form-inline">
+            <select asp-for="City" class="form-control">
                 <option value="">All</option>
                 @foreach (var city in Model.Cities)
                 {
@@ -15,9 +33,9 @@
                 }
             </select>
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-4">
             <label asp-for="Industry"></label>
-            <select asp-for="Industry" class="form-control form-inline">
+            <select asp-for="Industry" class="form-control">
                 <option value="">All</option>
                 @foreach (var industry in Model.Industries)
                 {
@@ -25,28 +43,63 @@
                 }
             </select>
         </div>
-        <div class="form-group col-6">
-            <label asp-for="SearchTerm"></label>
-            <input asp-for="SearchTerm" class="form-control" type="text" placeholder="Search" aria-label="Search">
-        </div>
-        <div class="form-group col-6">
+        <div class="form-group col-md-4">
             <div class="form-group">
                 <label asp-for="Sorting"></label>
                 <select asp-for="Sorting" class="form-control">
                     <option value="0" selected>Date created</option>
-                    <option value="1">Year established</option>
+                    <option value="1">Year of establishment</option>
                     <option value="2">Company name</option>
                     <option value="3">Employees count</option>
                 </select>
             </div>
         </div>
     </div>
+    <div class="row mb-2">
+        <div class="form-group offset-4 col-4">
+            <label asp-for="SearchTerm"></label>
+            <input asp-for="SearchTerm" class="form-control" type="text" placeholder="Search" aria-label="Search">
+        </div>
+    </div>
     <div class="d-flex justify-content-center mb-4">
-        <button class="btn btn-outline-primary btn-rounded btn-sm" type="submit">Search</button>
+        <button class="btn btn-outline-primary btn-rounded btn-md" type="submit">Search</button>
     </div>
 </form>
 
 <hr />
+
+<nav aria-label="...">
+    <ul class="pagination justify-content-center mb-4">
+        <li class="page-item @(currentPage == 1 ? "disabled" : String.Empty)">
+            <a 
+               class="page-link" 
+               asp-controller="Companies" asp-action="All" 
+               asp-route-currentPage="@previousPage"
+               asp-route-city="@Model.City"
+               asp-route-industry="@Model.Industry"
+               asp-route-searchTerm="@Model.SearchTerm"
+               asp-route-sorting="@((int)Model.Sorting)">Previous</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item active">
+            <span class="page-link">
+                2
+                <span class="sr-only">(current)</span>
+            </span>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item @(currentPage >= lastPage ? "disabled" : String.Empty)">
+            <a 
+               class="page-link" 
+               asp-controller="Companies" asp-action="All" 
+               asp-route-currentPage="@(currentPage + 1)"
+               asp-route-city="@Model.City"
+               asp-route-industry="@Model.Industry"
+               asp-route-searchTerm="@Model.SearchTerm"
+               asp-route-sorting="@((int)Model.Sorting)">Next</a>
+        </li>
+    </ul>
+</nav>
 
 <div class="row">
     @foreach (var company in Model.Companies)
@@ -68,11 +121,11 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title text-center">@company.Name</h5>
-                    <p class="card-text">Industry: @company.IndustryName</p>
-                    <p class="card-text">Category: @company.CategoryName</p>
-                    <p class="card-text">Location: @company.AddressCity, @company.AddressCountry</p>
-                    <p class="card-text">Founded: @company.Founded</p>
+                    <h5 class="card-title text-center mb-2"><b>@company.Name</b></h5>
+                    <p class="card-text text-center mb-3"><i>@company.CategoryName</i></p>
+                    <p class="card-text mb-2"><b>Industry:</b> @company.IndustryName</p>
+                    <p class="card-text mb-2"><b>Location:</b> @company.AddressCity, @company.AddressCountry</p>
+                    <p class="card-text mb-2"><b>Founded:</b> @company.Founded</p>
                     <a asp-action="Details" asp-controller="Companies" asp-route-id="@company.Id" class="btn btn-outline-primary">Details</a>
                 </div>
             </div>
