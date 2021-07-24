@@ -3,14 +3,14 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using static DataConstants;
+    using static DataConstants.Company;
 
     public class Company
     {
         public int Id { get; init; }
 
         [Required]
-        [MaxLength(CompanyNameMaxLength)]
+        [MaxLength(NameMaxLength)]
         public string Name { get; set; }
 
         public int? Founded { get; set; }

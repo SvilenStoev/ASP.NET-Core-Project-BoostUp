@@ -1,9 +1,5 @@
 ﻿namespace BoostUp.Models.Companies
 {
-    using BoostUp.Data.Models;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
     public class CompanyViewModel
     {
         public int Id { get; init; }

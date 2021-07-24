@@ -3,14 +3,14 @@
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    using static DataConstants;
+    using static DataConstants.Job;
 
     public class Job
     {
         public int Id { get; init; }
 
         [Required]
-        [MaxLength(JobTitleMaxLength)]
+        [MaxLength(TitleMaxLength)]
         public string JobTitle { get; set; }
 
         public DateTime CreatedOn { get; init; } = DateTime.UtcNow;

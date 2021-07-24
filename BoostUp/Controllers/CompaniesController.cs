@@ -9,8 +9,6 @@
     using BoostUp.Data.Models;
     using BoostUp.Models.Companies;
 
-    using static Data.DataConstants;
-
     public class CompaniesController : Controller
     {
         private readonly BoostUpDbContext data;
@@ -71,9 +69,9 @@
         {
             var companiesQuery = this.data.Companies.AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(query.City))
+            if (!string.IsNullOrWhiteSpace(query.Country))
             {
-                companiesQuery = companiesQuery.Where(c => c.Address.City == query.City);
+                companiesQuery = companiesQuery.Where(c => c.Address.Country == query.Country);
             }
 
             if (!string.IsNullOrWhiteSpace(query.Industry))
@@ -106,18 +104,16 @@
                     Name = c.Name,
                     Founded = c.Founded,
                     LogoUrl = c.LogoUrl,
-                    WebsiteUrl = c.WebsiteUrl,
                     AddressCity = c.Address.City,
                     AddressCountry = c.Address.Country,
-                    AddressText = c.Address.AddressText,
-                    CategoryName = c.Category.Value,
+                    CategoryName = c.Category.Value, //TODO: Show employees count
                     IndustryName = c.Industry.Value
                 })
                 .ToList();
 
-            var companyCities = this.data
+            var companyCountries = this.data
                 .Companies
-                .Select(c => c.Address.City)
+                .Select(c => c.Address.Country)
                 .OrderBy(c => c)
                 .Distinct()
                 .ToList();
@@ -125,9 +121,9 @@
             var companyIndustries = GetCompanyIndustries();
             var totalCompanies = companiesQuery.Count();
 
-            query.Industries = GetCompanyIndustries();
-            query.Cities = companyCities;
             query.Companies = companies;
+            query.Countries = companyCountries;
+            query.Industries = companyIndustries;
             query.TotalCompanies = totalCompanies;
 
             return View(query);

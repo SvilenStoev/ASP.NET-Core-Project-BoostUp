@@ -5,22 +5,22 @@
     using System.ComponentModel.DataAnnotations;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-    using static Data.DataConstants;
+    using static Data.DataConstants.Company;
 
     public class CompanyInputModel
     {
         [Display(Name = "Company name")]
         [Required(ErrorMessage = "{0} is required.")]
-        [StringLength(CompanyNameMaxLength, MinimumLength = CompanyNameMinLength, ErrorMessage = "{0} must be with a minimum length of {2} and a maximum length of {1}.")]
+        [StringLength(NameMaxLength, MinimumLength = NameMinLength, ErrorMessage = "{0} must be with a minimum length of {2} and a maximum length of {1}.")]
         public string Name { get; init; }
 
         [Display(Name = "Year of establishment")]
         [Required(ErrorMessage = "{0} is required.")]
-        [Range(CompanyMinYearFounded, CompanyMaxYearFounded, ErrorMessage = "{0} must be between {1} and {2}.")]
+        [Range(MinYearFounded, MaxYearFounded, ErrorMessage = "{0} must be between {1} and {2}.")]
         public int? Founded { get; init; }
 
         [Required(ErrorMessage = "{0} is required.")]
-        [MinLength(CompanyMinOverviewLength, ErrorMessage = "{0} must be with a minimum length of {1}.")]
+        [MinLength(MinOverviewLength, ErrorMessage = "{0} must be with a minimum length of {1}.")]
         public string Overview { get; init; }
 
         [Url]

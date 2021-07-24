@@ -3,22 +3,22 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using static DataConstants;
+    using static DataConstants.Address;
 
     public class Address
     {
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(AddressCityMaxLength)]
+        [MaxLength(CityMaxLength)]
         public string City { get; set; }
 
         [Required]
-        [MaxLength(AddressCountryMaxLength)]
+        [MaxLength(CountryMaxLength)]
         public string Country { get; set; }
 
         [Required]
-        [MaxLength(AddressTextMaxLength)]
+        [MaxLength(TextMaxLength)]
         public string AddressText { get; set; }
 
         public IEnumerable<Company> Companies { get; set; } = new List<Company>();
