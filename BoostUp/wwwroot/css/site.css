@@ -102,3 +102,8 @@ html {
     margin-bottom: 30px;
     font-style: italic;
 }
+
+h4.transparent-style {
+    background-color: #ffffff;
+    opacity: .6;
+}

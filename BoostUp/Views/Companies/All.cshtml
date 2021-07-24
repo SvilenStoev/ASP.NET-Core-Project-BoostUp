@@ -20,7 +20,7 @@
     <div class="row">
         <div class="form-group col-md-4">
             <label asp-for="Country"></label>
-            <select asp-for="Country" class="form-control">
+            <select asp-for="Country" class="form-control shadow">
                 <option value="">&#10150; All</option>
                 @foreach (var country in Model.Countries)
                 {
@@ -30,7 +30,7 @@
         </div>
         <div class="form-group col-md-4">
             <label asp-for="Industry"></label>
-            <select asp-for="Industry" class="form-control">
+            <select asp-for="Industry" class="form-control shadow">
                 <option value="">&#10150; All</option>
                 @foreach (var industry in Model.Industries)
                 {
@@ -41,7 +41,7 @@
         <div class="form-group col-md-4">
             <div class="form-group">
                 <label asp-for="Sorting"></label>
-                <select asp-for="Sorting" class="form-control">
+                <select asp-for="Sorting" class="form-control shadow">
                     <option value="0" selected>&bull; Date created</option>
                     <option value="1">&bull; Year of establishment</option>
                     <option value="2">&bull; Company name</option>
@@ -53,17 +53,17 @@
     <div class="row mb-2">
         <div class="form-group offset-4 col-4">
             <label asp-for="SearchTerm"></label>
-            <input asp-for="SearchTerm" class="form-control" type="text" placeholder="Search" aria-label="Search">
+            <input asp-for="SearchTerm" class="form-control shadow" type="text" placeholder="Search" aria-label="Search">
         </div>
     </div>
     <div class="d-flex justify-content-center mb-4">
-        <button class="btn btn-outline-primary btn-rounded btn-md" type="submit">Search</button>
+        <button class="btn btn-outline-primary btn-rounded btn-md shadow" type="submit">Search</button>
     </div>
 </form>
 
 <hr />
 
-<nav aria-label="...">
+<nav>
     <ul class="pagination justify-content-center mb-4">
         <li class="page-item @(currentPage <= 1 ? "disabled" : String.Empty)">
             <a class="page-link"
@@ -130,17 +130,17 @@
     @foreach (var company in Model.Companies)
     {
         <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="card bg-light mb-3" style="max-width: 18rem;">
+            <div class="card bg-light mb-3 shadow" style="max-width: 18rem;">
                 <div class="card-header">
                     <div>
                         <a asp-action="Details" asp-controller="Companies" asp-route-id="@company.Id">
                             @if (company.LogoUrl != null)
                             {
-                                <img class="card-img-top" src="@company.LogoUrl" alt="@company.Name - Logo">
+                                <img class="card-img-top rounded-circle mb-2 img-thumbnail" src="@company.LogoUrl" alt="@company.Name - Logo">
                             }
                             else
                             {
-                                <img class="card-img-top" src="~/default pictures/Company Logo.jpg" alt="@company.Name - Logo">
+                                <img class="card-img-top rounded-circle mb-2 img-thumbnail" src="~/default pictures/Company Logo.jpg" alt="@company.Name - Logo">
                             }
                         </a>
                     </div>

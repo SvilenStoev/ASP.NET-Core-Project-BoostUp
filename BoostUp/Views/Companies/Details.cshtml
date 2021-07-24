@@ -4,29 +4,49 @@
     ViewData["Title"] = $"{Model.Name}: Details";
 }
 
-<div class="card row offset-lg-1 col-lg-10">
+<div class="bg-white shadow rounded overflow-hidden">
     <div class="card-header">
-        <div class="card bg-light mb-2" style="max-width: 12rem;">
+        <div class="card bg-light mb-2 shadow" style="max-width: 14rem;">
             <div class="card-header">
-                <div>
-                    @if (Model.LogoUrl != null)
-                    {
-                        <img class="card-img-top" src="@Model.LogoUrl" alt="@Model.Name - Logo">
-                    }
-                    else
-                    {
-                        <img class="card-img-top" src="~/default pictures/Company Logo.jpg" alt="@Model.Name - Logo">
-                    }
+                @if (Model.LogoUrl != null)
+                {
+                    <img class="card-img-top rounded-circle mb-2 img-thumbnail" src="@Model.LogoUrl" alt="@Model.Name - Logo">
+                }
+                else
+                {
+                    <img class="card-img-top rounded-circle mb-2 img-thumbnail" src="~/default pictures/Company Logo.jpg" alt="@Model.Name - Logo">
+                }
+            </div>
+            <h5 class="card-title text-center mb-2"><b>@Model.Name</b></h5>
+            <h6 class="text-muted text-center">@Model.CategoryName</h6>
+        </div>
+        <a asp-controller="Jobs" asp-action="All" class="btn btn-outline-primary m-2"><b>Jobs</b></a>
+        <a asp-controller="Employees" asp-action="All" class="btn btn-outline-primary m-2"><b>Employees</b></a>
+        <a asp-controller="Jobs" asp-action="Add" class="btn btn-outline-primary m-2"><b>Post a job</b></a>
+    </div>
+    <div class="card-body">
+        <div id="accordion">
+            <div class="card mb-4">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <h5><b>Overview</b></h5>
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        @Model.Overview
+                    </div>
                 </div>
             </div>
         </div>
-        <a href="#" class="btn btn-outline-primary">Jobs</a>
-        <a href="#" class="btn btn-outline-primary">Employees</a>
-        <a asp-controller="Jobs" asp-action="Add" class="btn btn-outline-primary">Post a job</a>
-    </div>
-    <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <p class="card-text mb-2"><b>Website:</b> <a href="@Model.WebsiteUrl">@Model.WebsiteUrl</a></p>
+        <p class="card-text mb-2"><b>Industry:</b> @Model.IndustryName</p>
+        <p class="card-text mb-2"><b>Company size:</b> @Model.CategoryName</p>
+        <p class="card-text mb-2"><b>Location:</b> @Model.AddressCity, @Model.AddressCountry</p>
+        <p class="card-text mb-2"><b>Address:</b> @Model.AddressText</p>
+        <p class="card-text mb-4"><b>Founded:</b> @Model.Founded</p>
         <a href="#" class="btn btn-outline-primary">Go somewhere</a>
     </div>
     <div class="card-footer text-muted">
