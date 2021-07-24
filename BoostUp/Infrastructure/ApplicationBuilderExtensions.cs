@@ -49,15 +49,24 @@
             {
                 data.Industries.AddRange(new[]
                 {
-                     new Industry { Value = "Finance and accounting" },
-                     new Industry { Value = "Transportation" },
-                     new Industry { Value = "Real estate" },
+                     new Industry { Value = "Accounting" },
+                     new Industry { Value = "Agriculture" },
+                     new Industry { Value = "Airlines" },
+                     new Industry { Value = "Attorneys/Law" },
+                     new Industry { Value = "Automotive" },
                      new Industry { Value = "Construction" },
-                     new Industry { Value = "Retail" },
-                     new Industry { Value = "Media" },
+                     new Industry { Value = "Banking, Mortgage" },
+                     new Industry { Value = "Education" },
                      new Industry { Value = "Energy" },
-                     new Industry { Value = "Technology" },
+                     new Industry { Value = "Finance" },
+                     new Industry { Value = "Food & Beverage" },
                      new Industry { Value = "Healthcare" },
+                     new Industry { Value = "Manufacturing" },
+                     new Industry { Value = "Real estate" },
+                     new Industry { Value = "Media" },
+                     new Industry { Value = "Retail" },
+                     new Industry { Value = "Transportation" },
+                     new Industry { Value = "Technology" },
                      new Industry { Value = "Other" }
                 });
 

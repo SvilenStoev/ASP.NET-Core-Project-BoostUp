@@ -65,7 +65,7 @@
             return RedirectToAction(nameof(All));
         }
 
-        public IActionResult All([FromQuery]CompaniesQueryModel query)
+        public IActionResult All([FromQuery] CompaniesQueryModel query)
         {
             var companiesQuery = this.data.Companies.AsQueryable();
 
@@ -76,6 +76,7 @@
 
             if (!string.IsNullOrWhiteSpace(query.Industry))
             {
+                companiesQuery = companiesQuery.Where(c => c.Industry.Value.ToLower() == query.Industry);
                 companiesQuery = companiesQuery.Where(c => c.Industry.Value.ToLower() == query.Industry);
             }
 
@@ -127,6 +128,35 @@
             query.TotalCompanies = totalCompanies;
 
             return View(query);
+        }
+
+        public IActionResult Details(int companyId)
+        {
+            var company = this.data
+                .Companies
+                .Where(c => c.Id == companyId)
+                .Select(c => new CompanyDetailsViewModel
+                {
+                    CompanyId = companyId,
+                    Name = c.Name,
+                    Founded = c.Founded,
+                    LogoUrl = c.LogoUrl,
+                    WebsiteUrl = c.WebsiteUrl,
+                    Overview = c.Overview,
+                    AddressCountry = c.Address.Country,
+                    AddressCity = c.Address.City,
+                    AddressText = c.Address.AddressText,
+                    CategoryName = c.Category.Value,
+                    IndustryName = c.Industry.Value,
+                })
+                .FirstOrDefault();
+
+            if (company == null)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            return View(company);
         }
 
         private IEnumerable<CompanyIndustryViewModel> GetCompanyIndustries()

@@ -1,18 +1,24 @@
 ﻿namespace BoostUp.Models.Companies
 {
-    public class CompanyViewModel
+    public class CompanyDetailsViewModel
     {
-        public int Id { get; init; }
+        public int CompanyId { get; init; }
 
         public string Name { get; set; }
 
         public int? Founded { get; set; }
 
+        public string Overview { get; set; }
+
         public string LogoUrl { get; set; }
+
+        public string WebsiteUrl { get; set; }
 
         public string AddressCity { get; set; }
 
         public string AddressCountry { get; set; }
+
+        public string AddressText { get; set; }
 
         public string CategoryName { get; set; }
 

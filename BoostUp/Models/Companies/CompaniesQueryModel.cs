@@ -5,7 +5,7 @@
 
     public class CompaniesQueryModel
     {
-        public const int companiesPerPage = 2;
+        public const int companiesPerPage = 8;
 
         public int CurrentPage { get; init; } = 1;
 
