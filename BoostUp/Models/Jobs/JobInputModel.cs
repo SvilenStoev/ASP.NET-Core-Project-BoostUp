@@ -19,15 +19,15 @@
         public EmploymentType EmploymentType { get; init; }
 
         [Required(ErrorMessage = "{0} is required.")]
-        [MinLength(MinDescriptionLength, ErrorMessage = "{0} must be with a minimum length of {1}.")]
+        [MinLength(DescriptionMinLength, ErrorMessage = "{0} must be with a minimum length of {1}.")]
         public string Description { get; init; }
 
         [Display(Name = "Salary range from:")]
-        [Range(MinSalaryRange, MaxSalaryRange, ErrorMessage = SalaryRangeMessage)]
+        [Range(SalaryMinRange, SalaryMaxRange, ErrorMessage = SalaryRangeMessage)]
         public int? SalaryRangeFrom { get; init; }
 
         [Display(Name = "Salary range to:")]
-        [Range(MinSalaryRange, MaxSalaryRange, ErrorMessage = SalaryRangeMessage)]
+        [Range(SalaryMinRange, SalaryMaxRange, ErrorMessage = SalaryRangeMessage)]
         public int? SalaryRangeTo { get; init; }
 
         public int CompanyId { get; init; }

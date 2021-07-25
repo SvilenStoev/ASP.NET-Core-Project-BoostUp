@@ -2,6 +2,7 @@
 {
     using BoostUp.Data.Models;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
     public class BoostUpDbContext : IdentityDbContext
@@ -10,6 +11,18 @@
             : base(options)
         {
         }
+
+        public DbSet<Company> Companies { get; init; }
+
+        public DbSet<Industry> Industries { get; init; }
+
+        public DbSet<Category> Categories { get; init; }
+
+        public DbSet<Job> Jobs { get; init; }
+
+        public DbSet<Address> Addresses { get; init; }
+
+        public DbSet<Recruiter> Recruiters { get; init; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -48,17 +61,21 @@
                  .HasForeignKey(j => j.RecruiterId)
                  .OnDelete(DeleteBehavior.Restrict);
 
+            builder
+                .Entity<Recruiter>()
+                .HasOne(r => r.Company)
+                .WithMany(c => c.Recruiters)
+                .HasForeignKey(r => r.CompanyId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .Entity<Recruiter>()
+                .HasOne<IdentityUser>()
+                .WithOne()
+                .HasForeignKey<Recruiter>(r => r.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             base.OnModelCreating(builder);
         }
-
-        public DbSet<Company> Companies { get; init; }
-
-        public DbSet<Industry> Industries { get; init; }
-
-        public DbSet<Category> Categories { get; init; }
-
-        public DbSet<Job> Jobs { get; init; }
-
-        public DbSet<Address> Addresses { get; init; }
     }
 }

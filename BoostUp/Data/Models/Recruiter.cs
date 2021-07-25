@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Linq;
-    using System.Threading.Tasks;
+
+    using static Data.DataConstants.Recruiter;
 
     public class Recruiter
     {
@@ -13,20 +13,25 @@
         public string Id { get; init; } = Guid.NewGuid().ToString();
 
         [Required]
-        public string FullName { get; init; }
+        [MaxLength(NameMaxLength)]
+        public string FirstName { get; set; }
 
         [Required]
-        public string Email { get; init; }
-
-        public string PhoneNumber { get; init; }
+        [MaxLength(NameMaxLength)]
+        public string LastName { get; set; }
 
         [Required]
-        public string UserId { get; init; }
+        public string Email { get; set; }
+
+        [MaxLength(PhoneNumberMaxLength)]
+        public string PhoneNumber { get; set; }
+
+        [Required]
+        public string UserId { get; set; }
 
         public IEnumerable<Job> Jobs { get; init; } = new List<Job>();
 
-        //TODO: Recruiter си има една компания, но една компания може да има много Recruiter! Той си избира компанията в Become recruiter.
-        public int CompanyId { get; init; }
+        public int CompanyId { get; set; }
 
         public Company Company { get; init; }
     }

@@ -20,7 +20,7 @@
         public int? Founded { get; init; }
 
         [Required(ErrorMessage = "{0} is required.")]
-        [MinLength(MinOverviewLength, ErrorMessage = "{0} must be with a minimum length of {1}.")]
+        [MinLength(OverviewMinLength, ErrorMessage = "{0} must be with a minimum length of {1}.")]
         public string Overview { get; init; }
 
         [Url]

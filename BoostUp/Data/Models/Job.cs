@@ -30,7 +30,7 @@
 
         public Company Company { get; init; }
 
-        public string RecruiterId { get; set; }
+        public string RecruiterId { get; init; }
 
         public Recruiter Recruiter { get; init; }
     }

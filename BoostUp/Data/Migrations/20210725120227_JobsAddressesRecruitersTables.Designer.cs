@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BoostUp.Data.Migrations
 {
     [DbContext(typeof(BoostUpDbContext))]
-    [Migration("20210721071256_AlterTableCompanyFoundedToAllowNull")]
-    partial class AlterTableCompanyFoundedToAllowNull
+    [Migration("20210725120227_JobsAddressesRecruitersTables")]
+    partial class JobsAddressesRecruitersTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,13 +35,13 @@ namespace BoostUp.Data.Migrations
 
                     b.Property<string>("City")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.Property<string>("Country")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
@@ -118,7 +118,8 @@ namespace BoostUp.Data.Migrations
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.HasKey("Id");
 
@@ -142,16 +143,68 @@ namespace BoostUp.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("EmploymentType")
+                        .HasColumnType("int");
+
                     b.Property<string>("JobTitle")
                         .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<string>("RecruiterId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("SalaryRangeFrom")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SalaryRangeTo")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Views")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
 
+                    b.HasIndex("RecruiterId");
+
                     b.ToTable("Jobs");
+                });
+
+            modelBuilder.Entity("BoostUp.Data.Models.Recruiter", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Recruiters");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -389,6 +442,30 @@ namespace BoostUp.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("BoostUp.Data.Models.Recruiter", "Recruiter")
+                        .WithMany("Jobs")
+                        .HasForeignKey("RecruiterId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Recruiter");
+                });
+
+            modelBuilder.Entity("BoostUp.Data.Models.Recruiter", b =>
+                {
+                    b.HasOne("BoostUp.Data.Models.Company", "Company")
+                        .WithMany("Recruiters")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithOne()
+                        .HasForeignKey("BoostUp.Data.Models.Recruiter", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Company");
                 });
 
@@ -456,11 +533,18 @@ namespace BoostUp.Data.Migrations
             modelBuilder.Entity("BoostUp.Data.Models.Company", b =>
                 {
                     b.Navigation("Jobs");
+
+                    b.Navigation("Recruiters");
                 });
 
             modelBuilder.Entity("BoostUp.Data.Models.Industry", b =>
                 {
                     b.Navigation("Companies");
+                });
+
+            modelBuilder.Entity("BoostUp.Data.Models.Recruiter", b =>
+                {
+                    b.Navigation("Jobs");
                 });
 #pragma warning restore 612, 618
         }

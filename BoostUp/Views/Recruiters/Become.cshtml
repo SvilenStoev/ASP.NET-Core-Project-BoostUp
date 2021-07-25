@@ -1,0 +1,36 @@
+﻿@model RecruiterInputModel
+
+@{
+    ViewBag.Title = "Become recruiter";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-3 col-lg-6">
+            <h4 class="heading-margin-h4 text-center">Become recruiter to add a job and find the most qualified candidates for your company</h4>
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="FirstName" class="required"></label>
+                    <input asp-for="FirstName" class="form-control shadow">
+                    <span asp-validation-for="FirstName" class="small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName" class="required"></label>
+                    <input asp-for="LastName" class="form-control shadow">
+                    <span asp-validation-for="LastName" class="small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="required"></label>
+                    <input asp-for="Email" class="form-control shadow" placeholder="example@example.com">
+                    <span asp-validation-for="Email" class="small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PhoneNumber"></label>
+                    <input asp-for="PhoneNumber" class="form-control shadow" placeholder="(+359)-888-888-888">
+                    <span asp-validation-for="PhoneNumber" class="small text-danger"></span>
+                </div>
+                <input type="submit" class="btn btn-outline-primary shadow" value="Save" />
+            </form>
+        </div>
+    </div>
+</div>

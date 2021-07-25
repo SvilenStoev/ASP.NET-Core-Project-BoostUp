@@ -1,7 +1,7 @@
 ﻿@model CompanyInputModel
 
 @{
-    ViewData["Title"] = "Register Company";
+    ViewBag.Title = "Register Company";
 }
 
 <div class="container">
@@ -32,7 +32,7 @@
                     <select asp-for="CategoryId" class="form-control shadow">
                         @foreach (var category in Model.Categories)
                         {
-                            <option value="@category.Id">@category.Value</option>
+                        <option value="@category.Id">&bull; @category.Value</option>
                         }
                     </select>
                     <span asp-validation-for="CategoryId" class="small text-danger"></span>
@@ -42,7 +42,7 @@
                     <select asp-for="IndustryId" class="form-control shadow">
                         @foreach (var industry in Model.Industries)
                         {
-                            <option value="@industry.Id">@industry.Value</option>
+                        <option value="@industry.Id">&#9874; @industry.Value</option>
                         }
                     </select>
                     <span asp-validation-for="IndustryId" class="small text-danger"></span>
@@ -74,7 +74,7 @@
                     <input asp-for="Address.AddressText" class="form-control shadow" placeholder="Street, apartment, studio, or floor...">
                     <span asp-validation-for="Address.AddressText" class="small text-danger"></span>
                 </div>
-                <input type="submit" class="btn btn-outline-primary shadow" value="Save" />
+                <input type="submit" class="btn btn-outline-primary shadow mt-2 mb-2" value="Save" />
             </form>
         </div>
     </div>

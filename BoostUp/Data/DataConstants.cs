@@ -8,9 +8,9 @@
 
             public const int NameMinLength = 2;
             public const int NameMaxLength = 40;
-            public const int MinYearFounded = 1900;
+            public const int MinYearFounded = 1800;
             public const int MaxYearFounded = 2100;
-            public const int MinOverviewLength = 30;
+            public const int OverviewMinLength = 30;
         }
 
         public class Address
@@ -34,9 +34,17 @@
 
             public const int TitleMinLength = 3;
             public const int TitleMaxLength = 40;
-            public const int MinDescriptionLength = 30;
-            public const int MinSalaryRange = 200;
-            public const int MaxSalaryRange = 100000;
+            public const int DescriptionMinLength = 30;
+            public const int SalaryMinRange = 200;
+            public const int SalaryMaxRange = 100000;
+        }
+
+        public class Recruiter
+        {
+            public const int NameMinLength = 3;
+            public const int NameMaxLength = 30;
+            public const int PhoneNumberMaxLength = 15;
+            public const int PhoneNumberMinLength = 3;
         }
     }
 }

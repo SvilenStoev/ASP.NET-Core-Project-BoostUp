@@ -1,7 +1,7 @@
 ﻿@model CompanyDetailsViewModel
 
 @{
-    ViewData["Title"] = $"{Model.Name}: Details";
+    ViewBag.Title = $"{Model.Name}: Details";
 }
 
 <div class="bg-white shadow rounded overflow-hidden">
@@ -41,7 +41,10 @@
                 </div>
             </div>
         </div>
-        <p class="card-text mb-2"><b>Website:</b> <a href="@Model.WebsiteUrl">@Model.WebsiteUrl</a></p>
+        @if (Model.WebsiteUrl != null)
+        {
+            <p class="card-text mb-2"><b>Website:</b> <a href="@Model.WebsiteUrl">@Model.WebsiteUrl</a></p>
+        }
         <p class="card-text mb-2"><b>Industry:</b> @Model.IndustryName</p>
         <p class="card-text mb-2"><b>Company size:</b> @Model.CategoryName</p>
         <p class="card-text mb-2"><b>Location:</b> @Model.AddressCity, @Model.AddressCountry</p>

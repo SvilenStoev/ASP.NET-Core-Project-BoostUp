@@ -8,6 +8,9 @@
     using BoostUp.Data;
     using BoostUp.Data.Models;
     using BoostUp.Models.Companies;
+    using Microsoft.AspNetCore.Authorization;
+    using System.Security.Claims;
+    using BoostUp.Infrastructure;
 
     public class CompaniesController : Controller
     {
@@ -15,13 +18,19 @@
 
         public CompaniesController(BoostUpDbContext data) => this.data = data;
 
-        public IActionResult Add() => View(new CompanyInputModel
+        [Authorize]
+
+        public IActionResult Add()
         {
-            Categories = this.GetCompanyCategories(),
-            Industries = this.GetCompanyIndustries()
-        });
+            return View(new CompanyInputModel
+            {
+                Categories = this.GetCompanyCategories(),
+                Industries = this.GetCompanyIndustries()
+            });
+        }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Add(CompanyInputModel company)
         {
             if (!this.data.Categories.Any(c => c.Id == company.CategoryId))
