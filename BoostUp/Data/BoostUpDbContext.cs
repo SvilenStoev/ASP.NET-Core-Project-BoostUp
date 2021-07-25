@@ -41,6 +41,13 @@
                 .HasForeignKey(j => j.CompanyId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder
+                 .Entity<Job>()
+                 .HasOne(j => j.Recruiter)
+                 .WithMany(r => r.Jobs)
+                 .HasForeignKey(j => j.RecruiterId)
+                 .OnDelete(DeleteBehavior.Restrict);
+
             base.OnModelCreating(builder);
         }
 

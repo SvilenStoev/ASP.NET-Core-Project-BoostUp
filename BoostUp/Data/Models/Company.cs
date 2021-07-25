@@ -35,5 +35,7 @@
         public Address Address { get; init; }
 
         public IEnumerable<Job> Jobs { get; set; } = new List<Job>();
+
+        public IEnumerable<Recruiter> Recruiters { get; set; } = new List<Recruiter>();
     }
 }

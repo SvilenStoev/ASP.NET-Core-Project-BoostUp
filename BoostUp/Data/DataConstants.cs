@@ -30,7 +30,13 @@
 
         public class Job
         {
-            public const int TitleMaxLength = 60;
+            public const string SalaryRangeMessage = "Salary range must be between {1} and {2}.";
+
+            public const int TitleMinLength = 3;
+            public const int TitleMaxLength = 40;
+            public const int MinDescriptionLength = 30;
+            public const int MinSalaryRange = 200;
+            public const int MaxSalaryRange = 100000;
         }
     }
 }

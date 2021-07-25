@@ -20,9 +20,9 @@
             <h5 class="card-title text-center mb-2"><b>@Model.Name</b></h5>
             <h6 class="text-muted text-center">@Model.CategoryName</h6>
         </div>
-        <a asp-controller="Jobs" asp-action="All" class="btn btn-outline-primary m-2"><b>Jobs</b></a>
-        <a asp-controller="Employees" asp-action="All" class="btn btn-outline-primary m-2"><b>Employees</b></a>
-        <a asp-controller="Jobs" asp-action="Add" class="btn btn-outline-primary m-2"><b>Post a job</b></a>
+        <a asp-controller="Jobs" asp-action="All" asp-route-companyId="@Model.CompanyId" class="btn btn-outline-primary m-2"><b>Jobs</b></a>
+        <a asp-controller="Employees" asp-action="All" asp-route-companyId="@Model.CompanyId" class="btn btn-outline-primary m-2"><b>Employees</b></a>
+        <a asp-controller="Jobs" asp-action="Add" asp-route-companyId="@Model.CompanyId" class="btn btn-outline-primary m-2"><b>Post a job</b></a>
     </div>
     <div class="card-body">
         <div id="accordion">

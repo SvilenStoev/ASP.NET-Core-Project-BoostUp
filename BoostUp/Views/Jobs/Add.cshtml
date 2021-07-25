@@ -1,8 +1,57 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model JobInputModel
+
 @{
+    ViewData["Title"] = "Post a job";
 }
 
+<div class="col-sm-12 offset-md-1 col-md-10">
+    <div class="row offset-2 col-8 mt-2">
+        <div class="col-sm-12 col-lg-6"><img class="rounded-circle d-block w-100 text-center shadow" src="~/default pictures/Add Job Picture 2.jpg" alt="Recruiter img" /></div>
+        <h6 class="heading-margin-h6 text-center col-sm-12 col-lg-6 mt-5">Post your job on the best on the best professional network and get matched with the most qualified candidates for your role</h6>
+    </div>
+    <div class="row offset-2 col-8 mb-4">
+        <div class="col-sm-12 col-lg-6"><h4 class="heading-margin-h4 text-center mt-5"><b><i>BoostUp</i></b> your work environment</h4></div>
+        <div class="col-sm-12 col-lg-6"><img class="rounded-circle d-block w-100 text-center shadow" src="~/default pictures/Add Job Picture 1.jpg" alt="Recruiter img" /></div>
+    </div>
+</div>
 
-<div><h2>This is a job view!</h2></div>
+<div class="container">
+    <div class="row">
+        <div class="offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-3 col-lg-6">
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="JobTitle" class="required"></label>
+                    <input asp-for="JobTitle" class="form-control shadow">
+                    <span asp-validation-for="JobTitle" class="small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="EmploymentType" class="required"></label>
+                    <select asp-for="EmploymentType" class="form-control shadow">
+                        <option value="0" selected>&bull; Full-time</option>
+                        <option value="1">&bull; Part-time</option>
+                        <option value="2">&bull; Temporary</option>
+                        <option value="3">&bull; Volunteer</option>
+                        <option value="4">&bull; Intership</option>
+                    </select>
+                    <span asp-validation-for="EmploymentType" class="small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SalaryRangeFrom"></label>
+                    <input asp-for="SalaryRangeFrom" class="form-control shadow">
+                    <span asp-validation-for="SalaryRangeFrom" class="small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SalaryRangeTo"></label>
+                    <input asp-for="SalaryRangeTo" class="form-control shadow">
+                    <span asp-validation-for="SalaryRangeTo" class="small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="required"></label>
+                    <textarea asp-for="Description" class="form-control shadow" rows="6" placeholder="TODO: Something here"></textarea>
+                    <span asp-validation-for="Description" class="small text-danger"></span>
+                </div>
+                <input type="submit" class="btn btn-outline-primary shadow" value="Save" />
+            </form>
+        </div>
+    </div>
+</div>

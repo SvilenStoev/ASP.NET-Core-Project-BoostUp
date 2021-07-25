@@ -1,11 +1,9 @@
 ﻿namespace BoostUp.Controllers
 {
     using BoostUp.Data;
+    using BoostUp.Data.Models;
+    using BoostUp.Models.Jobs;
     using Microsoft.AspNetCore.Mvc;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
 
     public class JobsController : Controller
     {
@@ -13,9 +11,34 @@
 
         public JobsController(BoostUpDbContext data) => this.data = data;
 
-        public IActionResult Add()
+        public IActionResult Add() => View();
+
+        [HttpPost]
+        public IActionResult Add(JobInputModel job)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return View(job);
+            }
+
+            var jobToAdd = new Job
+            {
+                JobTitle = job.JobTitle,
+                SalaryRangeFrom = job.SalaryRangeFrom,
+                SalaryRangeTo = job.SalaryRangeTo,
+                EmploymentType = job.EmploymentType,
+                CompanyId = job.CompanyId,
+                RecruiterId = job.RecruiterId,
+                Description = job.Description
+            };
+
+            this.data.Jobs.Add(jobToAdd);
+
+            this.data.SaveChanges();
+
+            return RedirectToAction(nameof(Details));
         }
+
+        public IActionResult Details() => View();
     }
 }
