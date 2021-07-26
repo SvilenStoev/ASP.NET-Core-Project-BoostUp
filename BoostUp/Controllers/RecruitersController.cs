@@ -40,8 +40,7 @@
                 FirstName = recruiter.FirstName,
                 LastName = recruiter.LastName,
                 Email = recruiter.Email,
-                PhoneNumber = recruiter.PhoneNumber,
-                CompanyId = recruiter.CompanyId,
+                PhoneNumber = recruiter.PhoneNumber
             };
 
             this.data.Recruiters.Add(recruiterToAdd);

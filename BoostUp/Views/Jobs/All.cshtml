@@ -1,162 +1,164 @@
-﻿@model CompaniesQueryModel
+﻿@model IEnumerable<JobViewModel>
 
 @{
     ViewBag.Title = "Jobs";
 }
 
 @*@{
-    var previousPage = Model.CurrentPage - 1;
-    var currentPage = Model.CurrentPage;
+        var previousPage = Model.CurrentPage - 1;
+        var currentPage = Model.CurrentPage;
 
-    if (previousPage < 1)
-    {
-        previousPage = 1;
+        if (previousPage < 1)
+        {
+            previousPage = 1;
+        }
+
+        var lastPage = (int)Math.Ceiling((double)Model.TotalCompanies / CompaniesQueryModel.companiesPerPage);
     }
 
-    var lastPage = (int)Math.Ceiling((double)Model.TotalCompanies / CompaniesQueryModel.companiesPerPage);
-}
-
-<form method="get">
-    <div class="row">
-        <div class="form-group col-md-4">
-            <label asp-for="Country"></label>
-            <select asp-for="Country" class="form-control shadow">
-                <option value="">&#10150; All</option>
-                @foreach (var country in Model.Countries)
-                {
-                    <option value="@country">&#9992; @country</option>
-                }
-            </select>
-        </div>
-        <div class="form-group col-md-4">
-            <label asp-for="Industry"></label>
-            <select asp-for="Industry" class="form-control shadow">
-                <option value="">&#10150; All</option>
-                @foreach (var industry in Model.Industries)
-                {
-                    <option value="@industry.Value">&#9874; @industry.Value</option>
-                }
-            </select>
-        </div>
-        <div class="form-group col-md-4">
-            <div class="form-group">
-                <label asp-for="Sorting"></label>
-                <select asp-for="Sorting" class="form-control shadow">
-                    <option value="0" selected>&bull; Date created</option>
-                    <option value="1">&bull; Year of establishment</option>
-                    <option value="2">&bull; Company name</option>
-                    <option value="3">&bull; Employees count</option>
+    <!-- Filter, Sort and Search -->
+    <form method="get">
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label asp-for="Country"></label>
+                <select asp-for="Country" class="form-control shadow">
+                    <option value="">&#10150; All</option>
+                    @foreach (var country in Model.Countries)
+                    {
+                        <option value="@country">&#9992; @country</option>
+                    }
                 </select>
             </div>
+            <div class="form-group col-md-4">
+                <label asp-for="Industry"></label>
+                <select asp-for="Industry" class="form-control shadow">
+                    <option value="">&#10150; All</option>
+                    @foreach (var industry in Model.Industries)
+                    {
+                        <option value="@industry.Value">&#9874; @industry.Value</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <div class="form-group">
+                    <label asp-for="Sorting"></label>
+                    <select asp-for="Sorting" class="form-control shadow">
+                        <option value="0" selected>&bull; Date created</option>
+                        <option value="1">&bull; Year of establishment</option>
+                        <option value="2">&bull; Company name</option>
+                        <option value="3">&bull; Employees count</option>
+                    </select>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="row mb-2">
-        <div class="form-group offset-4 col-4">
-            <label asp-for="SearchTerm"></label>
-            <input asp-for="SearchTerm" class="form-control shadow" type="text" placeholder="Search" aria-label="Search">
+        <div class="row mb-2">
+            <div class="form-group offset-4 col-4">
+                <label asp-for="SearchTerm"></label>
+                <input asp-for="SearchTerm" class="form-control shadow" type="text" placeholder="Search" aria-label="Search">
+            </div>
         </div>
-    </div>
-    <div class="d-flex justify-content-center mb-4">
-        <button class="btn btn-outline-primary btn-rounded btn-md shadow" type="submit">Search</button>
-    </div>
-</form>
+        <div class="d-flex justify-content-center mb-4">
+            <button class="btn btn-outline-primary btn-rounded btn-md shadow" type="submit">Search</button>
+        </div>
+    </form>
 
-<hr />
+    <hr />*@
 
-<nav>
-    <ul class="pagination justify-content-center mb-4">
-        <li class="page-item @(currentPage <= 1 ? "disabled" : String.Empty)">
-            <a class="page-link"
-               asp-controller="Companies" asp-action="All"
-               asp-route-currentPage="@previousPage"
-               asp-route-city="@Model.Country"
-               asp-route-industry="@Model.Industry"
-               asp-route-searchTerm="@Model.SearchTerm"
-               asp-route-sorting="@((int)Model.Sorting)">Previous</a>
-        </li>
-        @for (int i = currentPage - 3; i < currentPage; i++)
-        {
-            if (i > 0)
+<!-- Pagination -->
+@*<nav>
+        <ul class="pagination justify-content-center mb-4">
+            <li class="page-item @(currentPage <= 1 ? "disabled" : String.Empty)">
+                <a class="page-link"
+                   asp-controller="Companies" asp-action="All"
+                   asp-route-currentPage="@previousPage"
+                   asp-route-city="@Model.Country"
+                   asp-route-industry="@Model.Industry"
+                   asp-route-searchTerm="@Model.SearchTerm"
+                   asp-route-sorting="@((int)Model.Sorting)">Previous</a>
+            </li>
+            @for (int i = currentPage - 3; i < currentPage; i++)
             {
-                <li class="page-item">
-                    <a class="page-link"
-                       asp-controller="Companies" asp-action="All"
-                       asp-route-currentPage="@i"
-                       asp-route-city="@Model.Country"
-                       asp-route-industry="@Model.Industry"
-                       asp-route-searchTerm="@Model.SearchTerm"
-                       asp-route-sorting="@((int)Model.Sorting)">@i</a>
-                </li>
+                if (i > 0)
+                {
+                    <li class="page-item">
+                        <a class="page-link"
+                           asp-controller="Companies" asp-action="All"
+                           asp-route-currentPage="@i"
+                           asp-route-city="@Model.Country"
+                           asp-route-industry="@Model.Industry"
+                           asp-route-searchTerm="@Model.SearchTerm"
+                           asp-route-sorting="@((int)Model.Sorting)">@i</a>
+                    </li>
+                }
             }
-        }
-        <li class="page-item active">
-            <span class="page-link">
-                @currentPage
-                <span class="sr-only">(current)</span>
-            </span>
-        </li>
-        @for (int i = currentPage + 1; i < currentPage + 4; i++)
-        {
-            if (i <= lastPage)
+            <li class="page-item active">
+                <span class="page-link">
+                    @currentPage
+                    <span class="sr-only">(current)</span>
+                </span>
+            </li>
+            @for (int i = currentPage + 1; i < currentPage + 4; i++)
             {
-                <li class="page-item">
-                    <a class="page-link"
-                       asp-controller="Companies" asp-action="All"
-                       asp-route-currentPage="@i"
-                       asp-route-city="@Model.Country"
-                       asp-route-industry="@Model.Industry"
-                       asp-route-searchTerm="@Model.SearchTerm"
-                       asp-route-sorting="@((int)Model.Sorting)">@i</a>
-                </li>
+                if (i <= lastPage)
+                {
+                    <li class="page-item">
+                        <a class="page-link"
+                           asp-controller="Companies" asp-action="All"
+                           asp-route-currentPage="@i"
+                           asp-route-city="@Model.Country"
+                           asp-route-industry="@Model.Industry"
+                           asp-route-searchTerm="@Model.SearchTerm"
+                           asp-route-sorting="@((int)Model.Sorting)">@i</a>
+                    </li>
+                }
             }
-        }
-        <li class="page-item @(currentPage >= lastPage ? "disabled" : String.Empty)">
-            <a class="page-link"
-               asp-controller="Companies" asp-action="All"
-               asp-route-currentPage="@(currentPage + 1)"
-               asp-route-city="@Model.Country"
-               asp-route-industry="@Model.Industry"
-               asp-route-searchTerm="@Model.SearchTerm"
-               asp-route-sorting="@((int)Model.Sorting)">Next</a>
-        </li>
-    </ul>
-</nav>
+            <li class="page-item @(currentPage >= lastPage ? "disabled" : String.Empty)">
+                <a class="page-link"
+                   asp-controller="Companies" asp-action="All"
+                   asp-route-currentPage="@(currentPage + 1)"
+                   asp-route-city="@Model.Country"
+                   asp-route-industry="@Model.Industry"
+                   asp-route-searchTerm="@Model.SearchTerm"
+                   asp-route-sorting="@((int)Model.Sorting)">Next</a>
+            </li>
+        </ul>
+    </nav>*@
 
-@if (!Model.Companies.Any())
-{
-    <h3 class="text-center mt-5 mb-5">No companies found by the given criteria!</h3>
-}
+<!-- Body -->
+@*@if (!Model.Companies.Any())
+    {
+        <h3 class="text-center mt-5 mb-5">No companies found by the given criteria!</h3>
+    }*@
 
 <div class="row">
-    @foreach (var company in Model.Companies)
+    @foreach (var job in Model)
     {
         <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="card bg-light mb-3 shadow" style="max-width: 18rem;">
-                <div class="card-header">
-                    <div>
-                        <a asp-action="Details" asp-controller="Companies" asp-route-id="@company.Id">
-                            @if (company.LogoUrl != null)
+            <div class="card bg-light shadow" style="max-width: 18rem;">
+                <div class="card-body">
+                    <div class="mb-2">
+                        <a asp-action="Details" asp-controller="Jobs" asp-route-id="@job.Id">
+                            @if (job.CompanyLogoUrl != null)
                             {
-                                <img class="card-img-top rounded-circle mb-2 img-thumbnail" src="@company.LogoUrl" alt="@company.Name - Logo">
+                                <img class="rounded-circle mb-2 img-thumbnail shadow" width="100" height="100" src="@job.CompanyLogoUrl" alt="@job.CompanyName - Logo">
                             }
                             else
                             {
-                                <img class="card-img-top rounded-circle mb-2 img-thumbnail" src="~/default pictures/Company Logo.jpg" alt="@company.Name - Logo">
+                                <img class="rounded-circle mb-2 img-thumbnail shadow" width="100" height="100" src="~/default pictures/Company Logo.jpg" alt="@job.CompanyName - Logo">
                             }
                         </a>
                     </div>
+                    <h5 class="card-title mb-2"><b>@job.JobTitle</b></h5>
+                    <h6 class="card-text mb-2">@job.CompanyName</h6>
+                    <p class="card-text mb-2"><i>@job.CompanyCity, @job.CompanyCountry</i></p>
+                    <a asp-action="Details" asp-controller="Jobs" asp-route-companyId="@job.Id" class="btn btn-outline-primary shadow">Learn more...</a>
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title text-center mb-2"><b>@company.Name</b></h5>
-                    <p class="card-text text-center mb-3"><i>@company.CategoryName</i></p>
-                    <p class="card-text mb-2"><b>Industry:</b> @company.IndustryName</p>
-                    <p class="card-text mb-2"><b>Location:</b> @company.AddressCity, @company.AddressCountry</p>
-                    <p class="card-text mb-2"><b>Founded:</b> @company.Founded</p>
-                    <a asp-action="Details" asp-controller="Companies" asp-route-companyId="@company.Id" class="btn btn-outline-primary">Details</a>
+                <div class="card-footer text-muted">
+                    <i>@job.RelativeTime</i>
                 </div>
             </div>
         </div>
     }
 </div>
 
-<hr />*@
+<hr />

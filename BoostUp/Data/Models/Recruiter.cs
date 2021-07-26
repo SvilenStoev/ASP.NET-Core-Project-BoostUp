@@ -31,7 +31,7 @@
 
         public IEnumerable<Job> Jobs { get; init; } = new List<Job>();
 
-        public int CompanyId { get; set; }
+        public int? CompanyId { get; set; }
 
         public Company Company { get; init; }
     }
