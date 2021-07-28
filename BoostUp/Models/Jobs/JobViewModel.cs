@@ -16,6 +16,10 @@
 
         public string EmploymentType { get; set; }
 
+        public int? SalaryRangeFrom { get; set; }
+        
+        public int? SalaryRangeTo { get; set; }
+
         public string AddressCountry { get; set; }
 
         public string AddressCity { get; set; }

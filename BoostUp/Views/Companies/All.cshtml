@@ -30,12 +30,12 @@
             </select>
         </div>
         <div class="form-group col-md-4">
-            <label asp-for="Industry"></label>
-            <select asp-for="Industry" class="form-control shadow">
+            <label asp-for="IndustryId"></label>
+            <select asp-for="IndustryId" class="form-control shadow">
                 <option value="">&#10150; All</option>
                 @foreach (var industry in Model.Industries)
                 {
-                    <option value="@industry.Value">&#9874; @industry.Value</option>
+                    <option value="@industry.Id">&#9874; @industry.Value</option>
                 }
             </select>
         </div>
@@ -71,8 +71,8 @@
             <a class="page-link"
                asp-controller="Companies" asp-action="All"
                asp-route-currentPage="@previousPage"
-               asp-route-city="@Model.Country"
-               asp-route-industry="@Model.Industry"
+               asp-route-country="@Model.Country"
+               asp-route-industryId="@Model.IndustryId"
                asp-route-searchTerm="@Model.SearchTerm"
                asp-route-sorting="@((int)Model.Sorting)">Previous</a>
         </li>
@@ -84,8 +84,8 @@
                     <a class="page-link"
                        asp-controller="Companies" asp-action="All"
                        asp-route-currentPage="@i"
-                       asp-route-city="@Model.Country"
-                       asp-route-industry="@Model.Industry"
+                       asp-route-country="@Model.Country"
+                       asp-route-industryId="@Model.IndustryId"
                        asp-route-searchTerm="@Model.SearchTerm"
                        asp-route-sorting="@((int)Model.Sorting)">@i</a>
                 </li>
@@ -105,8 +105,8 @@
                     <a class="page-link"
                        asp-controller="Companies" asp-action="All"
                        asp-route-currentPage="@i"
-                       asp-route-city="@Model.Country"
-                       asp-route-industry="@Model.Industry"
+                       asp-route-country="@Model.Country"
+                       asp-route-industryId="@Model.IndustryId"
                        asp-route-searchTerm="@Model.SearchTerm"
                        asp-route-sorting="@((int)Model.Sorting)">@i</a>
                 </li>
@@ -116,8 +116,8 @@
             <a class="page-link"
                asp-controller="Companies" asp-action="All"
                asp-route-currentPage="@(currentPage + 1)"
-               asp-route-city="@Model.Country"
-               asp-route-industry="@Model.Industry"
+               asp-route-country="@Model.Country"
+               asp-route-industryId="@Model.IndustryId"
                asp-route-searchTerm="@Model.SearchTerm"
                asp-route-sorting="@((int)Model.Sorting)">Next</a>
         </li>

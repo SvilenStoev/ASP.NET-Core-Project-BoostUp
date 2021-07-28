@@ -12,7 +12,7 @@
         public int TotalCompanies { get; set; }
 
         [Display(Name = "Filter by industry")]
-        public string Industry { get; init; }
+        public int IndustryId { get; init; }
 
         public IEnumerable<CompanyIndustryViewModel> Industries { get; set; }
 

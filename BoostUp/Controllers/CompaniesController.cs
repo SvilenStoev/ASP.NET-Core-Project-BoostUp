@@ -79,10 +79,9 @@
                 companiesQuery = companiesQuery.Where(c => c.Address.Country == query.Country);
             }
 
-            if (!string.IsNullOrWhiteSpace(query.Industry))
+            if (query.IndustryId > 0)
             {
-                companiesQuery = companiesQuery.Where(c => c.Industry.Value.ToLower() == query.Industry);
-                companiesQuery = companiesQuery.Where(c => c.Industry.Value.ToLower() == query.Industry);
+                companiesQuery = companiesQuery.Where(c => c.Industry.Id == query.IndustryId);
             }
 
             if (!string.IsNullOrWhiteSpace(query.SearchTerm))

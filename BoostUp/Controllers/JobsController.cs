@@ -85,12 +85,41 @@
         {
             var jobsQuery = this.data.Jobs.AsQueryable();
 
+            if (!string.IsNullOrWhiteSpace(query.Country))
+            {
+                jobsQuery = jobsQuery.Where(j => j.Address.Country == query.Country);
+            }
+
+            if (query.EmploymentTypeId > 0)
+            {
+                jobsQuery = jobsQuery.Where(j => j.EmploymentType.Id == query.EmploymentTypeId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
+            {
+                jobsQuery = jobsQuery.Where(j =>
+                    j.Address.City.ToLower().Contains(query.SearchTerm.ToLower()) ||
+                    j.JobTitle.ToLower().Contains(query.SearchTerm.ToLower()));
+            }
+
+            jobsQuery = query.Sorting switch
+            {
+                JobSorting.DateCreated => jobsQuery.OrderByDescending(j => j.Id),
+                JobSorting.Salary => jobsQuery.OrderByDescending(j => j.SalaryRangeFrom),
+                JobSorting.JobTitle => jobsQuery.OrderBy(j => j.JobTitle),
+                _ => jobsQuery.OrderByDescending(j => j.Id)
+            };
+
             var jobs = jobsQuery
+                .Skip((query.CurrentPage - 1) * JobsQueryModel.jobsPerPage)
+                .Take(JobsQueryModel.jobsPerPage)
                 .Select(j => new JobViewModel
                 {
                     Id = j.Id,
                     JobTitle = j.JobTitle,
                     EmploymentType = j.EmploymentType.Value,
+                    SalaryRangeFrom = j.SalaryRangeFrom,
+                    SalaryRangeTo = j.SalaryRangeTo,
                     CompanyName = j.Company.Name,
                     AddressCountry = j.Address.Country,
                     AddressCity = j.Address.City,
@@ -99,10 +128,20 @@
                 })
                 .ToList();
 
-            var countries = this.data
-                .Jobs;
+            var jobCountries = this.data
+                .Jobs
+                .Select(j => j.Address.Country)
+                .OrderBy(c => c)
+                .Distinct()
+                .ToList();
+
+            var jobEmploymentTypes = GetEmploymentTypes();
+            var totalJobs = jobsQuery.Count();
 
             query.Jobs = jobs;
+            query.Countries = jobCountries;
+            query.EmploymentTypes = jobEmploymentTypes;
+            query.TotalJobs = totalJobs;
 
             return View(query);
         }
