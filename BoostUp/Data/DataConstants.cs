@@ -28,6 +28,16 @@
             public const int ValueMaxLength = 25;
         }
 
+        public class Category
+        {
+            public const int ValueMaxLength = 25;
+        }
+
+        public class EmploymentType
+        {
+            public const int ValueMaxLength = 25;
+        }
+
         public class Job
         {
             public const string SalaryRangeMessage = "Salary range must be between {1} and {2}.";

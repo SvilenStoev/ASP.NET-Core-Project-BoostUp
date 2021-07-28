@@ -3,6 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
+    using BoostUp.Models.Addresses;
+
     using Microsoft.AspNetCore.Mvc.ModelBinding;
 
     using static Data.DataConstants.Company;

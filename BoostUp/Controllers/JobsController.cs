@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     public class JobsController : Controller
@@ -23,7 +24,10 @@
                 return RedirectToAction(nameof(RecruitersController.Become), "Recruiters", new { companyId = companyId });
             }
 
-            return View();
+            return View(new JobInputModel
+            {
+                EmploymentTypes = this.GetEmploymentTypes()
+            });
         }
 
         [HttpPost]
@@ -41,19 +45,32 @@
                 return RedirectToAction(nameof(RecruitersController.Become), "Recruiters", new { value = "companyId" });
             }
 
+            if (!this.data.EmploymentTypes.Any(et => et.Id == job.EmploymentTypeId))
+            {
+                this.ModelState.AddModelError(nameof(job.EmploymentTypeId), "Employment type does not exist.");
+            }
+
             if (!ModelState.IsValid)
             {
+                job.EmploymentTypes = this.GetEmploymentTypes();
+
                 return View(job);
             }
 
             var jobToAdd = new Job
             {
                 JobTitle = job.JobTitle,
+                EmploymentTypeId = job.EmploymentTypeId,
+                Address = new Address
+                {
+                    Country = job.Address.Country,
+                    City = job.Address.City,
+                    AddressText = job.Address.AddressText
+                },
                 SalaryRangeFrom = job.SalaryRangeFrom,
                 SalaryRangeTo = job.SalaryRangeTo,
-                EmploymentType = job.EmploymentType,
-                CompanyId = job.CompanyId,
                 Description = job.Description,
+                CompanyId = job.CompanyId,
                 RecruiterId = recruiterId
             };
 
@@ -64,23 +81,30 @@
             return RedirectToAction(nameof(Details));
         }
 
-        public IActionResult All()
+        public IActionResult All(JobsQueryModel query)
         {
-            var jobs = this.data
-                .Jobs
+            var jobsQuery = this.data.Jobs.AsQueryable();
+
+            var jobs = jobsQuery
                 .Select(j => new JobViewModel
                 {
                     Id = j.Id,
                     JobTitle = j.JobTitle,
-                    RelativeTime = CalculateRelativeTime(j.CreatedOn),
+                    EmploymentType = j.EmploymentType.Value,
                     CompanyName = j.Company.Name,
-                    CompanyCountry = j.Company.Address.Country,
-                    CompanyCity = j.Company.Address.City,
-                    CompanyLogoUrl = j.Company.LogoUrl
+                    AddressCountry = j.Address.Country,
+                    AddressCity = j.Address.City,
+                    CompanyLogoUrl = j.Company.LogoUrl,
+                    RelativeTime = CalculateRelativeTime(j.CreatedOn)
                 })
                 .ToList();
 
-            return View(jobs);
+            var countries = this.data
+                .Jobs;
+
+            query.Jobs = jobs;
+
+            return View(query);
         }
 
 
@@ -91,6 +115,16 @@
             .Recruiters
             .Any(r => r.UserId == this.User.GetId());
 
+
+        private IEnumerable<JobEmploymentTypeViewModel> GetEmploymentTypes()
+         => this.data
+         .EmploymentTypes
+         .Select(et => new JobEmploymentTypeViewModel
+         {
+             Id = et.Id,
+             Value = et.Value
+         })
+         .ToList();
 
         private static string CalculateRelativeTime(DateTime createdOn)
         {
@@ -114,7 +148,7 @@
                 relativeTime = "1 minute ago";
 
             }
-            else if (seconds < 50 * MINUTE)
+            else if (seconds < 60 * MINUTE)
             {
                 relativeTime = ts.Minutes + " minutes ago";
             }

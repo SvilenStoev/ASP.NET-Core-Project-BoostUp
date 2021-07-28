@@ -15,8 +15,6 @@
 
         public DateTime CreatedOn { get; init; } = DateTime.UtcNow;
 
-        public EmploymentType EmploymentType { get; set; }
-
         [Required]
         public string Description { get; set; }
 
@@ -25,6 +23,14 @@
         public int? SalaryRangeTo { get; set; }
 
         public int Views { get; set; }
+
+        public int AddressId { get; set; }
+
+        public Address Address { get; init; }
+
+        public int EmploymentTypeId { get; set; }
+
+        public EmploymentType EmploymentType { get; set; }
 
         public int CompanyId { get; set; }
 

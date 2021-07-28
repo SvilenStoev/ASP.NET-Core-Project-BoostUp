@@ -1,4 +1,4 @@
-﻿@model IEnumerable<JobViewModel>
+﻿@model JobsQueryModel
 
 @{
     ViewBag.Title = "Jobs";
@@ -131,10 +131,10 @@
     }*@
 
 <div class="row">
-    @foreach (var job in Model)
+    @foreach (var job in Model.Jobs)
     {
         <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="card bg-light shadow" style="max-width: 18rem;">
+            <div class="card bg-light mb-3 shadow" style="max-width: 18rem;">
                 <div class="card-body">
                     <div class="mb-2">
                         <a asp-action="Details" asp-controller="Jobs" asp-route-id="@job.Id">
@@ -148,13 +148,14 @@
                             }
                         </a>
                     </div>
-                    <h5 class="card-title mb-2"><b>@job.JobTitle</b></h5>
-                    <h6 class="card-text mb-2">@job.CompanyName</h6>
-                    <p class="card-text mb-2"><i>@job.CompanyCity, @job.CompanyCountry</i></p>
-                    <a asp-action="Details" asp-controller="Jobs" asp-route-companyId="@job.Id" class="btn btn-outline-primary shadow">Learn more...</a>
+                    <h5 class="card-title mb-1"><b>@job.JobTitle</b></h5>
+                    <h6 class="card-text mb-3">@job.EmploymentType</h6>
+                    <h6 class="card-text mb-1">@job.CompanyName</h6>
+                    <p class="card-text mb-2"><i>@job.AddressCity, @job.AddressCountry</i></p>
+                    <a asp-action="Details" asp-controller="Jobs" asp-route-companyId="@job.Id" class="btn btn-outline-primary shadow mt-2">Learn more</a>
                 </div>
                 <div class="card-footer text-muted">
-                    <i>@job.RelativeTime</i>
+                    <i>Posted @job.RelativeTime</i>
                 </div>
             </div>
         </div>

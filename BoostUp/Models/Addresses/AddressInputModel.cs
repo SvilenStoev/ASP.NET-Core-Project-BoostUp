@@ -1,4 +1,4 @@
-﻿namespace BoostUp.Models.Companies
+﻿namespace BoostUp.Models.Addresses
 {
     using System;
     using System.Linq;

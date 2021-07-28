@@ -14,11 +14,13 @@
 
         public string RelativeTime { get; set; }
 
+        public string EmploymentType { get; set; }
+
+        public string AddressCountry { get; set; }
+
+        public string AddressCity { get; set; }
+
         public string CompanyName { get; set; }
-
-        public string CompanyCountry { get; set; }
-
-        public string CompanyCity { get; set; }
 
         public string CompanyLogoUrl { get; set; }
     }

@@ -1,16 +1,18 @@
 ﻿namespace BoostUp.Data.Models
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
+    using System.ComponentModel.DataAnnotations;
 
-    public enum EmploymentType
+    using static DataConstants.EmploymentType;
+
+    public class EmploymentType
     {
-        FullTime = 0,
-        PartTime = 1,
-        Temporary = 2,
-        Volunteer = 3,
-        Intership = 4,
+        public int Id { get; init; }
+
+        [Required]
+        [MaxLength(ValueMaxLength)]
+        public string Value { get; set; }
+
+        public IEnumerable<Job> Jobs { get; set; } = new List<Job>();
     }
 }

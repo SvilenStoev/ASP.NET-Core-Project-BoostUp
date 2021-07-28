@@ -22,6 +22,8 @@
 
             SeedIndustries(data);
 
+            SeedEmploymentTypes(data);
+
             return app;
         }
 
@@ -68,6 +70,23 @@
                      new Industry { Value = "Transportation" },
                      new Industry { Value = "Technology" },
                      new Industry { Value = "Other" }
+                });
+
+                data.SaveChanges();
+            }
+        }
+
+        private static void SeedEmploymentTypes(BoostUpDbContext data)
+        {
+            if (!data.EmploymentTypes.Any())
+            {
+                data.EmploymentTypes.AddRange(new[]
+                {
+                     new EmploymentType { Value = "Full-time" },
+                     new EmploymentType { Value = "Part-time" },
+                     new EmploymentType { Value = "Temporary" },
+                     new EmploymentType { Value = "Volunteer" },
+                     new EmploymentType { Value = "Intership" }
                 });
 
                 data.SaveChanges();

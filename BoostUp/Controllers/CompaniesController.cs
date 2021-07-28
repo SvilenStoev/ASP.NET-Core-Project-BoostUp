@@ -1,6 +1,5 @@
 ﻿namespace BoostUp.Controllers
 {
-    using System;
     using System.Linq;
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
@@ -9,8 +8,6 @@
     using BoostUp.Data.Models;
     using BoostUp.Models.Companies;
     using Microsoft.AspNetCore.Authorization;
-    using System.Security.Claims;
-    using BoostUp.Infrastructure;
 
     public class CompaniesController : Controller
     {
@@ -19,7 +16,6 @@
         public CompaniesController(BoostUpDbContext data) => this.data = data;
 
         [Authorize]
-
         public IActionResult Add()
         {
             return View(new CompanyInputModel

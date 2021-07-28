@@ -22,5 +22,7 @@
         public string AddressText { get; set; }
 
         public IEnumerable<Company> Companies { get; set; } = new List<Company>();
+
+        public IEnumerable<Job> Jobs { get; set; } = new List<Job>();
     }
 }

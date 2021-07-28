@@ -4,14 +4,16 @@ using BoostUp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BoostUp.Data.Migrations
 {
     [DbContext(typeof(BoostUpDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210728092034_AlterJobsAddress")]
+    partial class AlterJobsAddress
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,8 +57,7 @@ namespace BoostUp.Data.Migrations
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -108,23 +109,6 @@ namespace BoostUp.Data.Migrations
                     b.ToTable("Companies");
                 });
 
-            modelBuilder.Entity("BoostUp.Data.Models.EmploymentType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EmploymentTypes");
-                });
-
             modelBuilder.Entity("BoostUp.Data.Models.Industry", b =>
                 {
                     b.Property<int>("Id")
@@ -162,7 +146,7 @@ namespace BoostUp.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EmploymentTypeId")
+                    b.Property<int>("EmploymentType")
                         .HasColumnType("int");
 
                     b.Property<string>("JobTitle")
@@ -187,8 +171,6 @@ namespace BoostUp.Data.Migrations
                     b.HasIndex("AddressId");
 
                     b.HasIndex("CompanyId");
-
-                    b.HasIndex("EmploymentTypeId");
 
                     b.HasIndex("RecruiterId");
 
@@ -476,12 +458,6 @@ namespace BoostUp.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("BoostUp.Data.Models.EmploymentType", "EmploymentType")
-                        .WithMany("Jobs")
-                        .HasForeignKey("EmploymentTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("BoostUp.Data.Models.Recruiter", "Recruiter")
                         .WithMany("Jobs")
                         .HasForeignKey("RecruiterId")
@@ -490,8 +466,6 @@ namespace BoostUp.Data.Migrations
                     b.Navigation("Address");
 
                     b.Navigation("Company");
-
-                    b.Navigation("EmploymentType");
 
                     b.Navigation("Recruiter");
                 });
@@ -580,11 +554,6 @@ namespace BoostUp.Data.Migrations
                     b.Navigation("Jobs");
 
                     b.Navigation("Recruiters");
-                });
-
-            modelBuilder.Entity("BoostUp.Data.Models.EmploymentType", b =>
-                {
-                    b.Navigation("Jobs");
                 });
 
             modelBuilder.Entity("BoostUp.Data.Models.Industry", b =>

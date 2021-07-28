@@ -24,6 +24,8 @@
 
         public DbSet<Recruiter> Recruiters { get; init; }
 
+        public DbSet<EmploymentType> EmploymentTypes { get; init; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder
@@ -62,6 +64,20 @@
                  .OnDelete(DeleteBehavior.Restrict);
 
             builder
+                .Entity<Job>()
+                .HasOne(j => j.Address)
+                .WithMany(a => a.Jobs)
+                .HasForeignKey(j => j.AddressId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .Entity<Job>()
+                .HasOne(j => j.EmploymentType)
+                .WithMany(et => et.Jobs)
+                .HasForeignKey(j => j.EmploymentTypeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
                 .Entity<Recruiter>()
                 .HasOne(r => r.Company)
                 .WithMany(c => c.Recruiters)
@@ -74,6 +90,7 @@
                 .WithOne()
                 .HasForeignKey<Recruiter>(r => r.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
+
 
             base.OnModelCreating(builder);
         }
