@@ -25,7 +25,7 @@ TODO:
 - Real-time user status(online-offline) based on SignalR connection
 - EPPlus for exportd data reports in Excel files
 - Cloudinary
-- Bootstrap
+- Bootstrap v4.3.1
 - AJAX real-time Requests
 - JavaScript and JS animations
 
@@ -33,7 +33,7 @@ TODO:
 TODO:
 
 ## :floppy_disk: Database Diagram
-![DataBase - Diagram](https://user-images.githubusercontent.com/64086041/126074109-52bf9f6d-9f4e-4c1b-ad00-075aee24adec.png)
+![DataBase - Diagram 20210730](https://user-images.githubusercontent.com/64086041/127685703-30ffbcad-0e7b-475f-8845-d45d9b8fd871.png)
 
 ## :link: Website Link
 TODO:
