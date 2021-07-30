@@ -10,6 +10,8 @@ namespace BoostUp
 
     using BoostUp.Data;
     using BoostUp.Infrastructure;
+    using BoostUp.Services.Statistics;
+    using BoostUp.Services.Companies;
 
     public class Startup
     {
@@ -37,6 +39,9 @@ namespace BoostUp
                 .AddEntityFrameworkStores<BoostUpDbContext>();
 
             services.AddControllersWithViews();
+
+            services.AddTransient<IStatisticsService, StatisticsService>();
+            services.AddTransient<ICompanyService, CompanyService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

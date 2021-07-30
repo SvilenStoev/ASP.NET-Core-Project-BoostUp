@@ -1,6 +1,6 @@
-﻿namespace BoostUp.Models.Companies
+﻿namespace BoostUp.Services.Companies
 {
-    public class CompanyIndustryViewModel
+    public class CompanyIndustryServiceModel
     {
         public int Id { get; init; }
 

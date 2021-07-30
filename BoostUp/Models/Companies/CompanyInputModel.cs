@@ -5,7 +5,7 @@
     using System.ComponentModel.DataAnnotations;
 
     using BoostUp.Models.Addresses;
-
+    using BoostUp.Services.Companies;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
 
     using static Data.DataConstants.Company;
@@ -39,7 +39,7 @@
         public int IndustryId { get; init; }
 
         [BindNever]
-        public IEnumerable<CompanyIndustryViewModel> Industries { get; set; }
+        public IEnumerable<CompanyIndustryServiceModel> Industries { get; set; }
 
         public int CategoryId { get; init; }
 

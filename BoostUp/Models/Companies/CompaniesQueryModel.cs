@@ -1,5 +1,6 @@
 ﻿namespace BoostUp.Models.Companies
 {
+    using BoostUp.Services.Companies;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
@@ -14,7 +15,7 @@
         [Display(Name = "Filter by industry")]
         public int IndustryId { get; init; }
 
-        public IEnumerable<CompanyIndustryViewModel> Industries { get; set; }
+        public IEnumerable<CompanyIndustryServiceModel> Industries { get; set; }
 
         [Display(Name = "Search by name or year of establishment")]
         public string SearchTerm { get; init; }
@@ -26,6 +27,6 @@
 
         public CompanySorting Sorting { get; init; }
 
-        public IEnumerable<CompanyViewModel> Companies { get; set; }
+        public IEnumerable<CompanyServiceModel> Companies { get; set; }
     }
 }

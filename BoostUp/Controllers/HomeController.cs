@@ -1,31 +1,29 @@
 ﻿namespace BoostUp.Controllers
 {
     using System.Diagnostics;
-    using System.Linq;
-    using BoostUp.Data;
+    using Microsoft.AspNetCore.Mvc;
+
     using BoostUp.Models;
     using BoostUp.Models.Home;
-    using Microsoft.AspNetCore.Mvc;
+    using BoostUp.Services.Statistics;
 
     public class HomeController : Controller
     {
-        private readonly BoostUpDbContext data;
+        private readonly IStatisticsService statistics;
 
-        public HomeController(BoostUpDbContext data) => this.data = data;
+        public HomeController(IStatisticsService statistics) 
+            => this.statistics = statistics;
 
         public IActionResult Index()
         {
-            var totalCompanies = this.data.Companies.Count();
-            var totalJobs = this.data.Jobs.Count();
-            var totalUsers = this.data.Users.Count();
-            var totalRecruiters = this.data.Recruiters.Count();
+            var totalStatistics = this.statistics.Total();
 
             return View(new IndexViewModel
             {
-                TotalCompanies = totalCompanies,
-                TotalJobs = totalJobs,
-                TotalUsers = totalUsers,
-                TotalRecruiters = totalRecruiters
+                TotalCompanies = totalStatistics.TotalCompanies,
+                TotalJobs = totalStatistics.TotalJobs,
+                TotalUsers = totalStatistics.TotalUsers,
+                TotalRecruiters = totalStatistics.TotalRecruiters
             });
         }
 
