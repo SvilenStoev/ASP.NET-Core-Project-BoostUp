@@ -23,5 +23,7 @@
         public string CategoryName { get; set; }
 
         public string IndustryName { get; set; }
+
+        public int JobsCount { get; set;  }
     }
 }

@@ -85,6 +85,11 @@
         {
             var jobsQuery = this.data.Jobs.AsQueryable();
 
+            if (query.CompanyId > 0)
+            {
+                jobsQuery = jobsQuery.Where(j => j.CompanyId == query.CompanyId);
+            }
+
             if (!string.IsNullOrWhiteSpace(query.Country))
             {
                 jobsQuery = jobsQuery.Where(j => j.Address.Country == query.Country);

@@ -152,6 +152,7 @@
                     AddressText = c.Address.AddressText,
                     CategoryName = c.Category.Value,
                     IndustryName = c.Industry.Value,
+                    JobsCount = c.Jobs.Count()
                 })
                 .FirstOrDefault();
 

@@ -21,6 +21,7 @@
         public string LastName { get; set; }
 
         [EmailAddress]
+        [Display(Name = "Email for receiving CVs")]
         [Required(ErrorMessage = "{0} is required.")]
         public string Email { get; set; }
 

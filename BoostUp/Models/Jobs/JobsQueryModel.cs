@@ -26,6 +26,8 @@
 
         public JobSorting Sorting { get; set; }
 
+        public int CompanyId { get; set; }
+
         public IEnumerable<JobViewModel> Jobs { get; set; }
     }
 }
