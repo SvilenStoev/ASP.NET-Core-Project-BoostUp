@@ -5,7 +5,7 @@
     using System.ComponentModel.DataAnnotations;
 
     using BoostUp.Models.Addresses;
-    using BoostUp.Services.Companies;
+    using BoostUp.Services.Companies.Models;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
 
     using static Data.DataConstants.Company;

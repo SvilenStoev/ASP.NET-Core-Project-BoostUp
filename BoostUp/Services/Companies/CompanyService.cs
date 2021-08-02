@@ -5,6 +5,7 @@
 
     using BoostUp.Data;
     using BoostUp.Models.Companies;
+    using BoostUp.Services.Companies.Models;
 
     public class CompanyService : ICompanyService
     {
@@ -69,9 +70,9 @@
 
             return new CompanyQueryServiceModel
             {
-                TotalCompanies = totalCompanies,
-                CurrentPage = currentPage,
                 Companies = companies,
+                CurrentPage = currentPage,
+                TotalCompanies = totalCompanies,
             };
         }
 

@@ -1,12 +1,11 @@
-﻿namespace BoostUp.Models.Jobs
+﻿namespace BoostUp.Services.Jobs.Models
 {
-    using BoostUp.Data.Models;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class JobViewModel
+    public class JobServiceModel
     {
         public int Id { get; init; }
 
@@ -17,7 +16,7 @@
         public string EmploymentType { get; set; }
 
         public int? SalaryRangeFrom { get; set; }
-        
+
         public int? SalaryRangeTo { get; set; }
 
         public string AddressCountry { get; set; }
@@ -27,5 +26,6 @@
         public string CompanyName { get; set; }
 
         public string CompanyLogoUrl { get; set; }
+
     }
 }

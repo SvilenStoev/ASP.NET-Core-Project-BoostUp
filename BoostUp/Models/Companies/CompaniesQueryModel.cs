@@ -1,6 +1,6 @@
 ﻿namespace BoostUp.Models.Companies
 {
-    using BoostUp.Services.Companies;
+    using BoostUp.Services.Companies.Models;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 

@@ -1,20 +1,26 @@
 ﻿namespace BoostUp.Controllers
 {
+    using System.Linq;
+
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
+
     using BoostUp.Data;
     using BoostUp.Data.Models;
-    using BoostUp.Infrastructure;
     using BoostUp.Models.Jobs;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    using BoostUp.Services.Jobs;
+    using BoostUp.Infrastructure;
 
     public class JobsController : Controller
     {
+        private readonly IJobService jobs;
         private readonly BoostUpDbContext data;
 
-        public JobsController(BoostUpDbContext data) => this.data = data;
+        public JobsController(IJobService jobs, BoostUpDbContext data)
+        {
+            this.jobs = jobs;
+            this.data = data;
+        }
 
         [Authorize]
         public IActionResult Add(int companyId)
@@ -26,7 +32,7 @@
 
             return View(new JobInputModel
             {
-                EmploymentTypes = this.GetEmploymentTypes()
+                EmploymentTypes = this.jobs.AllEmploymentTypes()
             });
         }
 
@@ -52,7 +58,7 @@
 
             if (!ModelState.IsValid)
             {
-                job.EmploymentTypes = this.GetEmploymentTypes();
+                job.EmploymentTypes = this.jobs.AllEmploymentTypes();
 
                 return View(job);
             }
@@ -81,76 +87,27 @@
             return RedirectToAction(nameof(Details));
         }
 
-        public IActionResult All(JobsQueryModel query)
+        public IActionResult All([FromQuery] JobsQueryModel query)
         {
-            var jobsQuery = this.data.Jobs.AsQueryable();
+            var jobsQuery = this.jobs.All(
+                query.CompanyId,
+                query.Country,
+                query.EmploymentTypeId,
+                query.SearchTerm,
+                query.Sorting,
+                query.CurrentPage,
+                JobsQueryModel.jobsPerPage);
 
-            if (query.CompanyId > 0)
-            {
-                jobsQuery = jobsQuery.Where(j => j.CompanyId == query.CompanyId);
-            }
+            var jobCountries = this.jobs.AllJobCountries();
+            var jobEmploymentTypes = this.jobs.AllEmploymentTypes();
 
-            if (!string.IsNullOrWhiteSpace(query.Country))
-            {
-                jobsQuery = jobsQuery.Where(j => j.Address.Country == query.Country);
-            }
-
-            if (query.EmploymentTypeId > 0)
-            {
-                jobsQuery = jobsQuery.Where(j => j.EmploymentType.Id == query.EmploymentTypeId);
-            }
-
-            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
-            {
-                jobsQuery = jobsQuery.Where(j =>
-                    j.Address.City.ToLower().Contains(query.SearchTerm.ToLower()) ||
-                    j.JobTitle.ToLower().Contains(query.SearchTerm.ToLower()));
-            }
-
-            jobsQuery = query.Sorting switch
-            {
-                JobSorting.DateCreated => jobsQuery.OrderByDescending(j => j.Id),
-                JobSorting.Salary => jobsQuery.OrderByDescending(j => j.SalaryRangeFrom),
-                JobSorting.JobTitle => jobsQuery.OrderBy(j => j.JobTitle),
-                _ => jobsQuery.OrderByDescending(j => j.Id)
-            };
-
-            var jobs = jobsQuery
-                .Skip((query.CurrentPage - 1) * JobsQueryModel.jobsPerPage)
-                .Take(JobsQueryModel.jobsPerPage)
-                .Select(j => new JobViewModel
-                {
-                    Id = j.Id,
-                    JobTitle = j.JobTitle,
-                    EmploymentType = j.EmploymentType.Value,
-                    SalaryRangeFrom = j.SalaryRangeFrom,
-                    SalaryRangeTo = j.SalaryRangeTo,
-                    CompanyName = j.Company.Name,
-                    AddressCountry = j.Address.Country,
-                    AddressCity = j.Address.City,
-                    CompanyLogoUrl = j.Company.LogoUrl,
-                    RelativeTime = CalculateRelativeTime(j.CreatedOn)
-                })
-                .ToList();
-
-            var jobCountries = this.data
-                .Jobs
-                .Select(j => j.Address.Country)
-                .OrderBy(c => c)
-                .Distinct()
-                .ToList();
-
-            var jobEmploymentTypes = GetEmploymentTypes();
-            var totalJobs = jobsQuery.Count();
-
-            query.Jobs = jobs;
+            query.Jobs = jobsQuery.Jobs;
+            query.TotalJobs = jobsQuery.TotalJobs;
             query.Countries = jobCountries;
             query.EmploymentTypes = jobEmploymentTypes;
-            query.TotalJobs = totalJobs;
 
             return View(query);
         }
-
 
         public IActionResult Details() => View();
 
@@ -158,73 +115,5 @@
             => this.data
             .Recruiters
             .Any(r => r.UserId == this.User.GetId());
-
-
-        private IEnumerable<JobEmploymentTypeViewModel> GetEmploymentTypes()
-         => this.data
-         .EmploymentTypes
-         .Select(et => new JobEmploymentTypeViewModel
-         {
-             Id = et.Id,
-             Value = et.Value
-         })
-         .ToList();
-
-        private static string CalculateRelativeTime(DateTime createdOn)
-        {
-            int SECOND = 1;
-            int MINUTE = 60 * SECOND;
-            int HOUR = 60 * MINUTE;
-            int DAY = 24 * HOUR;
-            int MONTH = 30 * DAY;
-
-            var ts = new TimeSpan(DateTime.UtcNow.Ticks - createdOn.Ticks);
-            double seconds = Math.Abs(ts.TotalSeconds);
-
-            var relativeTime = "";
-
-            if (seconds < 1 * MINUTE)
-            {
-                relativeTime = ts.Seconds == 1 ? "one second ago" : ts.Seconds + " seconds ago";
-            }
-            else if (seconds < 2 * MINUTE)
-            {
-                relativeTime = "1 minute ago";
-
-            }
-            else if (seconds < 60 * MINUTE)
-            {
-                relativeTime = ts.Minutes + " minutes ago";
-            }
-            else if (seconds < 90 * MINUTE)
-            {
-                relativeTime = "1 hour ago";
-            }
-            else if (seconds < 24 * HOUR)
-            {
-                relativeTime = ts.Hours + " hours ago";
-            }
-            else if (seconds < 48 * HOUR)
-            {
-                relativeTime = "yesterday";
-            }
-            else if (seconds < 30 * DAY)
-            {
-                relativeTime = ts.Days + " days ago";
-            }
-            else if (seconds < 12 * MONTH)
-            {
-                int months = Convert.ToInt32(Math.Floor((double)ts.Days / 30));
-
-                relativeTime = months <= 1 ? "one month ago" : months + " months ago";
-            }
-            else
-            {
-                int years = Convert.ToInt32(Math.Floor((double)ts.Days / 365));
-                relativeTime = years <= 1 ? "one year ago" : years + " years ago";
-            }
-
-            return relativeTime;
-        }
     }
 }

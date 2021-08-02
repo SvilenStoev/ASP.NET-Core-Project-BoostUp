@@ -1,6 +1,6 @@
-﻿namespace BoostUp.Models.Jobs
+﻿namespace BoostUp.Services.Jobs.Models
 {
-    public class JobEmploymentTypeViewModel
+    public class JobEmploymentTypeServiceModel
     {
         public int Id { get; init; }
 

@@ -1,8 +1,10 @@
-﻿using BoostUp.Models.Companies;
-using System.Collections.Generic;
-
-namespace BoostUp.Services.Companies
+﻿namespace BoostUp.Services.Companies
 {
+    using System.Collections.Generic;
+
+    using BoostUp.Models.Companies;
+    using BoostUp.Services.Companies.Models;
+
     public interface ICompanyService
     {
         CompanyQueryServiceModel All(

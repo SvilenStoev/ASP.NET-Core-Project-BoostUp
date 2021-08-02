@@ -1,11 +1,12 @@
 ﻿namespace BoostUp.Models.Jobs
 {
-    using BoostUp.Data.Models;
-    using BoostUp.Models.Addresses;
-    using Microsoft.AspNetCore.Mvc.ModelBinding;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
+    using BoostUp.Models.Addresses;
+    using BoostUp.Services.Jobs.Models;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
 
     using static Data.DataConstants.Job;
 
@@ -35,6 +36,6 @@
         public int EmploymentTypeId { get; init; }
 
         [BindNever]
-        public IEnumerable<JobEmploymentTypeViewModel> EmploymentTypes { get; set; }
+        public IEnumerable<JobEmploymentTypeServiceModel> EmploymentTypes { get; set; }
     }
 }

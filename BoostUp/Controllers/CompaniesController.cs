@@ -9,6 +9,7 @@
     using BoostUp.Models.Companies;
     using Microsoft.AspNetCore.Authorization;
     using BoostUp.Services.Companies;
+    using BoostUp.Services.Companies.Models;
 
     public class CompaniesController : Controller
     {
@@ -88,9 +89,8 @@
 
             var companyCountries = this.companies.AllCompanyCountries();
             var companyIndustries = this.companies.AllCompanyIndustries();
-            var totalCompanies = companiesQuery.TotalCompanies;
 
-            query.TotalCompanies = totalCompanies;
+            query.TotalCompanies = companiesQuery.TotalCompanies;
             query.Companies = companiesQuery.Companies;
             query.Industries = companyIndustries;
             query.Countries = companyCountries;

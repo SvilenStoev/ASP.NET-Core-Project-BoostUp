@@ -12,6 +12,8 @@ namespace BoostUp
     using BoostUp.Infrastructure;
     using BoostUp.Services.Statistics;
     using BoostUp.Services.Companies;
+    using Microsoft.AspNetCore.Mvc;
+    using BoostUp.Services.Jobs;
 
     public class Startup
     {
@@ -38,10 +40,14 @@ namespace BoostUp
                 })
                 .AddEntityFrameworkStores<BoostUpDbContext>();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+            });
 
             services.AddTransient<IStatisticsService, StatisticsService>();
             services.AddTransient<ICompanyService, CompanyService>();
+            services.AddTransient<IJobService, JobService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

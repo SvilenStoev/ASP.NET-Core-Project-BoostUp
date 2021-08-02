@@ -1,4 +1,4 @@
-﻿namespace BoostUp.Services.Companies
+﻿namespace BoostUp.Services.Companies.Models
 {
     using System.Collections.Generic;
 
