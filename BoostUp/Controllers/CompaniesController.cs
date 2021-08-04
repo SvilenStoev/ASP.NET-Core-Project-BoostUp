@@ -14,21 +14,17 @@
     public class CompaniesController : Controller
     {
         private readonly ICompanyService companies;
-        private readonly BoostUpDbContext data;
 
-        public CompaniesController(ICompanyService companies, BoostUpDbContext data)
-        {
-            this.companies = companies;
-            this.data = data;
-        }
+        public CompaniesController(ICompanyService companies) 
+            => this.companies = companies;
 
         [Authorize]
         public IActionResult Add()
         {
             return View(new CompanyInputModel
             {
-                Categories = this.GetCompanyCategories(),
-                Industries = this.GetCompanyIndustries()
+                Categories = this.companies.AllCategories(),
+                Industries = this.companies.AllIndustries()
             });
         }
 
@@ -36,43 +32,34 @@
         [Authorize]
         public IActionResult Add(CompanyInputModel company)
         {
-            if (!this.data.Categories.Any(c => c.Id == company.CategoryId))
+            if (!this.companies.CategoryExists(company.CategoryId))
             {
                 this.ModelState.AddModelError(nameof(company.CategoryId), "Category does not exist.");
             }
-            else if (!this.data.Industries.Any(i => i.Id == company.IndustryId))
+            else if (!this.companies.IndustryExists(company.IndustryId))
             {
                 this.ModelState.AddModelError(nameof(company.IndustryId), "Industry does not exist.");
             }
 
             if (!ModelState.IsValid)
             {
-                company.Categories = this.GetCompanyCategories();
-                company.Industries = this.GetCompanyIndustries();
+                company.Categories = this.companies.AllCategories();
+                company.Industries = this.companies.AllIndustries();
 
                 return View(company);
             }
 
-            var companyToAdd = new Company
-            {
-                Name = company.Name,
-                Founded = company.Founded,
-                Overview = company.Overview,
-                IndustryId = company.IndustryId,
-                CategoryId = company.CategoryId,
-                Address = new Address
-                {
-                    Country = company.Address.Country,
-                    City = company.Address.City,
-                    AddressText = company.Address.AddressText
-                },
-                LogoUrl = company.LogoUrl,
-                WebsiteUrl = company.WebsiteUrl
-            };
-
-            this.data.Companies.Add(companyToAdd);
-
-            this.data.SaveChanges();
+            int companyId = this.companies.Create(
+                company.Name,
+                company.Founded,
+                company.Overview,
+                company.IndustryId,
+                company.CategoryId,
+                company.Address.Country,
+                company.Address.City,
+                company.Address.AddressText,
+                company.LogoUrl,
+                company.WebsiteUrl);
 
             return RedirectToAction(nameof(All));
         }
@@ -87,8 +74,8 @@
                 query.CurrentPage,
                 CompaniesQueryModel.companiesPerPage);
 
-            var companyCountries = this.companies.AllCompanyCountries();
-            var companyIndustries = this.companies.AllCompanyIndustries();
+            var companyCountries = this.companies.AllCountries();
+            var companyIndustries = this.companies.AllIndustries();
 
             query.TotalCompanies = companiesQuery.TotalCompanies;
             query.Companies = companiesQuery.Companies;
@@ -98,27 +85,9 @@
             return View(query);
         }
 
-        public IActionResult Details(int companyId)
+        public IActionResult Details(int id)
         {
-            var company = this.data
-                .Companies
-                .Where(c => c.Id == companyId)
-                .Select(c => new CompanyDetailsViewModel
-                {
-                    CompanyId = companyId,
-                    Name = c.Name,
-                    Founded = c.Founded,
-                    LogoUrl = c.LogoUrl,
-                    WebsiteUrl = c.WebsiteUrl,
-                    Overview = c.Overview,
-                    AddressCountry = c.Address.Country,
-                    AddressCity = c.Address.City,
-                    AddressText = c.Address.AddressText,
-                    CategoryName = c.Category.Value,
-                    IndustryName = c.Industry.Value,
-                    JobsCount = c.Jobs.Count()
-                })
-                .FirstOrDefault();
+            var company = this.companies.Details(id);
 
             if (company == null)
             {
@@ -127,25 +96,5 @@
 
             return View(company);
         }
-
-        private IEnumerable<CompanyIndustryServiceModel> GetCompanyIndustries()
-            => this.data
-            .Industries
-            .Select(i => new CompanyIndustryServiceModel
-            {
-                Id = i.Id,
-                Value = i.Value
-            })
-            .ToList();
-
-        private IEnumerable<CompanyCategoryViewModel> GetCompanyCategories()
-           => this.data
-           .Categories
-           .Select(i => new CompanyCategoryViewModel
-           {
-               Id = i.Id,
-               Value = i.Value
-           })
-           .ToList();
     }
 }

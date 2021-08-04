@@ -6,6 +6,7 @@
     using BoostUp.Data;
     using BoostUp.Models.Companies;
     using BoostUp.Services.Companies.Models;
+    using BoostUp.Data.Models;
 
     public class CompanyService : ICompanyService
     {
@@ -76,7 +77,65 @@
             };
         }
 
-        public IEnumerable<string> AllCompanyCountries()
+        public int Create(
+           string name,
+           int? founded,
+           string overview,
+           int industryId,
+           int categoryId,
+           string country,
+           string city,
+           string addressText,
+           string logoUrl,
+           string websiteUrl)
+        {
+            var companyToAdd = new Company
+            {
+                Name = name,
+                Founded = founded,
+                Overview = overview,
+                IndustryId = industryId,
+                CategoryId = categoryId,
+                Address = new Address
+                {
+                    Country = country,
+                    City = city,
+                    AddressText = addressText
+                },
+                LogoUrl = logoUrl,
+                WebsiteUrl = websiteUrl
+            };
+
+            this.data.Companies.Add(companyToAdd);
+
+            this.data.SaveChanges();
+
+            return companyToAdd.Id;
+        }
+
+        public CompanyDetailsServiceModel Details(int id)
+        => this.data
+            .Companies
+            .Where(c => c.Id == id)
+            .Select(c => new CompanyDetailsServiceModel
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Founded = c.Founded,
+                LogoUrl = c.LogoUrl,
+                WebsiteUrl = c.WebsiteUrl,
+                Overview = c.Overview,
+                AddressCountry = c.Address.Country,
+                AddressCity = c.Address.City,
+                AddressText = c.Address.AddressText,
+                CategoryName = c.Category.Value,
+                IndustryName = c.Industry.Value,
+                JobsCount = c.Jobs.Count()
+            })
+            .ToList()
+            .FirstOrDefault();
+
+        public IEnumerable<string> AllCountries()
             => this.data
                 .Companies
                 .Select(c => c.Address.Country)
@@ -84,14 +143,34 @@
                 .Distinct()
                 .ToList();
 
-        public IEnumerable<CompanyIndustryServiceModel> AllCompanyIndustries()
+        public IEnumerable<CompanyIndustryServiceModel> AllIndustries()
+              => this.data
+                  .Industries
+                  .Select(i => new CompanyIndustryServiceModel
+                  {
+                      Id = i.Id,
+                      Value = i.Value
+                  })
+                  .ToList();
+
+        public IEnumerable<CompanyCategoryServiceModel> AllCategories()
+               => this.data
+                   .Categories
+                   .Select(c => new CompanyCategoryServiceModel
+                   {
+                       Id = c.Id,
+                       Value = c.Value
+                   })
+                   .ToList();
+
+        public bool IndustryExists(int industryId)
+           => this.data
+           .Industries
+           .Any(i => i.Id == industryId);
+
+        public bool CategoryExists(int categoryId)
           => this.data
-          .Industries
-          .Select(i => new CompanyIndustryServiceModel
-          {
-              Id = i.Id,
-              Value = i.Value
-          })
-          .ToList();
+          .Categories
+          .Any(i => i.Id == categoryId);
     }
 }

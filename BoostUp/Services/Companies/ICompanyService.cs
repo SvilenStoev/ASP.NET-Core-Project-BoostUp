@@ -15,8 +15,28 @@
             int currentPage,
             int companiesPerPage);
 
-        IEnumerable<string> AllCompanyCountries();
+        int Create(
+            string name,
+            int? founded,
+            string overview,
+            int IndustryId,
+            int CategoryId,
+            string country,
+            string city,
+            string addressText,
+            string logoUrl,
+            string WebsiteUrl);
 
-        IEnumerable<CompanyIndustryServiceModel> AllCompanyIndustries();
+        CompanyDetailsServiceModel Details(int id);
+
+        IEnumerable<string> AllCountries();
+
+        IEnumerable<CompanyIndustryServiceModel> AllIndustries();
+
+        IEnumerable<CompanyCategoryServiceModel> AllCategories();
+
+        bool CategoryExists(int categoryId);
+
+        bool IndustryExists(int industryId);
     }
 }

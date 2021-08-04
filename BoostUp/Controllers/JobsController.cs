@@ -1,31 +1,29 @@
 ﻿namespace BoostUp.Controllers
 {
-    using System.Linq;
-
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
 
-    using BoostUp.Data;
-    using BoostUp.Data.Models;
     using BoostUp.Models.Jobs;
     using BoostUp.Services.Jobs;
     using BoostUp.Infrastructure;
+    using BoostUp.Models.Addresses;
+    using BoostUp.Services.Recruiters;
 
     public class JobsController : Controller
     {
         private readonly IJobService jobs;
-        private readonly BoostUpDbContext data;
+        private readonly IRecruiterService recruiters;
 
-        public JobsController(IJobService jobs, BoostUpDbContext data)
+        public JobsController(IJobService jobs, IRecruiterService recruiters)
         {
             this.jobs = jobs;
-            this.data = data;
+            this.recruiters = recruiters;
         }
 
         [Authorize]
         public IActionResult Add(int companyId)
         {
-            if (!this.UserIsRecruiter())
+            if (!this.recruiters.IsRecruiter(this.User.GetId()))
             {
                 return RedirectToAction(nameof(RecruitersController.Become), "Recruiters", new { companyId = companyId });
             }
@@ -40,18 +38,14 @@
         [Authorize]
         public IActionResult Add(JobInputModel job)
         {
-            var recruiterId = this.data
-                .Recruiters
-                .Where(r => r.UserId == this.User.GetId())
-                .Select(r => r.Id)
-                .FirstOrDefault();
+            var recruiterId = this.recruiters.IdByUser(this.User.GetId());
 
             if (recruiterId == null)
             {
                 return RedirectToAction(nameof(RecruitersController.Become), "Recruiters", new { value = "companyId" });
             }
 
-            if (!this.data.EmploymentTypes.Any(et => et.Id == job.EmploymentTypeId))
+            if (!this.jobs.EmploymentTypeExists(job.EmploymentTypeId))
             {
                 this.ModelState.AddModelError(nameof(job.EmploymentTypeId), "Employment type does not exist.");
             }
@@ -63,26 +57,17 @@
                 return View(job);
             }
 
-            var jobToAdd = new Job
-            {
-                JobTitle = job.JobTitle,
-                EmploymentTypeId = job.EmploymentTypeId,
-                Address = new Address
-                {
-                    Country = job.Address.Country,
-                    City = job.Address.City,
-                    AddressText = job.Address.AddressText
-                },
-                SalaryRangeFrom = job.SalaryRangeFrom,
-                SalaryRangeTo = job.SalaryRangeTo,
-                Description = job.Description,
-                CompanyId = job.CompanyId,
-                RecruiterId = recruiterId
-            };
-
-            this.data.Jobs.Add(jobToAdd);
-
-            this.data.SaveChanges();
+            int jobId = this.jobs.Create(
+                job.JobTitle,
+                job.Address.Country,
+                job.Address.City,
+                job.Address.AddressText,
+                job.Description,
+                recruiterId,
+                job.EmploymentTypeId,
+                job.SalaryRangeFrom,
+                job.SalaryRangeTo,
+                job.CompanyId);
 
             return RedirectToAction(nameof(Details));
         }
@@ -98,7 +83,7 @@
                 query.CurrentPage,
                 JobsQueryModel.jobsPerPage);
 
-            var jobCountries = this.jobs.AllJobCountries();
+            var jobCountries = this.jobs.AllCountries();
             var jobEmploymentTypes = this.jobs.AllEmploymentTypes();
 
             query.Jobs = jobsQuery.Jobs;
@@ -109,11 +94,98 @@
             return View(query);
         }
 
-        public IActionResult Details() => View();
+        [Authorize]
+        public IActionResult Mine()
+        {
+            if (!this.recruiters.IsRecruiter(this.User.GetId()))
+            {
+                return RedirectToAction(nameof(RecruitersController.Become), "Recruiters");
+            }
 
-        private bool UserIsRecruiter()
-            => this.data
-            .Recruiters
-            .Any(r => r.UserId == this.User.GetId());
+            var userId = this.User.GetId();
+
+            var myJobs = this.jobs.ByUser(userId);
+
+            return View(myJobs);
+        }
+
+        [Authorize]
+        public IActionResult Edit(int id)
+        {
+            var userId = this.User.GetId();
+
+            if (!this.recruiters.IsRecruiter(userId))
+            {
+                return RedirectToAction(nameof(RecruitersController.Become), "Recruiters");
+            }
+
+            var job = this.jobs.Details(id);
+
+            if (job.UserId != userId)
+            {
+                return Unauthorized();
+            }
+
+            return View(new JobInputModel
+            {
+                JobTitle = job.JobTitle,
+                Address = new AddressInputModel
+                {
+                    Country = job.AddressCountry,
+                    City = job.AddressCity,
+                    AddressText = job.AddressText,
+                },
+                Description = job.Description,
+                SalaryRangeFrom = job.SalaryRangeFrom,
+                SalaryRangeTo = job.SalaryRangeTo,
+                EmploymentTypeId = job.EmploymentTypeId,
+                EmploymentTypes = this.jobs.AllEmploymentTypes()
+            });
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Edit(int id, JobInputModel job)
+        {
+            var recruiterId = this.recruiters.IdByUser(this.User.GetId());
+
+            if (recruiterId == null)
+            {
+                return RedirectToAction(nameof(RecruitersController.Become), "Recruiters", new { value = "companyId" });
+            }
+
+            if (!this.jobs.EmploymentTypeExists(job.EmploymentTypeId))
+            {
+                this.ModelState.AddModelError(nameof(job.EmploymentTypeId), "Employment type does not exist.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                job.EmploymentTypes = this.jobs.AllEmploymentTypes();
+
+                return View(job);
+            }
+
+            if (!this.jobs.IsByRecruiter(id, recruiterId))
+            {
+                return BadRequest();
+            }
+
+            this.jobs.Edit(
+                  id,
+                  job.JobTitle,
+                  job.Address.Country,
+                  job.Address.City,
+                  job.Address.AddressText,
+                  job.Description,
+                  job.EmploymentTypeId,
+                  job.SalaryRangeFrom,
+                  job.SalaryRangeTo,
+                  job.CompanyId);
+
+            return RedirectToAction(nameof(All));
+        }
+
+        public IActionResult Details() => View();
     }
 }

@@ -132,40 +132,6 @@ else if (Model.CompanyId > 0)
     <h3 class="text-center mt-2 mb-5">@Model.TotalJobs @(Model.TotalJobs == 1 ? "job" : "jobs") found for @Model.Jobs.Select(j => j.CompanyName).FirstOrDefault():</h3>
 }
 
-<div class="row">
-    @foreach (var job in Model.Jobs)
-    {
-        <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="card bg-light mb-3 shadow" style="max-width: 18rem;">
-                <div class="card-body">
-                    <div class="mb-2">
-                        <a asp-action="Details" asp-controller="Jobs" asp-route-id="@job.Id">
-                            @if (job.CompanyLogoUrl != null)
-                            {
-                                <img class="rounded-circle mb-2 img-thumbnail shadow" width="100" height="100" src="@job.CompanyLogoUrl" alt="@job.CompanyName - Logo">
-                            }
-                            else
-                            {
-                                <img class="rounded-circle mb-2 img-thumbnail shadow" width="100" height="100" src="~/default pictures/Company Logo.jpg" alt="@job.CompanyName - Logo">
-                            }
-                        </a>
-                    </div>
-                    <h5 class="card-title mb-1"><b>@job.JobTitle</b></h5>
-                    <h6 class="card-text mb-3">@job.EmploymentType</h6>
-                    <h6 class="card-text mb-1">@job.CompanyName</h6>
-                    <p class="card-text mb-3"><i>@job.AddressCity, @job.AddressCountry</i></p>
-                    @if (job.SalaryRangeFrom != null)
-                    {
-                        <h6 class="card-text mb-2">Salary: @job.SalaryRangeFrom @(job.SalaryRangeTo != null ? $"- {job.SalaryRangeTo}" : string.Empty)</h6>
-                    }
-                    <a asp-action="Details" asp-controller="Jobs" asp-route-jobId="@job.Id" class="btn btn-outline-primary shadow mt-2">Learn more</a>
-                </div>
-                <div class="card-footer text-muted">
-                    <i>Posted @job.RelativeTime</i>
-                </div>
-            </div>
-        </div>
-    }
-</div>
+<partial name="_JobsPartial" model="@Model.Jobs" />
 
 <hr />

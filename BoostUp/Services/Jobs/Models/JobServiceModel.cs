@@ -26,6 +26,5 @@
         public string CompanyName { get; set; }
 
         public string CompanyLogoUrl { get; set; }
-
     }
 }

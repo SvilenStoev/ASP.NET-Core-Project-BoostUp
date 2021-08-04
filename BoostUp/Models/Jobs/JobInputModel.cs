@@ -36,6 +36,9 @@
         public int EmploymentTypeId { get; init; }
 
         [BindNever]
+        public string EmploymentType { get; init; }
+
+        [BindNever]
         public IEnumerable<JobEmploymentTypeServiceModel> EmploymentTypes { get; set; }
     }
 }

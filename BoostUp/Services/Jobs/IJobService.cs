@@ -6,7 +6,7 @@
 
     public interface IJobService
     {
-        public JobQueryServiceModel All(
+        JobQueryServiceModel All(
             int companyId,
             string Country,
             int EmploymentTypeId,
@@ -15,8 +15,40 @@
             int currentPage,
             int companiesPerPage);
 
-        public IEnumerable<string> AllJobCountries();
+        int Create(
+            string jobTitle,
+            string country,
+            string city,
+            string addressText,
+            string description,
+            string recruiterId,
+            int employmentTypeId,
+            int? salaryRangeFrom,
+            int? salaryRangeTo,
+            int companyId);
 
-        public IEnumerable<JobEmploymentTypeServiceModel> AllEmploymentTypes();
+        bool Edit(
+            int jobId,
+            string jobTitle,
+            string country,
+            string city,
+            string addressText,
+            string description,
+            int employmentTypeId,
+            int? salaryRangeFrom,
+            int? salaryRangeTo,
+            int companyId);
+
+        JobDetailsServiceModel Details(int jobId);
+
+        IEnumerable<JobServiceModel> ByUser(string userId);
+
+        IEnumerable<string> AllCountries();
+
+        IEnumerable<JobEmploymentTypeServiceModel> AllEmploymentTypes();
+
+        bool IsByRecruiter(int jobId, string userId);
+
+        bool EmploymentTypeExists(int employmentTypeId);
     }
 }

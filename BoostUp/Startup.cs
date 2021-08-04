@@ -1,5 +1,6 @@
 namespace BoostUp
 {
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -10,10 +11,10 @@ namespace BoostUp
 
     using BoostUp.Data;
     using BoostUp.Infrastructure;
-    using BoostUp.Services.Statistics;
-    using BoostUp.Services.Companies;
-    using Microsoft.AspNetCore.Mvc;
     using BoostUp.Services.Jobs;
+    using BoostUp.Services.Companies;
+    using BoostUp.Services.Statistics;
+    using BoostUp.Services.Recruiters;
 
     public class Startup
     {
@@ -45,9 +46,10 @@ namespace BoostUp
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
             });
 
-            services.AddTransient<IStatisticsService, StatisticsService>();
-            services.AddTransient<ICompanyService, CompanyService>();
             services.AddTransient<IJobService, JobService>();
+            services.AddTransient<ICompanyService, CompanyService>();
+            services.AddTransient<IRecruiterService, RecruiterService>();
+            services.AddTransient<IStatisticsService, StatisticsService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

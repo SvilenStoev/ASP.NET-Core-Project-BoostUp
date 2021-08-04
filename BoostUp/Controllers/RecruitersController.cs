@@ -1,22 +1,29 @@
 ﻿namespace BoostUp.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
+
     using BoostUp.Data;
     using BoostUp.Data.Models;
     using BoostUp.Infrastructure;
     using BoostUp.Models.Recruiters;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using System.Linq;
+    using BoostUp.Services.Recruiters;
 
     public class RecruitersController : Controller
     {
-        private readonly BoostUpDbContext data;
+        private readonly IRecruiterService recruiters;
 
-        public RecruitersController(BoostUpDbContext data) => this.data = data;
+        public RecruitersController(IRecruiterService recruiters) 
+            => this.recruiters = recruiters;
 
         [Authorize]
         public IActionResult Become()
         {
+            if (this.recruiters.IsRecruiter(this.User.GetId()))
+            {
+                return BadRequest();
+            }
+
             return View();
         }
 
@@ -24,7 +31,7 @@
         [HttpPost]
         public IActionResult Become(RecruiterInputModel recruiter)
         {
-            if (UserIsRecruiter())
+            if (this.recruiters.IsRecruiter(this.User.GetId()))
             {
                 return BadRequest();
             }
@@ -34,23 +41,16 @@
                 return View(recruiter);
             }
 
-            var recruiterToAdd = new Recruiter
-            {
-                UserId = this.User.GetId(),
-                FirstName = recruiter.FirstName,
-                LastName = recruiter.LastName,
-                Email = recruiter.Email,
-                PhoneNumber = recruiter.PhoneNumber
-            };
+            var userId = this.User.GetId();
 
-            this.data.Recruiters.Add(recruiterToAdd);
-
-            this.data.SaveChanges();
+            this.recruiters.Create(
+                userId,
+                recruiter.FirstName,
+                recruiter.LastName,
+                recruiter.Email,
+                recruiter.PhoneNumber);
 
             return RedirectToAction("All", "Companies");
         }
-
-        private bool UserIsRecruiter()
-             => this.data.Recruiters.Any(r => r.UserId == this.User.GetId());
     }
 }

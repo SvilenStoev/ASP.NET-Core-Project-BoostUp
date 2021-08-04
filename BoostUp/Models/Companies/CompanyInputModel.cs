@@ -44,6 +44,6 @@
         public int CategoryId { get; init; }
 
         [BindNever]
-        public IEnumerable<CompanyCategoryViewModel> Categories { get; set; }
+        public IEnumerable<CompanyCategoryServiceModel> Categories { get; set; }
     }
 }

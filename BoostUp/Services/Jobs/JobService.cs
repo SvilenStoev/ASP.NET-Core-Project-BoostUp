@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using BoostUp.Data;
+    using BoostUp.Data.Models;
     using BoostUp.Models.Jobs;
     using BoostUp.Services.Jobs.Models;
 
@@ -55,23 +56,9 @@
                 _ => jobsQuery.OrderByDescending(j => j.Id)
             };
 
-            var jobs = jobsQuery
+            var jobs = GetJobs(jobsQuery
                 .Skip((currentPage - 1) * jobsPerPage)
-                .Take(jobsPerPage)
-                .Select(j => new JobServiceModel
-                {
-                    Id = j.Id,
-                    JobTitle = j.JobTitle,
-                    EmploymentType = j.EmploymentType.Value,
-                    SalaryRangeFrom = j.SalaryRangeFrom,
-                    SalaryRangeTo = j.SalaryRangeTo,
-                    CompanyName = j.Company.Name,
-                    AddressCountry = j.Address.Country,
-                    AddressCity = j.Address.City,
-                    CompanyLogoUrl = j.Company.LogoUrl,
-                    RelativeTime = CalculateRelativeTime(j.CreatedOn)
-                })
-                .ToList();
+                .Take(jobsPerPage));
 
             var totalJobs = jobsQuery.Count();
 
@@ -83,7 +70,104 @@
             };
         }
 
-        public IEnumerable<string> AllJobCountries()
+        public int Create(
+            string jobTitle,
+            string country,
+            string city,
+            string addressText,
+            string description,
+            string recruiterId,
+            int employmentTypeId,
+            int? salaryRangeFrom,
+            int? salaryRangeTo,
+            int companyId)
+        {
+            var jobToAdd = new Job
+            {
+                JobTitle = jobTitle,
+                Address = new Address
+                {
+                    Country = country,
+                    City = city,
+                    AddressText = addressText
+                },
+                Description = description,
+                RecruiterId = recruiterId,
+                EmploymentTypeId = employmentTypeId,
+                SalaryRangeFrom = salaryRangeFrom,
+                SalaryRangeTo = salaryRangeTo,
+                CompanyId = companyId,
+            };
+
+            this.data.Jobs.Add(jobToAdd);
+
+            this.data.SaveChanges();
+
+            return jobToAdd.Id;
+        }
+
+        public bool Edit(
+                int id,
+                string jobTitle,
+                string country,
+                string city,
+                string addressText,
+                string description,
+                int employmentTypeId,
+                int? salaryRangeFrom,
+                int? salaryRangeTo,
+                int companyId)
+        {
+            var job = this.data.Jobs.Find(id);
+
+            var jobAddress = this.data.Addresses.Find(job.AddressId);
+
+            if (job == null)
+            {
+                return false;
+            }
+
+            job.JobTitle = jobTitle;
+            jobAddress.Country = country;
+            jobAddress.City = city;
+            jobAddress.AddressText = addressText;
+            job.Description = description;
+            job.EmploymentTypeId = employmentTypeId;
+            job.SalaryRangeFrom = salaryRangeFrom;
+            job.SalaryRangeTo = salaryRangeTo;
+
+            this.data.SaveChanges();
+
+            return true;
+        }
+
+        public JobDetailsServiceModel Details(int id)
+            => this.data
+                .Jobs
+                .Where(j => j.Id == id)
+                .Select(j => new JobDetailsServiceModel
+                {
+                    Id = j.Id,
+                    JobTitle = j.JobTitle,
+                    AddressCountry = j.Address.Country,
+                    AddressCity = j.Address.City,
+                    AddressText = j.Address.AddressText,
+                    SalaryRangeFrom = j.SalaryRangeFrom,
+                    SalaryRangeTo = j.SalaryRangeTo,
+                    Description = j.Description,
+                    EmploymentTypeId = j.EmploymentType.Id,
+                    RecruiterId = j.RecruiterId,
+                    UserId = j.Recruiter.UserId,
+                })
+                .ToList()
+                .FirstOrDefault();
+
+        public IEnumerable<JobServiceModel> ByUser(string userId)
+            => GetJobs(this.data
+                .Jobs
+                .Where(j => j.Recruiter.UserId == userId));
+
+        public IEnumerable<string> AllCountries()
             => this.data
                 .Jobs
                 .Select(j => j.Address.Country)
@@ -157,5 +241,32 @@
 
             return relativeTime;
         }
+
+        private static IEnumerable<JobServiceModel> GetJobs(IQueryable<Job> jobQuery)
+            => jobQuery
+                .Select(j => new JobServiceModel
+                {
+                    Id = j.Id,
+                    JobTitle = j.JobTitle,
+                    EmploymentType = j.EmploymentType.Value,
+                    SalaryRangeFrom = j.SalaryRangeFrom,
+                    SalaryRangeTo = j.SalaryRangeTo,
+                    CompanyName = j.Company.Name,
+                    AddressCountry = j.Address.Country,
+                    AddressCity = j.Address.City,
+                    CompanyLogoUrl = j.Company.LogoUrl,
+                    RelativeTime = CalculateRelativeTime(j.CreatedOn)
+                })
+                .ToList();
+
+        public bool IsByRecruiter(int jobId, string recruiterId)
+            => this.data
+            .Jobs
+            .Any(j => j.Id == jobId && j.RecruiterId == recruiterId);
+
+        public bool EmploymentTypeExists(int employmentTypeId)
+            => this.data
+            .EmploymentTypes
+            .Any(et => et.Id == employmentTypeId);
     }
 }

@@ -1,13 +1,27 @@
 ﻿@using Microsoft.AspNetCore.Identity
+
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+@inject IRecruiterService Recruiters
 
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Recruiters" asp-action="Become">Become recruiter</a>
-        </li>
+        var userId = User.GetId();
+        var userIsRecruiter = Recruiters.IsRecruiter(userId);
+
+        if (userIsRecruiter)
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Jobs" asp-action="Mine">My jobs</a>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Recruiters" asp-action="Become">Become recruiter</a>
+            </li>
+        }
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Profile</a>
         </li>
