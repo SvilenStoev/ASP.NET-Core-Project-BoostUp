@@ -16,16 +16,12 @@
 
         public void Create(
             string userId,
-            string firstName, 
-            string lastName, 
             string email, 
             string phoneNumber)
         {
             var recruiterToAdd = new Recruiter
             {
                 UserId = userId,
-                FirstName = firstName,
-                LastName = lastName,
                 Email = email,
                 PhoneNumber = phoneNumber
             };

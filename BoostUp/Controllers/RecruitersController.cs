@@ -45,8 +45,6 @@
 
             this.recruiters.Create(
                 userId,
-                recruiter.FirstName,
-                recruiter.LastName,
                 recruiter.Email,
                 recruiter.PhoneNumber);
 

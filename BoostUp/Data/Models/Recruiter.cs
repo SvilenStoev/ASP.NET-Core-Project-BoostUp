@@ -13,14 +13,6 @@
         public string Id { get; init; } = Guid.NewGuid().ToString();
 
         [Required]
-        [MaxLength(NameMaxLength)]
-        public string FirstName { get; set; }
-
-        [Required]
-        [MaxLength(NameMaxLength)]
-        public string LastName { get; set; }
-
-        [Required]
         public string Email { get; set; }
 
         [MaxLength(PhoneNumberMaxLength)]

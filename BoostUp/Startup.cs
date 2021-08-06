@@ -15,6 +15,7 @@ namespace BoostUp
     using BoostUp.Services.Companies;
     using BoostUp.Services.Statistics;
     using BoostUp.Services.Recruiters;
+    using BoostUp.Data.Models;
 
     public class Startup
     {
@@ -32,13 +33,14 @@ namespace BoostUp
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services
-                .AddDefaultIdentity<IdentityUser>(options =>
+                .AddDefaultIdentity<User>(options =>
                 {
                     options.Password.RequireDigit = false;
                     options.Password.RequireLowercase = false;
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = false;
                 })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<BoostUpDbContext>();
 
             services.AddControllersWithViews(options =>

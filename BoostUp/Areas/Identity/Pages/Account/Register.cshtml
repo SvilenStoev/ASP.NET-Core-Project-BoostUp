@@ -1,0 +1,102 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="row mt-4">
+    <div class="offset-sm-0 col-sm-6 offset-md-0 col-md-6 offset-lg-1 col-lg-5">
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <h4 class="text-center">Your profile helps you discover new people and opportunities</h4>
+            <hr />
+            <div class="form-group">
+                <label asp-for="Input.Email" class="required"></label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Password" class="required"></label>
+                <input asp-for="Input.Password" class="form-control" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.ConfirmPassword" class="required"></label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.FirstName" class="required"></label>
+                <input asp-for="Input.FirstName" class="form-control" />
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.LastName"></label>
+                <input asp-for="Input.LastName" class="form-control" />
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Gender"></label>
+                <select asp-for="Input.Gender" class="form-control" asp-items="@Html.GetEnumSelectList<GenderType>()"></select>
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label asp-for="Input.Country" class="required"></label>
+                    <input asp-for="Input.Country" class="form-control shadow" placeholder="England, USA...">
+                    <span asp-validation-for="Input.Country" class="small text-danger"></span>
+                </div>
+                <div class="form-group col-6">
+                    <label asp-for="Input.City" class="required"></label>
+                    <input asp-for="Input.City" class="form-control shadow" placeholder="London, New York...">
+                    <span asp-validation-for="Input.City" class="small text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.DateOfBirth"></label>
+                <input asp-for="Input.DateOfBirth" class="form-control" />
+                <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
+            </div>
+            <div class="row justify-content-center"><button type="submit" class="btn justify-content-center btn-primary mt-2 mb-2">Register</button></div>
+        </form>
+    </div>
+    <div class="offset-sm-0 col-sm-6 offset-md-0 col-md-6 offset-lg-0 col-lg-5">
+        <div class="offset-lg-1 col-lg-10"><h4 class="text-center"><b>BoostUp</b> your professional community</h4></div>
+        <hr />
+        <div class="col text-center mt-5 mb-5"><img class="rounded-circle img-thumbnail text-center shadow" src="~/default pictures/Register Picture 0.png" alt="ManOnRocket" /></div>
+        <div class="col text-center"><img class="rounded-circle img-thumbnail text-center shadow" src="~/default pictures/Register Picture 1.jpg" alt="ManOnRocket" /></div>
+    </div>
+    @*<div class="col-md-6 col-md-offset-2">
+            <section>
+                <h4>Use another service to register.</h4>
+                <hr />
+                @{
+                    if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                    {
+                        <div>
+                            <p>
+                                There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                                for details on setting up this ASP.NET application to support logging in via external services.
+                            </p>
+                        </div>
+                    }
+                    else
+                    {
+                        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                            <div>
+                                <p>
+                                    @foreach (var provider in Model.ExternalLogins)
+                                    {
+                                        <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                    }
+                                </p>
+                            </div>
+                        </form>
+                    }
+                }
+            </section>
+        </div>*@
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

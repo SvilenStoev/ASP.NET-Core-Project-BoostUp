@@ -10,16 +10,6 @@
     {
         public string Id { get; init; }
 
-        [Display(Name = "First name")]
-        [Required(ErrorMessage = "{0} is required.")]
-        [StringLength(NameMaxLength, MinimumLength = NameMinLength, ErrorMessage = "{0} must be with a minimum length of {2} and a maximum length of {1}.")]
-        public string FirstName { get; set; }
-
-        [Display(Name = "Last name")]
-        [Required(ErrorMessage = "{0} is required.")]
-        [StringLength(NameMaxLength, MinimumLength = NameMinLength, ErrorMessage = "{0} must be with a minimum length of {2} and a maximum length of {1}.")]
-        public string LastName { get; set; }
-
         [EmailAddress]
         [Display(Name = "Email for receiving CVs")]
         [Required(ErrorMessage = "{0} is required.")]

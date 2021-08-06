@@ -7,7 +7,7 @@
 
     public class Address
     {
-        public int Id { get; set; }
+        public int Id { get; init; }
 
         [Required]
         [MaxLength(CityMaxLength)]
@@ -17,12 +17,13 @@
         [MaxLength(CountryMaxLength)]
         public string Country { get; set; }
 
-        [Required]
         [MaxLength(TextMaxLength)]
         public string AddressText { get; set; }
 
         public IEnumerable<Company> Companies { get; set; } = new List<Company>();
 
         public IEnumerable<Job> Jobs { get; set; } = new List<Job>();
+
+        public IEnumerable<User> Users { get; set; } = new List<User>();
     }
 }

@@ -20,7 +20,6 @@
         public string Country { get; init; }
 
         [Display(Name = "Address")]
-        [Required(ErrorMessage = "{0} is required.")]
         [StringLength(TextMaxLength, MinimumLength = TextMinLength, ErrorMessage = "{0} must be with a minimum length of {2} and a maximum length of {1}.")]
         public string AddressText { get; init; }
     }

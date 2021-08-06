@@ -5,7 +5,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-    public class BoostUpDbContext : IdentityDbContext
+    public class BoostUpDbContext : IdentityDbContext<User>
     {
         public BoostUpDbContext(DbContextOptions<BoostUpDbContext> options)
             : base(options)
@@ -25,6 +25,14 @@
         public DbSet<Recruiter> Recruiters { get; init; }
 
         public DbSet<EmploymentType> EmploymentTypes { get; init; }
+
+        public DbSet<Post> Posts { get; init; }
+
+        public DbSet<Comment> Comments { get; init; }
+
+        public DbSet<Image> Images { get; init; }
+
+        public DbSet<Friendship> Friendships { get; init; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -86,11 +94,38 @@
 
             builder
                 .Entity<Recruiter>()
-                .HasOne<IdentityUser>()
+                .HasOne<User>()
                 .WithOne()
                 .HasForeignKey<Recruiter>(r => r.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder
+                .Entity<User>()
+                .HasOne(u => u.Address)
+                .WithMany(a => a.Users)
+                .HasForeignKey(u => u.AddressId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .Entity<Post>()
+                .HasOne(p => p.FromUser)
+                .WithMany(u => u.OwnPosts)
+                .HasForeignKey(p => p.FromUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .Entity<Comment>()
+                .HasOne(c => c.FromUser)
+                .WithMany(u => u.OwnComments)
+                .HasForeignKey(c => c.FromUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .Entity<Comment>()
+                .HasOne(c => c.ToPost)
+                .WithMany(p => p.Comments)
+                .HasForeignKey(c => c.ToPostId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);
         }
