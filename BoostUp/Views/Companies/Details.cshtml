@@ -4,60 +4,72 @@
     ViewBag.Title = $"{Model.Name}: Details";
 }
 
-<div class="bg-white shadow rounded overflow-hidden">
-    <div class="card-header">
-        <div class="card bg-light mb-2 shadow" style="max-width: 14rem;">
-            <div class="card-header">
-                @if (Model.LogoUrl != null)
+<div class="offset-lg-1 col-lg-10">
+    <div class="bg-white shadow rounded overflow-hidden">
+        <div class="card-header">
+            <div class="card bg-light mb-2 shadow" style="max-width: 14rem;">
+                <div class="card-header">
+                    @if (Model.LogoUrl != null)
+                    {
+                        <img class="card-img-top rounded-circle mb-2 img-thumbnail" src="@Model.LogoUrl" alt="@Model.Name - Logo">
+                    }
+                    else
+                    {
+                        <img class="card-img-top rounded-circle mb-2 img-thumbnail" src="~/default pictures/Company Logo.jpg" alt="@Model.Name - Logo">
+                    }
+                </div>
+                <h5 class="card-title text-center mb-2"><b>@Model.Name</b></h5>
+                <h6 class="text-muted text-center">@Model.CategoryName</h6>
+            </div>
+            <div class="row">
+                <a asp-controller="Jobs" asp-action="All" asp-route-companyId="@Model.Id" class="btn btn-outline-primary m-2">
+                    <b>@Model.JobsCount @(Model.JobsCount == 1 ? "Job" : "Jobs")</b>
+                </a>
+                <a asp-controller="Employees" asp-action="All" asp-route-companyId="@Model.Id" class="btn btn-outline-primary m-2"><b>Employees</b></a>
+                @if (!User.IsAdmin())
                 {
-                    <img class="card-img-top rounded-circle mb-2 img-thumbnail" src="@Model.LogoUrl" alt="@Model.Name - Logo">
-                }
-                else
-                {
-                    <img class="card-img-top rounded-circle mb-2 img-thumbnail" src="~/default pictures/Company Logo.jpg" alt="@Model.Name - Logo">
+                    <a asp-controller="Jobs" asp-action="Add" asp-route-companyId="@Model.Id" class="btn btn-outline-primary m-2"><b>Post a job</b></a>
                 }
             </div>
-            <h5 class="card-title text-center mb-2"><b>@Model.Name</b></h5>
-            <h6 class="text-muted text-center">@Model.CategoryName</h6>
         </div>
-        <a asp-controller="Jobs" asp-action="All" asp-route-companyId="@Model.Id" class="btn btn-outline-primary m-2">
-            <b>@Model.JobsCount @(Model.JobsCount == 1 ? "Job" : "Jobs")</b>
-        </a>
-        <a asp-controller="Employees" asp-action="All" asp-route-companyId="@Model.Id" class="btn btn-outline-primary m-2"><b>Employees</b></a>
-        @if (!User.IsAdmin())
-        {
-            <a asp-controller="Jobs" asp-action="Add" asp-route-companyId="@Model.Id" class="btn btn-outline-primary m-2"><b>Post a job</b></a>
-        }
-    </div>
-    <div class="card-body">
-        <div id="accordion">
-            <div class="card mb-4">
-                <div class="card-header" id="headingOne">
-                    <h5 class="mb-0">
-                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            <h5><b>Overview</b></h5>
-                        </button>
-                    </h5>
-                </div>
-                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                    <div class="card-body">
-                        @Model.Overview
+        <div class="card-body">
+            <div id="accordion">
+                <div class="card mb-4">
+                    <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <h5><b>Overview</b></h5>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            @Model.Overview
+                        </div>
                     </div>
                 </div>
             </div>
+            @if (Model.WebsiteUrl != null)
+            {
+                <p class="card-text mb-2"><b>Website:</b> <a href="@Model.WebsiteUrl">@Model.WebsiteUrl</a></p>
+            }
+            <p class="card-text mb-2"><b>Industry:</b> @Model.IndustryName</p>
+            <p class="card-text mb-2"><b>Company size:</b> @Model.CategoryName</p>
+            <p class="card-text mb-2"><b>Location:</b> @Model.AddressCity, @Model.AddressCountry</p>
+            @if (Model.AddressText != null)
+            {
+                <p class="card-text mb-2"><b>Address:</b> @Model.AddressText</p>
+            }
+            <p class="card-text mb-4"><b>Founded:</b> @Model.Founded</p>
         </div>
-        @if (Model.WebsiteUrl != null)
-        {
-            <p class="card-text mb-2"><b>Website:</b> <a href="@Model.WebsiteUrl">@Model.WebsiteUrl</a></p>
-        }
-        <p class="card-text mb-2"><b>Industry:</b> @Model.IndustryName</p>
-        <p class="card-text mb-2"><b>Company size:</b> @Model.CategoryName</p>
-        <p class="card-text mb-2"><b>Location:</b> @Model.AddressCity, @Model.AddressCountry</p>
-        <p class="card-text mb-2"><b>Address:</b> @Model.AddressText</p>
-        <p class="card-text mb-4"><b>Founded:</b> @Model.Founded</p>
-        <a href="#" class="btn btn-outline-primary">Go somewhere</a>
-    </div>
-    <div class="card-footer text-muted">
-        2 days ago
+        <div class="card-footer text-muted">
+            @if (User.IsAdmin())
+            {
+                <div class="text-center">
+                    <a asp-action="Edit" asp-controller="Companies" asp-route-id="@Model.Id" class="btn btn-outline-warning shadow m-2">Edit</a>
+                    <a asp-action="Delete" asp-controller="Companies" asp-route-id="@Model.Id" class="btn btn-outline-danger shadow m-2">Delete</a>
+                </div>
+            }
+        </div>
     </div>
 </div>

@@ -10,12 +10,14 @@
     using Microsoft.AspNetCore.Authorization;
     using BoostUp.Services.Companies;
     using BoostUp.Services.Companies.Models;
+    using BoostUp.Infrastructure;
+    using BoostUp.Models.Addresses;
 
     public class CompaniesController : Controller
     {
         private readonly ICompanyService companies;
 
-        public CompaniesController(ICompanyService companies) 
+        public CompaniesController(ICompanyService companies)
             => this.companies = companies;
 
         [Authorize]
@@ -95,6 +97,78 @@
             }
 
             return View(company);
+        }
+
+        public IActionResult Edit(int id)
+        {
+            if (!this.User.IsAdmin())
+            {
+                return Unauthorized();
+            }
+
+            var company = this.companies.Details(id);
+
+            return View(new CompanyInputModel
+            {
+                Name = company.Name,
+                Founded = company.Founded,
+                Overview = company.Overview,
+                LogoUrl = company.LogoUrl,
+                WebsiteUrl = company.WebsiteUrl,
+                Address = new AddressInputModel
+                {
+                    Country = company.AddressCountry,
+                    City = company.AddressCity,
+                    AddressText = company.AddressText,
+                },
+                IndustryId = company.IndustryId,
+                Industries = this.companies.AllIndustries(),
+                CategoryId = company.CategoryId,
+                Categories = this.companies.AllCategories(),
+            });
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Edit(int id, CompanyInputModel company)
+        {
+            if (!this.User.IsAdmin())
+            {
+                return Unauthorized();
+            }
+
+            if (!this.companies.CategoryExists(company.CategoryId))
+            {
+                this.ModelState.AddModelError(nameof(company.CategoryId), "Category does not exist.");
+            }
+
+            if (!this.companies.IndustryExists(company.IndustryId))
+            {
+                this.ModelState.AddModelError(nameof(company.IndustryId), "Industry does not exist.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                company.Industries = this.companies.AllIndustries();
+                company.Categories = this.companies.AllCategories();
+
+                return View(company);
+            }
+
+            this.companies.Edit(
+                id,
+                company.Name,
+                company.Founded,
+                company.Overview,
+                company.IndustryId,
+                company.CategoryId,
+                company.Address.Country,
+                company.Address.City,
+                company.Address.AddressText,
+                company.LogoUrl,
+                company.WebsiteUrl);
+
+            return RedirectToAction(nameof(All));
         }
     }
 }

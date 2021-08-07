@@ -9,5 +9,9 @@
         public string AddressText { get; set; }
 
         public int JobsCount { get; set;  }
+
+        public int CategoryId { get; set; }
+
+        public int IndustryId { get; set; }
     }
 }

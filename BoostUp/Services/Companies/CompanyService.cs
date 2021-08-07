@@ -78,16 +78,16 @@
         }
 
         public int Create(
-           string name,
-           int? founded,
-           string overview,
-           int industryId,
-           int categoryId,
-           string country,
-           string city,
-           string addressText,
-           string logoUrl,
-           string websiteUrl)
+               string name,
+               int? founded,
+               string overview,
+               int industryId,
+               int categoryId,
+               string country,
+               string city,
+               string addressText,
+               string logoUrl,
+               string websiteUrl)
         {
             var companyToAdd = new Company
             {
@@ -113,6 +113,44 @@
             return companyToAdd.Id;
         }
 
+        public bool Edit(
+               int id,
+               string name,
+               int? founded,
+               string overview,
+               int industryId,
+               int categoryId,
+               string country,
+               string city,
+               string addressText,
+               string logoUrl,
+               string websiteUrl)
+        {
+            var company = this.data.Companies.Find(id);
+
+            var companyAddress = this.data.Addresses.Find(company.AddressId);
+
+            if (company == null)
+            {
+                return false;
+            }
+
+            company.Name = name;
+            company.Founded = founded;
+            company.Overview = overview;
+            company.IndustryId = industryId;
+            company.CategoryId = categoryId;
+            companyAddress.Country = country;
+            companyAddress.City = city;
+            companyAddress.AddressText = addressText;
+            company.LogoUrl = logoUrl;
+            company.WebsiteUrl = websiteUrl;
+
+            this.data.SaveChanges();
+
+            return true;
+        }
+
         public CompanyDetailsServiceModel Details(int id)
         => this.data
             .Companies
@@ -128,7 +166,9 @@
                 AddressCountry = c.Address.Country,
                 AddressCity = c.Address.City,
                 AddressText = c.Address.AddressText,
+                CategoryId = c.CategoryId,
                 CategoryName = c.Category.Value,
+                IndustryId = c.IndustryId,
                 IndustryName = c.Industry.Value,
                 JobsCount = c.Jobs.Count()
             })

@@ -19,13 +19,26 @@
             string name,
             int? founded,
             string overview,
-            int IndustryId,
-            int CategoryId,
+            int industryId,
+            int categoryId,
             string country,
             string city,
             string addressText,
             string logoUrl,
-            string WebsiteUrl);
+            string websiteUrl);
+
+        bool Edit(
+            int id,
+            string name,
+            int? founded,
+            string overview,
+            int industryId,
+            int categoryId,
+            string country,
+            string city,
+            string addressText,
+            string logoUrl,
+            string websiteUrl);
 
         CompanyDetailsServiceModel Details(int id);
 
