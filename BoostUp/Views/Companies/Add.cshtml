@@ -32,7 +32,7 @@
                     <select asp-for="CategoryId" class="form-control shadow">
                         @foreach (var category in Model.Categories)
                         {
-                        <option value="@category.Id">&bull; @category.Value</option>
+                            <option value="@category.Id">&bull; @category.Value</option>
                         }
                     </select>
                     <span asp-validation-for="CategoryId" class="small text-danger"></span>
@@ -42,7 +42,7 @@
                     <select asp-for="IndustryId" class="form-control shadow">
                         @foreach (var industry in Model.Industries)
                         {
-                        <option value="@industry.Id">&#9874; @industry.Value</option>
+                            <option value="@industry.Id">&#9874; @industry.Value</option>
                         }
                     </select>
                     <span asp-validation-for="IndustryId" class="small text-danger"></span>
@@ -79,3 +79,7 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

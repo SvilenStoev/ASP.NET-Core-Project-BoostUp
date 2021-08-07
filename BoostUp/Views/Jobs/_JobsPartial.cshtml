@@ -27,7 +27,7 @@
                         <h6 class="card-text mb-2">Salary: @job.SalaryRangeFrom @(job.SalaryRangeTo != null ? $"- {job.SalaryRangeTo}" : string.Empty)</h6>
                     }
                     <a asp-action="Details" asp-controller="Jobs" asp-route-id="@job.Id" class="btn btn-outline-primary shadow mt-2">Details</a>
-                    @if (ViewBag.AllowJobEdit == true || User.IsInRole(WebConstants.AdministratorRoleName))
+                    @if (ViewBag.AllowJobEdit == true || User.IsAdmin())
                     {
                         <a asp-action="Edit" asp-controller="Jobs" asp-route-id="@job.Id" class="btn btn-outline-warning shadow mt-2">Edit</a>
                         <a asp-action="Delete" asp-controller="Jobs" asp-route-id="@job.Id" class="btn btn-outline-danger shadow mt-2">Delete</a>

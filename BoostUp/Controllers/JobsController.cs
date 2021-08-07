@@ -114,14 +114,14 @@
         {
             var userId = this.User.GetId();
 
-            if (!this.recruiters.IsRecruiter(userId))
+            if (!this.recruiters.IsRecruiter(userId) && !this.User.IsAdmin())
             {
                 return RedirectToAction(nameof(RecruitersController.Become), "Recruiters");
             }
 
             var job = this.jobs.Details(id);
 
-            if (job.UserId != userId)
+            if (job.UserId != userId && !this.User.IsAdmin())
             {
                 return Unauthorized();
             }
@@ -149,7 +149,7 @@
         {
             var recruiterId = this.recruiters.IdByUser(this.User.GetId());
 
-            if (recruiterId == null)
+            if (recruiterId == null && !this.User.IsAdmin())
             {
                 return RedirectToAction(nameof(RecruitersController.Become), "Recruiters", new { value = "companyId" });
             }
@@ -166,7 +166,7 @@
                 return View(job);
             }
 
-            if (!this.jobs.IsByRecruiter(id, recruiterId))
+            if (!this.jobs.IsByRecruiter(id, recruiterId) && !this.User.IsAdmin())
             {
                 return BadRequest();
             }

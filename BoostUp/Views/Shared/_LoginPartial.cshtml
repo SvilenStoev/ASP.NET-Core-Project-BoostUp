@@ -10,7 +10,7 @@
     {
         var userId = User.GetId();
         var userIsRecruiter = Recruiters.IsRecruiter(userId);
-        var userIsAdmin = User.IsInRole(WebConstants.AdministratorRoleName);
+        var userIsAdmin = User.IsAdmin();
 
         if (userIsRecruiter && !userIsAdmin)
         {
