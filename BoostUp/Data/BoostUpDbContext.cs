@@ -107,6 +107,13 @@
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder
+               .Entity<User>()
+               .HasOne(u => u.Company)
+               .WithMany(c => c.Employees)
+               .HasForeignKey(u => u.CompanyId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            builder
                 .Entity<Post>()
                 .HasOne(p => p.FromUser)
                 .WithMany(u => u.OwnPosts)
@@ -126,6 +133,7 @@
                 .WithMany(p => p.Comments)
                 .HasForeignKey(c => c.ToPostId)
                 .OnDelete(DeleteBehavior.Restrict);
+
 
             base.OnModelCreating(builder);
         }

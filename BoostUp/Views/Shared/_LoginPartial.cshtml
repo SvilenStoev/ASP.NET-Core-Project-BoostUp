@@ -10,14 +10,15 @@
     {
         var userId = User.GetId();
         var userIsRecruiter = Recruiters.IsRecruiter(userId);
+        var userIsAdmin = User.IsInRole(WebConstants.AdministratorRoleName);
 
-        if (userIsRecruiter)
+        if (userIsRecruiter && !userIsAdmin)
         {
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Jobs" asp-action="Mine">My jobs</a>
             </li>
         }
-        else
+        else if(!userIsAdmin)
         {
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Recruiters" asp-action="Become">Become recruiter</a>

@@ -4,14 +4,16 @@ using BoostUp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BoostUp.Data.Migrations
 {
     [DbContext(typeof(BoostUpDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210807090208_AlterUserColumns")]
+    partial class AlterUserColumns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -335,14 +337,17 @@ namespace BoostUp.Data.Migrations
                     b.Property<int>("AddressId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CompanyId")
+                    b.Property<int>("CompanyId")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CoverImageId")
+                    b.Property<string>("CoverImageId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CoverImageId1")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
@@ -410,7 +415,10 @@ namespace BoostUp.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("ProfileImageId")
+                    b.Property<string>("ProfileImageId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ProfileImageId1")
                         .HasColumnType("int");
 
                     b.Property<string>("SecurityStamp")
@@ -429,7 +437,7 @@ namespace BoostUp.Data.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.HasIndex("CoverImageId");
+                    b.HasIndex("CoverImageId1");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -439,7 +447,7 @@ namespace BoostUp.Data.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("ProfileImageId");
+                    b.HasIndex("ProfileImageId1");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -718,15 +726,16 @@ namespace BoostUp.Data.Migrations
                     b.HasOne("BoostUp.Data.Models.Company", "Company")
                         .WithMany("Employees")
                         .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("BoostUp.Data.Models.Image", "CoverImage")
                         .WithMany()
-                        .HasForeignKey("CoverImageId");
+                        .HasForeignKey("CoverImageId1");
 
                     b.HasOne("BoostUp.Data.Models.Image", "ProfileImage")
                         .WithMany()
-                        .HasForeignKey("ProfileImageId");
+                        .HasForeignKey("ProfileImageId1");
 
                     b.Navigation("Address");
 

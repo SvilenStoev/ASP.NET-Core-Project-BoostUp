@@ -20,19 +20,32 @@
 
         public GenderType Gender { get; set; }
 
+        public int? CompanyId { get; set; }
+
+        public Company Company { get; set; }
+
         public int AddressId { get; set; }
 
         public Address Address { get; set; }
 
         public DateTime? DateOfBirth { get; set; }
 
-        public string ProfileImageId { get; set; }
+        public int? ProfileImageId { get; set; }
 
         public Image ProfileImage { get; set; }
 
-        public string CoverImageId { get; set; }
+        public int? CoverImageId { get; set; }
 
         public Image CoverImage { get; set; }
+
+        [MaxLength(AboutMaxLength)]
+        public string About { get; set; }
+
+        [MaxLength(ExperienceMaxLength)]
+        public string Experience { get; set; }
+
+        [MaxLength(EducationMaxLength)]
+        public string Education { get; set; }
 
         [InverseProperty("FromUser")]
         public IEnumerable<Post> OwnPosts { get; set; } = new List<Post>();

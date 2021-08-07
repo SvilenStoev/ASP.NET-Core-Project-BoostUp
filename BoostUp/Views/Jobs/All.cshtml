@@ -65,6 +65,7 @@ else if (Model.CompanyId > 0)
     <h3 class="text-center mt-2 mb-5">@Model.TotalJobs @(Model.TotalJobs == 1 ? "job" : "jobs") found for @Model.Jobs.Select(j => j.CompanyName).FirstOrDefault():</h3>
 }
 
+<!-- All jobs -->
 <partial name="_JobsPartial" model="@Model.Jobs" />
 
 <!-- Pagination -->

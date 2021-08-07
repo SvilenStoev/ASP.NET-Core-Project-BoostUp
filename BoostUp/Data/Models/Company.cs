@@ -37,5 +37,7 @@
         public IEnumerable<Job> Jobs { get; set; } = new List<Job>();
 
         public IEnumerable<Recruiter> Recruiters { get; set; } = new List<Recruiter>();
+
+        public IEnumerable<User> Employees { get; set; } = new List<User>();
     }
 }

@@ -32,6 +32,10 @@
             public const int NameMaxLength = 30;
             public const int PasswordMinLength = 6;
             public const int PasswordMaxLength = 100;
+
+            public const int AboutMaxLength = 600;
+            public const int ExperienceMaxLength = 600;
+            public const int EducationMaxLength = 600;
         }
 
         public class Recruiter
