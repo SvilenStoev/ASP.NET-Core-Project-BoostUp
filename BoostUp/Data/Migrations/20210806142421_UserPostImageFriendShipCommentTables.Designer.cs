@@ -401,7 +401,7 @@ namespace BoostUp.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("ProfileImageId")
-                        .HasColumnType("nvarchar(max)");
+                      .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ProfileImageId1")
                         .HasColumnType("int");
