@@ -2,7 +2,7 @@
 {
     using System.Security.Claims;
 
-    using static BoostUp.WebConstants;
+    using static BoostUp.Areas.Admin.AdminConstants;
 
     public static class ClaimsPrincipalExtensions
     {
