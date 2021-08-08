@@ -7,30 +7,59 @@
 <div class="offset-lg-1 col-lg-10">
     <div class="bg-white shadow rounded overflow-hidden">
         <div class="card-header">
-            <div class="card bg-light mb-2 shadow" style="max-width: 14rem;">
-                <div class="card-header">
-                    @if (Model.LogoUrl != null)
-                    {
-                        <img class="card-img-top rounded-circle mb-2 img-thumbnail" src="@Model.LogoUrl" alt="@Model.Name - Logo">
-                    }
-                    else
-                    {
-                        <img class="card-img-top rounded-circle mb-2 img-thumbnail" src="~/default pictures/Company Logo.jpg" alt="@Model.Name - Logo">
-                    }
-                </div>
-                <h5 class="card-title text-center mb-2"><b>@Model.Name</b></h5>
-                <h6 class="text-muted text-center">@Model.CategoryName</h6>
-            </div>
             <div class="row">
-                <a asp-controller="Jobs" asp-action="All" asp-route-companyId="@Model.Id" class="btn btn-outline-primary m-2">
-                    <b>@Model.JobsCount @(Model.JobsCount == 1 ? "Job" : "Jobs")</b>
-                </a>
-                <a asp-controller="Employees" asp-action="All" asp-route-companyId="@Model.Id" class="btn btn-outline-primary m-2"><b>Employees</b></a>
-                @if (!User.IsAdmin())
-                {
-                    <a asp-controller="Jobs" asp-action="Add" asp-route-companyId="@Model.Id" class="btn btn-outline-primary m-2"><b>Post a job</b></a>
-                }
+                <div class="col-3">
+                    <div class="card bg-light mb-2 shadow" style="max-width: 14rem;">
+                        <div class="card-header">
+                            @if (Model.LogoUrl != null)
+                            {
+                                <img class="card-img-top rounded-circle mb-2 img-thumbnail" src="@Model.LogoUrl" alt="@Model.Name - Logo">
+                            }
+                            else
+                            {
+                                <img class="card-img-top rounded-circle mb-2 img-thumbnail" src="~/default pictures/Company Logo.jpg" alt="@Model.Name - Logo">
+                            }
+                        </div>
+                        <h5 class="card-title text-center mb-2"><b>@Model.Name</b></h5>
+                        <h6 class="text-muted text-center">@Model.EmployeesCount @(Model.EmployeesCount == 1 ? "employee" : "employees")</h6>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="row">
+                        @if (!User.IsAdmin())
+                        {
+                            <a asp-controller="Jobs" asp-action="Add" asp-route-companyId="@Model.Id" class="btn btn-outline-warning m-2">
+                                <b>Post a job</b>
+                            </a>
+                        }
+                    </div>
+                    <div class="row">
+                        <a asp-controller="Jobs" asp-action="All" asp-route-companyId="@Model.Id" class="btn btn-outline-primary m-2">
+                            <b>@Model.JobsCount @(Model.JobsCount == 1 ? "Job" : "Jobs")</b>
+                        </a>
+                    </div>
+                    <div class="row">
+                        <a asp-controller="Employees" asp-action="All" asp-route-companyId="@Model.Id" asp-route-userFirstName="@Model." class="btn btn-outline-primary m-2">
+                            <b>Employees</b>
+                        </a>
+                    </div>
+                </div>
             </div>
+            @if (!User.IsAdmin() && !Model.UserIsEmployed)
+            {
+                <div class="row mt-2">
+                    <p class="text-primary"><b><i>&nbsp&nbsp @Model.UserFirstName, are you an employee of this company? &nbsp</i></b></p>
+                    <p>
+                        <a asp-controller="Companies"
+                           asp-action="BecomeEmployee"
+                           asp-route-companyId="@Model.Id"
+                           asp-route-companyName="@Model.Name"
+                           asp-route-userFirstName="@Model.UserFirstName" class="text-warning">
+                            <b><i>Yes</i></b>
+                        </a>
+                    </p>
+                </div>
+            }
         </div>
         <div class="card-body">
             <div id="accordion">
@@ -54,7 +83,7 @@
                 <p class="card-text mb-2"><b>Website:</b> <a href="@Model.WebsiteUrl">@Model.WebsiteUrl</a></p>
             }
             <p class="card-text mb-2"><b>Industry:</b> @Model.IndustryName</p>
-            <p class="card-text mb-2"><b>Company size:</b> @Model.CategoryName</p>
+            <p class="card-text mb-2"><b>Company size:</b> @Model.CategoryName &nbsp<i>/@Model.EmployeesCount on <b>BoostUp</b>/</i></p>
             <p class="card-text mb-2"><b>Location:</b> @Model.AddressCity, @Model.AddressCountry</p>
             @if (Model.AddressText != null)
             {

@@ -170,10 +170,39 @@
                 CategoryName = c.Category.Value,
                 IndustryId = c.IndustryId,
                 IndustryName = c.Industry.Value,
-                JobsCount = c.Jobs.Count()
+                JobsCount = c.Jobs.Count(),
+                EmployeesCount = c.Employees.Count(),
             })
             .ToList()
             .FirstOrDefault();
+
+        public bool BecomeEmployee(string userId, int id)
+        {
+            var company = this.data.Companies.Find(id);
+            var user = this.data.Users.Find(userId);
+
+            if (company == null || user == null)
+            {
+                return false;
+            }
+
+            if (IsEmployee(userId, id))
+            {
+                return false;
+            }
+
+            user.CompanyId = id;
+
+            this.data.SaveChanges();
+
+            return true;
+        }
+
+        public bool IsEmployee(string userId, int id)
+            => this.data
+                .Users
+                .Where(u => u.Id == userId)
+                .Any(u => u.CompanyId == id);
 
         public IEnumerable<string> AllCountries()
             => this.data

@@ -4,7 +4,6 @@
     ViewBag.Title = "Jobs";
 }
 
-
 <!-- Filter, Sort and Search -->
 <form method="get">
     <div class="row">
@@ -52,23 +51,26 @@
 
 <hr />
 
-<!-- Pagination -->
-<partial name="_JobsPaginationPartial" model="@Model" />
-
 <!-- Body -->
 @if (!Model.Jobs.Any())
 {
     <h3 class="text-center mt-5 mb-5">No jobs found by the given criteria!</h3>
 }
-else if (Model.CompanyId > 0)
+else
 {
-    <h3 class="text-center mt-2 mb-5">@Model.TotalJobs @(Model.TotalJobs == 1 ? "job" : "jobs") found for @Model.Jobs.Select(j => j.CompanyName).FirstOrDefault():</h3>
+    if (Model.CompanyId > 0 && Model.CurrentPage == 1)
+    {
+        <h3 class="text-center mt-3 mb-5">@Model.TotalJobs @(Model.TotalJobs == 1 ? "job" : "jobs") found for @Model.Jobs.Select(j => j.CompanyName).FirstOrDefault()</h3>
+    }
+
+    <!-- Pagination -->
+    <partial name="_JobsPaginationPartial" model="@Model" />
+
+    <!-- All jobs -->
+    <partial name="_JobsPartial" model="@Model.Jobs" />
+
+    <!-- Pagination -->
+    <partial name="_JobsPaginationPartial" model="@Model" />
 }
-
-<!-- All jobs -->
-<partial name="_JobsPartial" model="@Model.Jobs" />
-
-<!-- Pagination -->
-<partial name="_JobsPaginationPartial" model="@Model" />
 
 <hr />

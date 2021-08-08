@@ -12,13 +12,18 @@
     using BoostUp.Services.Companies.Models;
     using BoostUp.Infrastructure;
     using BoostUp.Models.Addresses;
+    using BoostUp.Services.Users;
 
     public class CompaniesController : Controller
     {
         private readonly ICompanyService companies;
+        private readonly IUserService users;
 
-        public CompaniesController(ICompanyService companies)
-            => this.companies = companies;
+        public CompaniesController(ICompanyService companies, IUserService users)
+        {
+            this.companies = companies;
+            this.users = users;
+        }
 
         [Authorize]
         public IActionResult Add()
@@ -96,9 +101,32 @@
                 return RedirectToAction(nameof(All));
             }
 
+            var userId = this.User.GetId();
+
+            company.UserFirstName = this.users.FirstNameById(userId);
+            company.UserIsEmployed = this.users.IsEmployed(userId);
+
             return View(company);
         }
 
+        [Authorize]
+        public IActionResult BecomeEmployee(CompanyBecomeEmployeeViewModel becomeEmployee)
+        {
+            return View(becomeEmployee);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult BecomeEmployee(int companyId)
+        {
+            var userId = this.User.GetId();
+
+            this.companies.BecomeEmployee(userId, companyId);
+
+            return RedirectToAction(nameof(Details), new { id = companyId });
+        }
+
+        [Authorize]
         public IActionResult Edit(int id)
         {
             if (!this.User.IsAdmin())

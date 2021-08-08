@@ -42,6 +42,10 @@
 
         CompanyDetailsServiceModel Details(int id);
 
+        bool BecomeEmployee(string userId, int id);
+
+        bool IsEmployee(string userId, int id);
+
         IEnumerable<string> AllCountries();
 
         IEnumerable<CompanyIndustryServiceModel> AllIndustries();

@@ -60,7 +60,7 @@
         public IEnumerable<Friendship> FriendshipResponses { get; set; } = new List<Friendship>();
 
         // Audit info
-        public DateTime CreatedOn { get; set; }
+        public DateTime CreatedOn { get; init; } = DateTime.UtcNow;
 
         public DateTime? ModifiedOn { get; set; }
 

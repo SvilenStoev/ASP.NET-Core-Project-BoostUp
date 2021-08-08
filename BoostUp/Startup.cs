@@ -16,6 +16,7 @@ namespace BoostUp
     using BoostUp.Services.Statistics;
     using BoostUp.Services.Recruiters;
     using BoostUp.Data.Models;
+    using BoostUp.Services.Users;
 
     public class Startup
     {
@@ -49,6 +50,7 @@ namespace BoostUp
             });
 
             services.AddTransient<IJobService, JobService>();
+            services.AddTransient<IUserService, UserService>();
             services.AddTransient<ICompanyService, CompanyService>();
             services.AddTransient<IRecruiterService, RecruiterService>();
             services.AddTransient<IStatisticsService, StatisticsService>();
