@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
     using BoostUp.Data;
     using BoostUp.Data.Models;
     using BoostUp.Models.Jobs;
@@ -11,9 +13,13 @@
     public class JobService : IJobService
     {
         private readonly BoostUpDbContext data;
+        private readonly IMapper mapper;
 
-        public JobService(BoostUpDbContext data)
-            => this.data = data;
+        public JobService(BoostUpDbContext data, IMapper mapper)
+        {
+            this.data = data;
+            this.mapper = mapper;
+        }
 
         public JobQueryServiceModel All(
             int companyId,
@@ -145,20 +151,7 @@
             => this.data
                 .Jobs
                 .Where(j => j.Id == id)
-                .Select(j => new JobDetailsServiceModel
-                {
-                    Id = j.Id,
-                    JobTitle = j.JobTitle,
-                    AddressCountry = j.Address.Country,
-                    AddressCity = j.Address.City,
-                    AddressText = j.Address.AddressText,
-                    SalaryRangeFrom = j.SalaryRangeFrom,
-                    SalaryRangeTo = j.SalaryRangeTo,
-                    Description = j.Description,
-                    EmploymentTypeId = j.EmploymentType.Id,
-                    RecruiterId = j.RecruiterId,
-                    UserId = j.Recruiter.UserId,
-                })
+                .ProjectTo<JobDetailsServiceModel>(this.mapper.ConfigurationProvider)
                 .ToList()
                 .FirstOrDefault();
 
@@ -252,8 +245,8 @@
                     SalaryRangeFrom = j.SalaryRangeFrom,
                     SalaryRangeTo = j.SalaryRangeTo,
                     CompanyName = j.Company.Name,
-                    AddressCountry = j.Address.Country,
-                    AddressCity = j.Address.City,
+                    Country = j.Address.Country,
+                    City = j.Address.City,
                     CompanyLogoUrl = j.Company.LogoUrl,
                     RelativeTime = CalculateRelativeTime(j.CreatedOn)
                 })

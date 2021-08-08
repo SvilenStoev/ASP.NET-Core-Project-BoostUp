@@ -6,18 +6,20 @@
     using BoostUp.Models.Jobs;
     using BoostUp.Services.Jobs;
     using BoostUp.Infrastructure;
-    using BoostUp.Models.Addresses;
     using BoostUp.Services.Recruiters;
+    using AutoMapper;
 
     public class JobsController : Controller
     {
         private readonly IJobService jobs;
         private readonly IRecruiterService recruiters;
+        private readonly IMapper mapper;
 
-        public JobsController(IJobService jobs, IRecruiterService recruiters)
+        public JobsController(IJobService jobs, IRecruiterService recruiters, IMapper mapper)
         {
             this.jobs = jobs;
             this.recruiters = recruiters;
+            this.mapper = mapper;
         }
 
         [Authorize]
@@ -126,21 +128,11 @@
                 return Unauthorized();
             }
 
-            return View(new JobInputModel
-            {
-                JobTitle = job.JobTitle,
-                Address = new AddressInputModel
-                {
-                    Country = job.AddressCountry,
-                    City = job.AddressCity,
-                    AddressText = job.AddressText,
-                },
-                Description = job.Description,
-                SalaryRangeFrom = job.SalaryRangeFrom,
-                SalaryRangeTo = job.SalaryRangeTo,
-                EmploymentTypeId = job.EmploymentTypeId,
-                EmploymentTypes = this.jobs.AllEmploymentTypes()
-            });
+            var jobInput = this.mapper.Map<JobInputModel>(job);
+
+            jobInput.EmploymentTypes = this.jobs.AllEmploymentTypes();
+
+            return View(jobInput);
         }
 
         [HttpPost]

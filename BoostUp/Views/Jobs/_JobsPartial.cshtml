@@ -21,7 +21,7 @@
                     <h5 class="card-title mb-1"><b>@job.JobTitle</b></h5>
                     <h6 class="card-text mb-3">@job.EmploymentType</h6>
                     <h6 class="card-text mb-1">@job.CompanyName</h6>
-                    <p class="card-text mb-3"><i>@job.AddressCity, @job.AddressCountry</i></p>
+                    <p class="card-text mb-3"><i>@job.City, @job.Country</i></p>
                     @if (job.SalaryRangeFrom != null)
                     {
                         <h6 class="card-text mb-2">Salary: @job.SalaryRangeFrom @(job.SalaryRangeTo != null ? $"- {job.SalaryRangeTo}" : string.Empty)</h6>

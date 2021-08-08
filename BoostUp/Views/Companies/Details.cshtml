@@ -21,7 +21,7 @@
                             }
                         </div>
                         <h5 class="card-title text-center mb-2"><b>@Model.Name</b></h5>
-                        <h6 class="text-muted text-center">@Model.EmployeesCount @(Model.EmployeesCount == 1 ? "employee" : "employees")</h6>
+                        <h6 class="text-muted text-center">@Model.IndustryName</h6>
                     </div>
                 </div>
                 <div class="col-4">
@@ -39,8 +39,8 @@
                         </a>
                     </div>
                     <div class="row">
-                        <a asp-controller="Employees" asp-action="All" asp-route-companyId="@Model.Id" asp-route-userFirstName="@Model." class="btn btn-outline-primary m-2">
-                            <b>Employees</b>
+                        <a asp-controller="Employees" asp-action="All" asp-route-companyId="@Model.Id" class="btn btn-outline-primary m-2">
+                            <b>@Model.EmployeesCount @(Model.EmployeesCount == 1 ? "Employee" : "Employees")</b>
                         </a>
                     </div>
                 </div>

@@ -19,9 +19,9 @@
 
         public int? SalaryRangeTo { get; set; }
 
-        public string AddressCountry { get; set; }
+        public string Country { get; set; }
 
-        public string AddressCity { get; set; }
+        public string City { get; set; }
 
         public string CompanyName { get; set; }
 

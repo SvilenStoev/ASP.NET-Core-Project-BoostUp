@@ -32,6 +32,7 @@ namespace BoostUp
                     .UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
+            services.AddAutoMapper(typeof(Startup));
 
             services
                 .AddDefaultIdentity<User>(options =>
@@ -79,10 +80,7 @@ namespace BoostUp
                 .UseAuthorization()
                 .UseEndpoints(endpoints =>
                 {
-                    endpoints.MapControllerRoute(
-                         name: "Areas",
-                         pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
+                    endpoints.MapDefaultAreaRoute();
                     endpoints.MapDefaultControllerRoute();
                     endpoints.MapRazorPages();
                 });

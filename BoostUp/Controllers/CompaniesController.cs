@@ -1,18 +1,14 @@
 ﻿namespace BoostUp.Controllers
 {
-    using System.Linq;
-    using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
-
-    using BoostUp.Data;
-    using BoostUp.Data.Models;
-    using BoostUp.Models.Companies;
     using Microsoft.AspNetCore.Authorization;
-    using BoostUp.Services.Companies;
-    using BoostUp.Services.Companies.Models;
+
     using BoostUp.Infrastructure;
     using BoostUp.Models.Addresses;
+    using BoostUp.Models.Companies;
+    using BoostUp.Services.Companies;
     using BoostUp.Services.Users;
+
 
     public class CompaniesController : Controller
     {

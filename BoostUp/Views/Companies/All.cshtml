@@ -52,48 +52,50 @@
 
 <hr />
 
-<!-- Pagination -->
-<partial name="_CompaniesPaginationPartial" model="@Model" />
-
 <!-- Body -->
 @if (!Model.Companies.Any())
 {
     <h3 class="text-center mt-5 mb-5">No companies found by the given criteria!</h3>
 }
+else
+{
+    <!-- Pagination -->
+    <partial name="_CompaniesPaginationPartial" model="@Model" />
 
-<div class="row">
-    @foreach (var company in Model.Companies)
-    {
-        <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="card bg-light mb-4 shadow" style="max-width: 18rem;">
-                <div class="card-header">
-                    <div>
-                        <a asp-action="Details" asp-controller="Companies" asp-route-id="@company.Id">
-                            @if (company.LogoUrl != null)
-                            {
-                                <img class="card-img-top rounded-circle mb-2 img-thumbnail shadow" src="@company.LogoUrl" alt="@company.Name - Logo">
-                            }
-                            else
-                            {
-                                <img class="card-img-top rounded-circle mb-2 img-thumbnail shadow" src="~/default pictures/Company Logo.jpg" alt="@company.Name - Logo">
-                            }
-                        </a>
+    <div class="row">
+        @foreach (var company in Model.Companies)
+        {
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card bg-light mb-4 shadow" style="max-width: 18rem;">
+                    <div class="card-header">
+                        <div>
+                            <a asp-action="Details" asp-controller="Companies" asp-route-id="@company.Id">
+                                @if (company.LogoUrl != null)
+                                {
+                                    <img class="card-img-top rounded-circle mb-2 img-thumbnail shadow" src="@company.LogoUrl" alt="@company.Name - Logo">
+                                }
+                                else
+                                {
+                                    <img class="card-img-top rounded-circle mb-2 img-thumbnail shadow" src="~/default pictures/Company Logo.jpg" alt="@company.Name - Logo">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center mb-2"><b>@company.Name</b></h5>
+                        <p class="card-text text-center mb-3"><i>@company.CategoryName</i></p>
+                        <p class="card-text mb-2"><b>Industry:</b> @company.IndustryName</p>
+                        <p class="card-text mb-2"><b>Location:</b> @company.AddressCity, @company.AddressCountry</p>
+                        <p class="card-text mb-2"><b>Founded:</b> @company.Founded</p>
+                        <a asp-action="Details" asp-controller="Companies" asp-route-id="@company.Id" class="btn btn-outline-primary shadow">Details</a>
                     </div>
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title text-center mb-2"><b>@company.Name</b></h5>
-                    <p class="card-text text-center mb-3"><i>@company.CategoryName</i></p>
-                    <p class="card-text mb-2"><b>Industry:</b> @company.IndustryName</p>
-                    <p class="card-text mb-2"><b>Location:</b> @company.AddressCity, @company.AddressCountry</p>
-                    <p class="card-text mb-2"><b>Founded:</b> @company.Founded</p>
-                    <a asp-action="Details" asp-controller="Companies" asp-route-id="@company.Id" class="btn btn-outline-primary shadow">Details</a>
-                </div>
             </div>
-        </div>
-    }
-</div>
+        }
+    </div>
 
-<!-- Pagination -->
-<partial name="_CompaniesPaginationPartial" model="@Model" />
+    <!-- Pagination -->
+    <partial name="_CompaniesPaginationPartial" model="@Model" />
+}
 
 <hr />
