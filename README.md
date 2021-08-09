@@ -5,12 +5,12 @@
 
 **BoostUp Website** is created as defense project for **ASP.NET Core MVC** course at [SoftUni](https://softuni.bg/ "SoftUni") (June 2021).
 
-BoostUp website is a professional community for companies, employees and recruiters. Place for connecting professionals to each other and engaging them on topics they care about. Place, where employees can take their career path and professional development to the next level, or if they are recruiters can start searching for candidates.
-Recruiters can publish and manage their own job offers and review the received applications.
+BoostUp website is a professional community for companies, employees and recruiters. Place for connecting professionals to each other and engaging them on topics they care about.
+BoostUp is a platform, where companies can introduce their businesses, employees can take their career path and professional development to the next level and recruiters can share their vital experience, while searching for the right candidates.
 
 ## :pencil2: Overview
 
-**BoostUp** is a website where companies can share their company details, job offers and applications, employees can share their knowledge and work experience through posts and comments. BoostUp is a platform which helps recruiters to find the right candidates and give advices one to other.
+**BoostUp** is a place, where companies can share their company details, job offers and applications, users can find the best job for them or just share their knowledge and work experience through posts and comments. Recruiters can publish and manage their own job offers and review the received applications.
 
 ## :pencil: Project Description
 TODO:
