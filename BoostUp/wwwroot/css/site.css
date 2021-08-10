@@ -3,17 +3,22 @@ for details on configuring this project to bundle and minify static web assets. 
 
 .navbar-custom {
     background-color: #9ac7e6 !important;
+    color: #191d26;
 }
 
 body {
     font-family: Roboto, sans-serif;
-    color: #515a6e;
+    color: #191d26;
     background-color: #d5eafc;
     height: 100%;
     margin: 0;
     align-items: center;
     justify-content: center;
     margin-bottom: 60px;
+}
+
+.cover-color {
+    background-color: #9ac7e6 !important;
 }
 
 a.navbar-brand {

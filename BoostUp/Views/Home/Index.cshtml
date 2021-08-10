@@ -1,4 +1,8 @@
-﻿@model IndexViewModel
+﻿@using Microsoft.AspNetCore.Identity
+@using BoostUp.Data.Models
+
+@inject SignInManager<User> SignInManager
+@model IndexViewModel
 
 @{
     ViewBag.Title = "Home";
@@ -19,9 +23,18 @@
         </div>
         <div class="carousel-item">
             <img class="d-block w-100" src="~/default pictures/Index Picture 2.jpg" alt="Second slide">
-            <div class="carousel-caption d-none d-md-block">
-                <h5 class="p-3 mb-2 bg-dark text-white"><a asp-action="Index" asp-controller="Home">BoostUp</a> your professional life</h5>
-            </div>
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <div class="carousel-caption d-none d-md-block">
+                    <h5 class="p-3 mb-2 bg-dark text-white"><a asp-controller="Users" asp-action="All">BoostUp</a> your professional life</h5>
+                </div>
+            }
+            else
+            {
+                <div class="carousel-caption d-none d-md-block">
+                    <h5 class="p-3 mb-2 bg-dark text-white"><a asp-area="Identity" asp-page="/Account/Login">BoostUp</a> your professional life</h5>
+                </div>
+            }
         </div>
     </div>
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -35,22 +48,22 @@
 </div>
 
 <div class="jumbotron jumbotron-fluid text-center shadow">
-        <ul class="list-inline mb-0">
-            <li class="list-inline-item col-lg-2 col-sm-4">
-                <h3 class="font-weight-bold mb-0 d-block">@Model.TotalCompanies</h3>
-                <h4 class="text-muted">@(Model.TotalCompanies == 1 ? "Company" : "Companies")</h4>
-            </li>
-            <li class="list-inline-item col-lg-2 col-sm-4">
-                <h3 class="font-weight-bold mb-0 d-block">@Model.TotalJobs</h3>
-                <h4 class="text-muted">@(Model.TotalJobs == 1 ? "Job" : "Jobs")</h4>
-            </li>
-            <li class="list-inline-item col-lg-2 col-sm-4">
-                <h3 class="font-weight-bold mb-0 d-block">@Model.TotalUsers</h3>
-                <h4 class="text-muted">@(Model.TotalUsers == 1 ? "User" : "Users")</h4>
-            </li>
-            <li class="list-inline-item col-lg-2 col-sm-4">
-                <h3 class="font-weight-bold mb-0 d-block">@Model.TotalRecruiters</h3>
-                <h4 class="text-muted">@(Model.TotalRecruiters == 1 ? "Recruiter" : "Recruiters")</h4>
-            </li>
-        </ul>
+    <ul class="list-inline mb-0">
+        <li class="list-inline-item col-lg-2 col-sm-4">
+            <h3 class="font-weight-bold mb-0 d-block">@Model.TotalCompanies</h3>
+            <h4 class="text-muted">@(Model.TotalCompanies == 1 ? "Company" : "Companies")</h4>
+        </li>
+        <li class="list-inline-item col-lg-2 col-sm-4">
+            <h3 class="font-weight-bold mb-0 d-block">@Model.TotalJobs</h3>
+            <h4 class="text-muted">@(Model.TotalJobs == 1 ? "Job" : "Jobs")</h4>
+        </li>
+        <li class="list-inline-item col-lg-2 col-sm-4">
+            <h3 class="font-weight-bold mb-0 d-block">@Model.TotalUsers</h3>
+            <h4 class="text-muted">@(Model.TotalUsers == 1 ? "User" : "Users")</h4>
+        </li>
+        <li class="list-inline-item col-lg-2 col-sm-4">
+            <h3 class="font-weight-bold mb-0 d-block">@Model.TotalRecruiters</h3>
+            <h4 class="text-muted">@(Model.TotalRecruiters == 1 ? "Recruiter" : "Recruiters")</h4>
+        </li>
+    </ul>
 </div>

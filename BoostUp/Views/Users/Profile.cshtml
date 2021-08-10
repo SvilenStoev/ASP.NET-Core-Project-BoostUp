@@ -3,95 +3,108 @@
 @{ ViewBag.Title = "Profile"; }
 
 <link href="~/css/profileView.css" rel="stylesheet" />
-<link href="~/css/chat.css" rel="stylesheet">
 
-<div class="row py-5 px-4">
-    <div class="col-xl-10 col-md-6 col-sm-10 mx-auto">
+<div class="row py-4">
+    <div class="col-xl-10 col-md-10 col-sm-12 mx-auto">
         <!-- Profile widget -->
         <div class="bg-white shadow rounded overflow-hidden">
-            @*<img id="coverImage" src="@Model.CoverImagePath" alt="..." class="img-fluid" />*@
-            <div class="px-4 pt-0 pb-4 bg-dark" @*style="position: absolute; top: 10px;"*@>
+            <div class="px-4 pt-0 pb-4 bg-secondary">
                 <div class="media align-items-end profile-header">
                     <div class="profile mr-3">
                         <img src="@Model.ProfileImagePath" alt="..." width="130" class="rounded mb-2 img-thumbnail">
                         @if (Model.CurrentLoggedUser == Model.UserId)
                         {
-                           <a asp-area="Identity" asp-page="/Account/Manage/Index" class="btn btn-dark btn-sm btn-block">Edit</a> }
-                        else
-                        {
-                            if (@Model.FriendShip != null)
-                            {
-                                if (!@Model.FriendShip.IsAccepted && Model.FriendShip.RequesterId == Model.CurrentLoggedUser)
-                                {
-            <a class="btn btn-primary btn-sm btn-block" id="cancelTheRequest" accesskey="@Model.UserId">Cancel the request</a> }
-        else if (!@Model.FriendShip.IsAccepted && Model.FriendShip.ResponderId == Model.CurrentLoggedUser)
+            <a asp-controller="Users" asp-action="Edit" class="btn btn-dark btn-sm btn-block">Edit</a> }
+        else
         {
-<a class="btn btn-primary btn-sm btn-block" id="acceptTheRequest" accesskey="@Model.UserId">Accept the request</a> }
-else if (@Model.FriendShip.IsAccepted)
+            if (Model.FriendShip != null)
+            {
+                if (!Model.FriendShip.IsAccepted && Model.FriendShip.ResponderId == Model.CurrentLoggedUser)
+                {
+<a class="btn btn-primary btn-sm btn-block" asp-controller="Friendships" asp-action="Accept" asp-route-profileUserId="@Model.UserId">Accept the request</a> }
+else if (Model.FriendShip.IsAccepted)
 {
-<a class="btn btn-info btn-sm btn-block" id="removeFromFriends" accesskey="@Model.UserId">Remove from friends</a> }
+<a class="btn btn-info btn-sm btn-block" asp-controller="Friendships" asp-action="Remove" asp-route-profileUserId="@Model.UserId">Remove from friends</a> }
 }
 else
 {
-<a class="btn btn-success btn-sm btn-block" id="addToFriends" accesskey="@Model.UserId">Add to friends</a>}
+<a class="btn btn-success btn-sm btn-block" asp-controller="Friendships" asp-action="Add" asp-route-profileUserId="@Model.UserId">Add to friends</a>}
 }
                     </div>
                     <div class="media-body mb-5 text-white">
                         <h4 class="mt-0 mb-0">@Model.FullName</h4>
-                        <p class="small mb-4"> <i class="fa fa-map-marker mr-2"></i>@Model.City</p>
+                        <p class="small mb-4">@Model.City, @Model.Country</p>
                     </div>
                 </div>
             </div>
             <div class="bg-light p-4 d-flex justify-content-end text-center">
                 <ul class="list-inline mb-0">
                     <li class="list-inline-item">
-                        <h5 class="font-weight-bold mb-0 d-block">@Model.Friends</h5><small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Friends</small>
+                        <h5 class="font-weight-bold mb-0 d-block">@Model.Friends</h5><small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Connections</small>
                     </li>
                 </ul>
             </div>
 
-            <div class="py-4 px-4">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h5 class="mb-0">Recent photos</h5><a href="#" class="btn btn-link text-muted">Show all</a>
+            <!-- Profile body -->
+            <div class="card-body">
+                <div id="accordion">
+                    <div class="card mb-4">
+                        <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <h5><b>About</b></h5>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                                @if (Model.About != null)
+                                {
+                    @Model.About}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="accordion">
+                    <div class="card mb-4">
+                        <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <h5><b>Experience</b></h5>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                                @if (Model.Experience != null)
+                                {
+                    @Model.Experience}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="accordion">
+                    <div class="card mb-4">
+                        <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <h5><b>Education</b></h5>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                                @if (Model.Education != null)
+                                {
+                    @Model.Education}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
             <!-- End profile widget -->
-
         </div>
     </div>
-
-    <div id="currentProfileUserId" accesskey="@Model.UserId"></div>
-    <div id="currentLoggedUserId" accesskey="@Model.CurrentLoggedUser"></div>
-
-    <div class="modal fade" id="modalId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    @Model.SetProfileImageMessage
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                    <form asp-controller="User" asp-action="ChangeProfileImage" method="post">
-                        <input id="imageId" type="hidden" name="ImageId" />
-                        <button type="submit" class="btn btn-success" asp-controller="User" asp-action="ChangeProfileImage">Yes</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    @*@section Scripts{
-            <script src="~/js/friendships.js"></script>
-            <script>
-                $(".img-thumbnail").on("click", function (e) {
-                    var imageId = e.target.accessKey;
-                    $("#imageId").val(imageId);
-                });</script>
-        }*@
 </div>

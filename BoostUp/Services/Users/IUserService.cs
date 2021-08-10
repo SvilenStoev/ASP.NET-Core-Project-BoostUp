@@ -8,10 +8,18 @@
 
     public interface IUserService
     {
+        UserQueryServiceModel All(string searchTerm,
+                int currentPage,
+                int usersPerPage,
+                int companyId,
+                string userId);
+
+        ProfileServiceModel Details(string id);
+
+        FriendshipServiceModel GetFriendship(string fromId, string toId);
+
         bool IsEmployed(string id);
 
         string FirstNameById(string id);
-
-        ProfileServiceModel Details(string id);
     }
 }

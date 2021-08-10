@@ -1,0 +1,62 @@
+﻿@model UsersQueryModel
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<!-- Filter, Sort and Search -->
+<form method="get">
+    <div class="row mb-2 mt-4">
+        <div class="form-group offset-4 col-4">
+            <label asp-for="SearchTerm"></label>
+            <input asp-for="SearchTerm" class="form-control shadow" type="text" placeholder="Search" aria-label="Search">
+        </div>
+    </div>
+    <div class="d-flex justify-content-center mb-4">
+        <button class="btn btn-outline-primary btn-rounded btn-md shadow" type="submit">Search</button>
+    </div>
+</form>
+
+<hr />
+
+<!-- Body -->
+@if (!Model.Users.Any())
+{
+    <h3 class="text-center mt-5 mb-5">No users found!</h3>
+}
+else
+{
+    <!-- Pagination -->
+    <partial name="_UsersPaginationPartial" model="@Model" />
+
+    <div class="row">
+        @foreach (var user in Model.Users)
+        {
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card bg-light mb-4 shadow" style="max-width: 18rem;">
+                    <div class="card-header">
+                        <div>
+                            <a asp-action="Profile" asp-controller="Users" asp-route-id="@user.Id">
+                                <img class="card-img-top rounded-circle mb-2 img-thumbnail shadow" src="@user.ProfileImagePath" alt="@user.FullName - Profile Picture">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center mb-0"><b>@user.FullName</b></h5>
+                        <p class="card-text text-center mb-3">@user.City, @user.Country</p>
+                        @if (user.JobTitle != null)
+                        {
+                            <p class="card-text text-center mb-3">@user.JobTitle</p>
+                        }
+                        <div class="text-center"><a asp-action="Profile" asp-controller="Users" asp-route-id="@user.Id" class="btn btn-outline-primary shadow">View profile</a></div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Pagination -->
+    <partial name="_UsersPaginationPartial" model="@Model" />
+}
+
+<hr />

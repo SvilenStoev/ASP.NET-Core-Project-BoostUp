@@ -18,6 +18,9 @@
         [MaxLength(NameMaxLength)]
         public string LastName { get; set; }
 
+        [MaxLength(JobTitleMaxLength)]
+        public string JobTitle { get; set; }
+
         public GenderType Gender { get; set; }
 
         public int? CompanyId { get; set; }

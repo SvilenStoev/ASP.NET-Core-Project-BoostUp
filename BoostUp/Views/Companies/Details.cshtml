@@ -39,7 +39,7 @@
                         </a>
                     </div>
                     <div class="row">
-                        <a asp-controller="Employees" asp-action="All" asp-route-companyId="@Model.Id" class="btn btn-outline-primary m-2">
+                        <a asp-controller="Users" asp-action="All" asp-route-companyId="@Model.Id" class="btn btn-outline-primary m-2">
                             <b>@Model.EmployeesCount @(Model.EmployeesCount == 1 ? "Employee" : "Employees")</b>
                         </a>
                     </div>

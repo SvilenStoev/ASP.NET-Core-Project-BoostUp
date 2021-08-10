@@ -1,5 +1,6 @@
 ﻿namespace BoostUp.Services.Users.Models
 {
+    using BoostUp.Data.Models;
     using BoostUp.Services.Posts;
     using System.Collections.Generic;
 
@@ -10,6 +11,18 @@
         public string CurrentLoggedUser { get; set; }
 
         public string UserId { get; set; }
+
+        public string JobTitle { get; set; }
+
+        public GenderType Gender { get; set; }
+
+        public string About { get; set; }
+
+        public string Experience { get; set; }
+
+        public string Education { get; set; }
+
+        public int? CompanyId { get; set; }
 
         public string ProfileImagePath { get; set; }
 
