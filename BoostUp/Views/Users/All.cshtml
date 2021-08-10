@@ -4,7 +4,7 @@
     ViewBag.Title = "Users";
 }
 
-<!-- Filter, Sort and Search -->
+<!-- Search -->
 <form method="get">
     <div class="row mb-2 mt-4">
         <div class="form-group offset-4 col-4">
@@ -13,7 +13,9 @@
         </div>
     </div>
     <div class="d-flex justify-content-center mb-4">
-        <button class="btn btn-outline-primary btn-rounded btn-md shadow" asp-route-companyId="@Model.CompanyId" type="submit">Search</button>
+        <button asp-route-CompanyId="@Model.CompanyId" class="btn btn-outline-primary btn-rounded btn-md shadow" type="submit">
+            Search
+        </button>
     </div>
 </form>
 
@@ -48,11 +50,7 @@ else
                     </div>
                     <div class="card-body">
                         <h5 class="card-title text-center mb-0"><b>@user.FullName</b></h5>
-                        <p class="card-text text-center mb-2">@user.City, @user.Country</p>
-                        @if (user.JobTitle != null)
-                        {
-                            <p class="card-text text-center">@user.JobTitle</p>
-                        }
+                        <p class="card-text text-center mb-1">@user.City, @user.Country</p>
                         @if (user.CompanyName != null)
                         {
                             <p class="card-text text-center">@user.CompanyName</p>

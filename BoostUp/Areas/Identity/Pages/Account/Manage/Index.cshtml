@@ -1,0 +1,56 @@
+﻿@page
+@model IndexModel
+@{ ViewData["Title"] = "Profile";
+    ViewData["ActivePage"] = ManageNavPages.Index; }
+
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<div class="row mt-4">
+    <div class="col-lg-6 col-md-8 col-sm-12">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Input.FirstName" class="required"></label>
+                <input asp-for="Input.FirstName" class="form-control" />
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.LastName"></label>
+                <input asp-for="Input.LastName" class="form-control" />
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Gender"></label>
+                <select asp-for="Input.Gender" class="form-control" asp-items="@Html.GetEnumSelectList<GenderType>()"></select>
+                <span asp-validation-for="Input.Gender" class="text-danger"></span>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label asp-for="Input.Country" class="required"></label>
+                    <input asp-for="Input.Country" class="form-control shadow" placeholder="England, USA...">
+                    <span asp-validation-for="Input.Country" class="small text-danger"></span>
+                </div>
+                <div class="form-group col-6">
+                    <label asp-for="Input.City" class="required"></label>
+                    <input asp-for="Input.City" class="form-control shadow" placeholder="London, New York...">
+                    <span asp-validation-for="Input.City" class="small text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.DateOfBirth"></label>
+                <input asp-for="Input.DateOfBirth" class="form-control" />
+                <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.About"></label>
+                <textarea asp-for="Input.About" class="form-control shadow" rows="3" placeholder="TODO: Something here"></textarea>
+                <span asp-validation-for="Input.About" class="small text-danger"></span>
+            </div>
+            <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

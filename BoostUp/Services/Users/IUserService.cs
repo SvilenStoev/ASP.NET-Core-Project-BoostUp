@@ -1,6 +1,7 @@
 ﻿namespace BoostUp.Services.Users
 {
     using BoostUp.Services.Users.Models;
+    using Microsoft.AspNetCore.Http;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -16,7 +17,9 @@
 
         ProfileServiceModel Details(string id);
 
+        public void SetProfilePicture(string userId, int imageId);
 
+        public void UploadUserImagesAsync(string userId, IEnumerable<IFormFile> localImages, string imageUrl, string userimagesPath);
 
         bool IsEmployed(string id);
 
