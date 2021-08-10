@@ -17,6 +17,7 @@ namespace BoostUp
     using BoostUp.Services.Recruiters;
     using BoostUp.Data.Models;
     using BoostUp.Services.Users;
+    using BoostUp.Services.Friendships;
 
     public class Startup
     {
@@ -54,6 +55,7 @@ namespace BoostUp
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ICompanyService, CompanyService>();
             services.AddTransient<IRecruiterService, RecruiterService>();
+            services.AddTransient<IFriendshipService, FriendshipService>();
             services.AddTransient<IStatisticsService, StatisticsService>();
         }
 

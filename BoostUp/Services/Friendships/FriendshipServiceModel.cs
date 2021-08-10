@@ -1,4 +1,4 @@
-﻿namespace BoostUp.Services.Users.Models
+﻿namespace BoostUp.Services.Friendships
 {
     using System;
     using System.Collections.Generic;

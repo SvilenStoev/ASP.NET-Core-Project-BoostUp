@@ -13,6 +13,8 @@
 
         public string JobTitle { get; init; }
 
+        public string CompanyName { get; init; }
+
         public string City { get; init; }
 
         public string Country { get; init; }

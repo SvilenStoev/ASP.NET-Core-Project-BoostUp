@@ -178,6 +178,7 @@
             return RedirectToAction(nameof(All));
         }
 
+        [Authorize]
         public IActionResult Details() => View();
     }
 }

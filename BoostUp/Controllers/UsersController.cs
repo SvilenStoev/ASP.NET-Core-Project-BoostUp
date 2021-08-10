@@ -2,6 +2,7 @@
 {
     using BoostUp.Infrastructure;
     using BoostUp.Models.Users;
+    using BoostUp.Services.Friendships;
     using BoostUp.Services.Users;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,12 @@
     public class UsersController : Controller
     {
         private readonly IUserService users;
+        private readonly IFriendshipService friendships;
 
-        public UsersController(IUserService users)
+        public UsersController(IUserService users, IFriendshipService friendships)
         {
             this.users = users;
+            this.friendships = friendships;
         }
 
         [Authorize]
@@ -22,12 +25,7 @@
             var user = this.users.Details(id);
             user.CurrentLoggedUser = User.GetId();
 
-            user.FriendShip = this.users.GetFriendship(user.CurrentLoggedUser, id);
-
-            if (user.FriendShip == null)
-            {
-                this.RedirectToAction(nameof(All));
-            }
+            user.FriendShip = this.friendships.GetFriendship(user.CurrentLoggedUser, id);
 
             return View(user);
         }

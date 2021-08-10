@@ -88,6 +88,7 @@
             return View(query);
         }
 
+        [Authorize]
         public IActionResult Details(int id)
         {
             var company = this.companies.Details(id);

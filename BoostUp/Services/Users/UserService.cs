@@ -3,6 +3,7 @@
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
     using BoostUp.Data;
+    using BoostUp.Data.Models;
     using BoostUp.Services.Users.Models;
     using System;
     using System.Collections.Generic;
@@ -29,11 +30,15 @@
             int companyId,
             string userId)
         {
-            var usersQuery = this.data.Users.Where(u => u.Id != userId).AsQueryable();
+            var usersQuery = this.data.Users.AsQueryable();
 
             if (companyId > 0)
             {
                 usersQuery = usersQuery.Where(u => u.CompanyId == companyId);
+            }
+            else
+            {
+                usersQuery = this.data.Users.Where(u => u.Id != userId).AsQueryable();
             }
 
             if (!string.IsNullOrEmpty(searchTerm))
@@ -50,8 +55,9 @@
                     FullName = u.FirstName + " " + u.LastName,
                     JobTitle = u.JobTitle,
                     City = u.Address.City,
+                    CompanyName = u.Company.Name,
                     Country = u.Address.Country,
-                    ProfileImagePath = GlobalConstants.GetProfileImagePath(u.ProfileImageId, u.ProfileImage.Extension, u.ProfileImage.ImageUrl)
+                    ProfileImagePath = GlobalConstants.GetProfileImagePath(u.ProfileImageId, u.ProfileImage.Extension, u.ProfileImage.ImageUrl, u.Gender)
                 })
                 .ToList();
 
@@ -72,13 +78,6 @@
                 .ProjectTo<ProfileServiceModel>(this.mapper.ConfigurationProvider)
                 .ToList()
                 .FirstOrDefault();
-
-        public FriendshipServiceModel GetFriendship(string fromId, string toId)
-            => new FriendshipServiceModel
-            {
-                RequesterId = fromId,
-                ResponderId = toId,
-            };
 
         public bool IsEmployed(string id)
             => this.data

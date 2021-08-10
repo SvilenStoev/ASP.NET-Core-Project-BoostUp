@@ -16,7 +16,7 @@
 
         ProfileServiceModel Details(string id);
 
-        FriendshipServiceModel GetFriendship(string fromId, string toId);
+
 
         bool IsEmployed(string id);
 

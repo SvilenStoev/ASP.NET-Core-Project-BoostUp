@@ -24,9 +24,6 @@
                 <a class="nav-link text-dark" asp-area="" asp-controller="Recruiters" asp-action="Become">Become recruiter</a>
             </li>
         }
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account</a>
-        </li>
         @if (!userIsAdmin)
         {
             <li class="nav-item">

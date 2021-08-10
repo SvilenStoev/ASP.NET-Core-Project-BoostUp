@@ -27,12 +27,13 @@
                 .ForMember(j => j.UserId, cfg => cfg.MapFrom(j => j.Recruiter.UserId));
 
             this.CreateMap<User, ProfileServiceModel>()
+                .ForMember(p => p.CompanyName, cfg => cfg.MapFrom(u => u.Company.Name))
                 .ForMember(p => p.Country, cfg => cfg.MapFrom(u => u.Address.Country))
                 .ForMember(p => p.City, cfg => cfg.MapFrom(u => u.Address.City))
                 .ForMember(p => p.ProfileImagePath, cfg => cfg.MapFrom(u =>
-                GlobalConstants.GetProfileImagePath(u.ProfileImageId, u.ProfileImage.Extension, u.ProfileImage.ImageUrl)))
+                GlobalConstants.GetProfileImagePath(u.ProfileImageId, u.ProfileImage.Extension, u.ProfileImage.ImageUrl, u.Gender)))
                 .ForMember(p => p.CoverImagePath, cfg => cfg.MapFrom(u =>
-                GlobalConstants.GetProfileImagePath(u.CoverImageId, u.CoverImage.Extension, u.CoverImage.ImageUrl)))
+                GlobalConstants.GetProfileImagePath(u.CoverImageId, u.CoverImage.Extension, u.CoverImage.ImageUrl, u.Gender)))
                 .ForMember(p => p.FullName, cfg => cfg.MapFrom(u => u.FirstName + " " + u.LastName))
                 .ForMember(p => p.UserId, cfg => cfg.MapFrom(u => u.Id))
                 .ForMember(p => p.Friends, cfg => cfg.MapFrom(u =>

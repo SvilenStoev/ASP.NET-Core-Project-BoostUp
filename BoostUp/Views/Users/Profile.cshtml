@@ -14,26 +14,38 @@
                         <img src="@Model.ProfileImagePath" alt="..." width="130" class="rounded mb-2 img-thumbnail">
                         @if (Model.CurrentLoggedUser == Model.UserId)
                         {
-            <a asp-controller="Users" asp-action="Edit" class="btn btn-dark btn-sm btn-block">Edit</a> }
-        else
-        {
-            if (Model.FriendShip != null)
-            {
-                if (!Model.FriendShip.IsAccepted && Model.FriendShip.ResponderId == Model.CurrentLoggedUser)
-                {
-<a class="btn btn-primary btn-sm btn-block" asp-controller="Friendships" asp-action="Accept" asp-route-profileUserId="@Model.UserId">Accept the request</a> }
-else if (Model.FriendShip.IsAccepted)
-{
-<a class="btn btn-info btn-sm btn-block" asp-controller="Friendships" asp-action="Remove" asp-route-profileUserId="@Model.UserId">Remove from friends</a> }
-}
-else
-{
-<a class="btn btn-success btn-sm btn-block" asp-controller="Friendships" asp-action="Add" asp-route-profileUserId="@Model.UserId">Add to friends</a>}
-}
+                               <a asp-area="Identity" asp-page="/Account/Manage/Index" class="btn btn-dark btn-sm btn-block">Edit</a> 
+                        }
+                        else
+                        {
+                            if (Model.FriendShip != null)
+                            {
+                                if (!Model.FriendShip.IsAccepted && Model.FriendShip.ResponderId == Model.CurrentLoggedUser)
+                                {
+                                     <a class="btn btn-primary btn-sm btn-block" asp-controller="Friendships" asp-action="Accept" asp-route-profileUserId="@Model.UserId">Accept the request</a> 
+                                }
+                                else if (Model.FriendShip.IsAccepted)
+                                {
+                                <a class="btn btn-info btn-sm btn-block" asp-controller="Friendships" asp-action="Remove" asp-route-profileUserId="@Model.UserId">Remove from friends</a> 
+                                }
+                            }
+                            else
+                            {
+                            <a class="btn btn-success btn-sm btn-block" asp-controller="Friendships" asp-action="Add" asp-route-profileUserId="@Model.UserId">Add to friends</a>
+                            }
+                        }
                     </div>
                     <div class="media-body mb-5 text-white">
                         <h4 class="mt-0 mb-0">@Model.FullName</h4>
-                        <p class="small mb-4">@Model.City, @Model.Country</p>
+                        <p class="small mb-2">@Model.City, @Model.Country</p>
+                        @if (Model.JobTitle != null)
+                        {
+                            <p class="small mt-0 mb-0"><b>Job:</b> @Model.JobTitle</p>
+                            }
+                        @if (Model.CompanyName != null)
+                        {
+                            <p class="small"><b>Company:</b> @Model.CompanyName</p>
+                          }
                     </div>
                 </div>
             </div>
@@ -49,6 +61,7 @@ else
             <div class="card-body">
                 <div id="accordion">
                     <div class="card mb-4">
+                        <p class="card-text mb-2"><b>Location:</b> Text</p>
                         <div class="card-header" id="headingOne">
                             <h5 class="mb-0">
                                 <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">

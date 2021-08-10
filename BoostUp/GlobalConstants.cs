@@ -1,16 +1,21 @@
 ﻿namespace BoostUp
 {
+    using BoostUp.Data.Models;
     using System;
 
     public static class GlobalConstants
     {
         public static string[] AllowedImageExtensions => new[] { "jpg", "jpeg", "png", "gif", "tiff", "psd", "pdf", "eps" };
 
-        public static string DefaultProfileImageName => "Male Profile Picture.png";
-        //TODO Different gender types!
+        public static string DefaultProfileImageMale => "Male Profile Picture.png";
+
+        public static string DefaultProfileImageFemale => "Female Profile Picture.png";
+
+        public static string DefaultProfileImageUnknown => "Unknown Profile Picture.png";
+
         public static string DefaultCoverImageName => "DefaultCoverImage.jpg";
 
-        public static string GetProfileImagePath(int? imageId, string imageExtension, string imageUrl)
+        public static string GetProfileImagePath(int? imageId, string imageExtension, string imageUrl, GenderType gender)
         {
             if (imageUrl != null)
             {
@@ -21,7 +26,18 @@
 
             if (imageId == null)
             {
-                localPath = $"/default pictures/{DefaultProfileImageName}";
+                if (gender == GenderType.Male)
+                {
+                    localPath = $"/default pictures/{DefaultProfileImageMale}";
+                }
+                else if (gender == GenderType.Female)
+                {
+                    localPath = $"/default pictures/{DefaultProfileImageFemale}";
+                }
+                else
+                {
+                    localPath = $"/default pictures/{DefaultProfileImageUnknown}";
+                }
             }
             else
             {

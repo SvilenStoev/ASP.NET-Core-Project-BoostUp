@@ -1,8 +1,7 @@
 ﻿namespace BoostUp.Services.Users.Models
 {
     using BoostUp.Data.Models;
-    using BoostUp.Services.Posts;
-    using System.Collections.Generic;
+    using BoostUp.Services.Friendships;
 
     public class ProfileServiceModel
     {
@@ -23,6 +22,8 @@
         public string Education { get; set; }
 
         public int? CompanyId { get; set; }
+
+        public string CompanyName { get; set; }
 
         public string ProfileImagePath { get; set; }
 

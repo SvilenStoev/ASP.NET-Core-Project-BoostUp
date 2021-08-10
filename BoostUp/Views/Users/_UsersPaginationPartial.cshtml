@@ -18,7 +18,8 @@
             <a class="page-link"
                asp-controller="Users" asp-action="All"
                asp-route-currentPage="@previousPage"
-               asp-route-searchTerm="@Model.SearchTerm">Previous</a>
+               asp-route-searchTerm="@Model.SearchTerm"
+               asp-route-companyId="@Model.CompanyId">Previous</a>
         </li>
         @for (int i = currentPage - 3; i < currentPage; i++)
         {
@@ -28,7 +29,8 @@
                     <a class="page-link"
                        asp-controller="Users" asp-action="All"
                        asp-route-currentPage="@i"
-                       asp-route-searchTerm="@Model.SearchTerm">@i</a>
+                       asp-route-searchTerm="@Model.SearchTerm"
+                       asp-route-companyId="@Model.CompanyId">@i</a>
                 </li>
             }
         }
@@ -46,7 +48,8 @@
                     <a class="page-link"
                        asp-controller="Users" asp-action="All"
                        asp-route-currentPage="@i"
-                       asp-route-searchTerm="@Model.SearchTerm">@i</a>
+                       asp-route-searchTerm="@Model.SearchTerm"
+                       asp-route-companyId="@Model.CompanyId">@i</a>
                 </li>
             }
         }
@@ -54,7 +57,8 @@
             <a class="page-link"
                asp-controller="Users" asp-action="All"
                asp-route-currentPage="@(currentPage + 1)"
-               asp-route-searchTerm="@Model.SearchTerm">Next</a>
+               asp-route-searchTerm="@Model.SearchTerm"
+               asp-route-companyId="@Model.CompanyId">Next</a>
         </li>
     </ul>
 </nav>
