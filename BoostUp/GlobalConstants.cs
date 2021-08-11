@@ -7,6 +7,8 @@
     {
         public static string[] AllowedImageExtensions => new[] { "jpg", "jpeg", "png", "gif", "tiff", "psd", "pdf", "eps" };
 
+        public static string DefaultCompanyLogoPath => "/default pictures/Company Logo.jpg";
+
         public static string DefaultProfileImageMale => "Male Profile Picture.png";
 
         public static string DefaultProfileImageFemale => "Female Profile Picture.png";

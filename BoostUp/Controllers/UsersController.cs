@@ -23,6 +23,12 @@
         public IActionResult Profile(string id)
         {
             var user = this.users.Details(id);
+
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
             user.CurrentLoggedUser = User.GetId();
 
             user.FriendShip = this.friendships.GetFriendship(user.CurrentLoggedUser, id);

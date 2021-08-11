@@ -2,6 +2,7 @@
 {
     using BoostUp.Models.Jobs;
     using BoostUp.Services.Jobs.Models;
+    using System;
     using System.Collections.Generic;
 
     public interface IJobService

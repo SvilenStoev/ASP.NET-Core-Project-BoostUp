@@ -155,5 +155,12 @@
                 .Where(u => u.Id == id)
                 .Select(u => u.FirstName)
                 .FirstOrDefault();
+
+        public string LastNameById(string id)
+          => this.data
+              .Users
+              .Where(u => u.Id == id)
+              .Select(u => u.LastName)
+              .FirstOrDefault();
     }
 }

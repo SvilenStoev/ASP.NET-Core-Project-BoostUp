@@ -24,5 +24,7 @@
         bool IsEmployed(string id);
 
         string FirstNameById(string id);
+
+        string LastNameById(string id);
     }
 }

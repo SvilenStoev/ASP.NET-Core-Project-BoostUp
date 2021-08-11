@@ -8,19 +8,24 @@
     using BoostUp.Infrastructure;
     using BoostUp.Services.Recruiters;
     using AutoMapper;
+    using BoostUp.Services.Users;
 
     public class JobsController : Controller
     {
         private readonly IJobService jobs;
         private readonly IRecruiterService recruiters;
+        private readonly IUserService users;
         private readonly IMapper mapper;
 
-        public JobsController(IJobService jobs, IRecruiterService recruiters, IMapper mapper)
+        public JobsController(IJobService jobs, IRecruiterService recruiters, IMapper mapper, IUserService users)
         {
             this.jobs = jobs;
+            this.users = users;
             this.recruiters = recruiters;
             this.mapper = mapper;
         }
+
+        public int JobViews { get; set; }
 
         [Authorize]
         public IActionResult Add(int companyId)
@@ -179,6 +184,22 @@
         }
 
         [Authorize]
-        public IActionResult Details() => View();
+        public IActionResult Details(int id)
+        {
+            var job = this.jobs.Details(id);
+
+            if (job == null)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            this.JobViews++;
+
+            job.Views = this.JobViews;
+
+            job.RecruiterFullName = this.users.FirstNameById(job.UserId) + " " + this.users.LastNameById(job.UserId);
+
+            return View(job);
+        }
     }
 }

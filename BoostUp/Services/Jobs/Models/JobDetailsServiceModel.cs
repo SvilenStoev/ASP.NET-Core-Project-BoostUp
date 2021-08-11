@@ -11,5 +11,21 @@
         public string RecruiterId { get; set; }
 
         public int EmploymentTypeId { get; set; }
+
+        public int Views { get; set; }
+
+        public string RecruiterEmail { get; set; }
+
+        public string RecruiterPhoneNumber { get; set; }
+        
+        public string RecruiterFullName { get; set; }
+
+        public string RecruiterCompanyName { get; set; }
+
+        public int CompanyId { get; set; }
+
+        public string CompanyCategory { get; set; }
+        
+        public string CompanyIndustry { get; set; }
     }
 }

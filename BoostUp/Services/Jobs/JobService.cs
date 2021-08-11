@@ -151,7 +151,29 @@
             => this.data
                 .Jobs
                 .Where(j => j.Id == id)
-                .ProjectTo<JobDetailsServiceModel>(this.mapper.ConfigurationProvider)
+                .Select(j => new JobDetailsServiceModel
+                {
+                    Id = j.Id,
+                    JobTitle = j.JobTitle,
+                    Country = j.Address.Country,
+                    City = j.Address.City,
+                    AddressText = j.Address.AddressText,
+                    CompanyName = j.Company.Name,
+                    Description = j.Description,
+                    SalaryRangeFrom = j.SalaryRangeFrom,
+                    SalaryRangeTo = j.SalaryRangeTo,
+                    CompanyLogoUrl = j.Company.LogoUrl,
+                    EmploymentType = j.EmploymentType.Value,
+                    RecruiterId = j.RecruiterId,
+                    RecruiterEmail = j.Recruiter.Email,
+                    RecruiterPhoneNumber = j.Recruiter.PhoneNumber,
+                    RecruiterCompanyName = j.Recruiter.Company.Name,
+                    UserId = j.Recruiter.UserId,
+                    CompanyId = j.CompanyId,
+                    CompanyCategory = j.Company.Category.Value,
+                    CompanyIndustry = j.Company.Industry.Value,
+                    RelativeTime = CalculateRelativeTime(j.CreatedOn),
+                })
                 .ToList()
                 .FirstOrDefault();
 
