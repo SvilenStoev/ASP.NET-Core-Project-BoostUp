@@ -3,12 +3,12 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
 
+    using AutoMapper;
     using BoostUp.Models.Jobs;
     using BoostUp.Services.Jobs;
     using BoostUp.Infrastructure;
-    using BoostUp.Services.Recruiters;
-    using AutoMapper;
     using BoostUp.Services.Users;
+    using BoostUp.Services.Recruiters;
 
     public class JobsController : Controller
     {
@@ -17,7 +17,7 @@
         private readonly IUserService users;
         private readonly IMapper mapper;
 
-        public JobsController(IJobService jobs, IRecruiterService recruiters, IMapper mapper, IUserService users)
+        public JobsController(IJobService jobs, IRecruiterService recruiters, IUserService users, IMapper mapper)
         {
             this.jobs = jobs;
             this.users = users;
