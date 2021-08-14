@@ -25,8 +25,6 @@
             this.mapper = mapper;
         }
 
-        public int JobViews { get; set; }
-
         [Authorize]
         public IActionResult Add(int companyId)
         {
@@ -193,10 +191,7 @@
                 return RedirectToAction(nameof(All));
             }
 
-            this.JobViews++;
-
-            job.Views = this.JobViews;
-
+            job.Views = this.jobs.JobViews(id);
             job.RecruiterFullName = this.users.FirstNameById(job.UserId) + " " + this.users.LastNameById(job.UserId);
 
             return View(job);

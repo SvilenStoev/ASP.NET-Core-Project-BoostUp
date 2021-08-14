@@ -14,6 +14,7 @@
     using static BoostUp.Data.DataConstants.User;
     using static BoostUp.Data.DataConstants.Address;
     using System;
+    using BoostUp.Infrastructure;
 
     public partial class IndexModel : PageModel
     {
@@ -68,24 +69,14 @@
             [Display(Name = "Date of birth")]
             public DateTime? DateOfBirth { get; set; }
 
-            [Required]
-            [EmailAddress]
-            [Display(Name = "Email")]
-            public string Email { get; set; }
-
             [Display(Name = "About")]
             public string About { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-            [DataType(DataType.Password)]
-            [Display(Name = "Password")]
-            public string Password { get; set; }
+            [Display(Name = "Education")]
+            public string Education { get; set; }
 
-            [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-            public string ConfirmPassword { get; set; }
+            [Display(Name = "Experience")]
+            public string Experience { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -95,27 +86,27 @@
             {
                 return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
             }
-
             // await this.LoadAsync(user);
             return this.Page();
         }
 
+
         public async Task<IActionResult> OnPostAsync()
         {
-            var user = await this.userManager.GetUserAsync(this.User);
+            var user = await this.userManager.GetUserAsync(User);
 
             if (user == null)
             {
                 return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
             }
 
-            user.UserName = this.Input.Email;
-            user.Email = this.Input.Email;
             user.LastName = this.Input.LastName;
             user.FirstName = this.Input.FirstName;
             user.Gender = this.Input.Gender;
             user.DateOfBirth = this.Input.DateOfBirth;
             user.About = this.Input.About;
+            user.Education = this.Input.Education;
+            user.Experience = this.Input.Experience;
 
             var result = await userManager.UpdateAsync(user);
 
@@ -127,7 +118,7 @@
 
             await this.signInManager.RefreshSignInAsync(user);
             this.StatusMessage = "Your profile has been updated";
-            return this.RedirectToPage();
+            return Page();
         }
     }
 }

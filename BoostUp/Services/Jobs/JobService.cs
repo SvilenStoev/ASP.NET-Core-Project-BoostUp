@@ -200,6 +200,22 @@
                  })
                  .ToList();
 
+        public int JobViews(int id)
+        {
+            var job = this.data.Jobs.Find(id);
+
+            if (job == null)
+            {
+                return 0;
+            }
+
+            var jobViews = ++job.Views;
+
+            this.data.SaveChanges();
+
+            return jobViews;
+        }
+
         private static string CalculateRelativeTime(DateTime createdOn)
         {
             int SECOND = 1;

@@ -48,6 +48,8 @@
 
         IEnumerable<JobEmploymentTypeServiceModel> AllEmploymentTypes();
 
+        int JobViews(int jobId);
+
         bool IsByRecruiter(int jobId, string userId);
 
         bool EmploymentTypeExists(int employmentTypeId);

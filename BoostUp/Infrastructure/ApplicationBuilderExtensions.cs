@@ -136,22 +136,29 @@
                     const string adminEmail = "admin@boostup.com";
                     const string adminPassword = "admin123";
 
-                    var user = new User
+                    var admin = new User
                     {
                         Email = adminEmail,
                         UserName = adminEmail,
-                        FirstName = "Admin",
-                        Gender = GenderType.Unknown,
+                        FirstName = "Svilen",
+                        LastName = "Stoev",
+                        Gender = GenderType.Male,
+                        DateOfBirth = new DateTime(1993, 12, 6),
                         Address = new Address
                         {
                             Country = "Bulgaria",
                             City = "Sofia",
+                            AddressText = "Gotse Delchev 108A",
                         }
                     };
 
-                    await userManager.CreateAsync(user, adminPassword);
+                    var result = await userManager.CreateAsync(admin, adminPassword);
+                    await userManager.AddToRoleAsync(admin, role.Name);
 
-                    await userManager.AddToRoleAsync(user, role.Name);
+                    if (!result.Succeeded)
+                    {
+                        throw new Exception(string.Join(Environment.NewLine, result.Errors.Select(e => e.Description)));
+                    }
                 })
                 .GetAwaiter()
                 .GetResult();

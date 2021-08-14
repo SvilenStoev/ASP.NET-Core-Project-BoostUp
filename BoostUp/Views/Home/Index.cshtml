@@ -2,7 +2,6 @@
 @using BoostUp.Data.Models
 
 @inject SignInManager<User> SignInManager
-@model IndexViewModel
 
 @{
     ViewBag.Title = "Home";
@@ -47,23 +46,48 @@
     </a>
 </div>
 
-<div class="jumbotron jumbotron-fluid text-center shadow">
+<div class="row mt-5" id="statistics-button">
+    <div class="col-12 text-center">
+        <button class="btn btn-outline-primary"><b>BoostUp</b> Statistics</button>
+    </div>
+</div>
+
+<div class="jumbotron jumbotron-fluid text-center shadow d-none" id="statistics">
     <ul class="list-inline mb-0">
         <li class="list-inline-item col-lg-2 col-sm-4">
-            <h3 class="font-weight-bold mb-0 d-block">@Model.TotalCompanies</h3>
-            <h4 class="text-muted">@(Model.TotalCompanies == 1 ? "Company" : "Companies")</h4>
+            <h3 class="font-weight-bold mb-0 d-block" id="total-companies"></h3>
+            <h4 class="text-muted" id="total-companies-text"></h4>
         </li>
         <li class="list-inline-item col-lg-2 col-sm-4">
-            <h3 class="font-weight-bold mb-0 d-block">@Model.TotalJobs</h3>
-            <h4 class="text-muted">@(Model.TotalJobs == 1 ? "Job" : "Jobs")</h4>
+            <h3 class="font-weight-bold mb-0 d-block" id="total-jobs"></h3>
+            <h4 class="text-muted" id="total-jobs-text"></h4>
         </li>
         <li class="list-inline-item col-lg-2 col-sm-4">
-            <h3 class="font-weight-bold mb-0 d-block">@Model.TotalUsers</h3>
-            <h4 class="text-muted">@(Model.TotalUsers == 1 ? "User" : "Users")</h4>
+            <h3 class="font-weight-bold mb-0 d-block" id="total-users"></h3>
+            <h4 class="text-muted" id="total-users-text"></h4>
         </li>
         <li class="list-inline-item col-lg-2 col-sm-4">
-            <h3 class="font-weight-bold mb-0 d-block">@Model.TotalRecruiters</h3>
-            <h4 class="text-muted">@(Model.TotalRecruiters == 1 ? "Recruiter" : "Recruiters")</h4>
+            <h3 class="font-weight-bold mb-0 d-block" id="total-recruiters"></h3>
+            <h4 class="text-muted" id="total-recruiters-text"></h4>
         </li>
     </ul>
 </div>
+
+@section Scripts {
+    <script>
+        $('#statistics-button').on('click', ev => {
+            $.get('/api/statistics', (data) => {
+                $('#total-companies').text(data.totalCompanies);
+                $('#total-companies-text').text(data.totalCompanies == 1 ? "Company" : "Companies");
+                $('#total-jobs').text(data.totalJobs);
+                $('#total-jobs-text').text(data.totalJobs == 1 ? "Job" : "Jobs");
+                $('#total-users').text(data.totalUsers);
+                $('#total-users-text').text(data.totalUsers == 1 ? "User" : "Users");
+                $('#total-recruiters').text(data.totalRecruiters);
+                $('#total-recruiters-text').text(data.totalRecruiters == 1 ? "Recruiter" : "Recruiters");
+                $('#statistics').removeClass('d-none');
+                $('#statistics-button').hide();
+            });
+        });
+    </script>
+}
