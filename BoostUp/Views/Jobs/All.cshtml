@@ -61,7 +61,7 @@ else
 {
     if (Model.CompanyId > 0 && Model.CurrentPage == 1)
     {
-        <h3 class="text-center mt-3 mb-5">@Model.TotalJobs @(Model.TotalJobs == 1 ? "job" : "jobs") found for @Model.Jobs.Select(j => j.CompanyName).FirstOrDefault()</h3>
+        <h3 class="text-center mt-3 mb-5">@Model.TotalJobs @(Model.TotalJobs == 1 ? "job" : "jobs") found for @Model.Jobs.Select(j => j.Company.Name).FirstOrDefault()</h3>
     }
 
     <!-- Pagination -->

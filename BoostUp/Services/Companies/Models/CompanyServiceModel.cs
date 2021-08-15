@@ -1,6 +1,6 @@
 ﻿namespace BoostUp.Services.Companies.Models
 {
-    public class CompanyServiceModel
+    public class CompanyServiceModel : ICompanyModel
     {
         public int Id { get; init; }
 
@@ -10,9 +10,9 @@
 
         public string LogoUrl { get; set; }
 
-        public string AddressCity { get; set; }
+        public string City { get; set; }
 
-        public string AddressCountry { get; set; }
+        public string Country { get; set; }
 
         public string CategoryName { get; set; }
 

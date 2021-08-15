@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class JobServiceModel
+    public class JobServiceModel : IJobModel
     {
         public int Id { get; init; }
 
@@ -23,8 +23,6 @@
 
         public string City { get; set; }
 
-        public string CompanyName { get; set; }
-
-        public string CompanyLogoUrl { get; set; }
+        public JobCompanyDetailsServiceModel Company { get; set; }
     }
 }

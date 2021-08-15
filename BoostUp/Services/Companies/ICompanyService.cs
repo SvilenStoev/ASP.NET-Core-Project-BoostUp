@@ -44,6 +44,8 @@
 
         bool BecomeEmployee(string userId, int id);
 
+        public string InformationById(int id);
+
         bool IsEmployee(string userId, int id);
 
         IEnumerable<string> AllCountries();

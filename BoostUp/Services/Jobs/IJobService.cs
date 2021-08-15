@@ -50,6 +50,8 @@
 
         int JobViews(int jobId);
 
+        public string InformationById(int id);
+
         bool IsByRecruiter(int jobId, string userId);
 
         bool EmploymentTypeExists(int employmentTypeId);

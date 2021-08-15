@@ -52,7 +52,7 @@
                     <p>
                         <a asp-controller="Companies"
                            asp-action="BecomeEmployee"
-                           asp-route-companyId="@Model.Id"
+                           asp-route-id="@Model.Id"
                            asp-route-companyName="@Model.Name"
                            asp-route-userFirstName="@Model.UserFirstName" class="text-warning">
                             <b><i>Yes</i></b>
@@ -84,7 +84,7 @@
             }
             <p class="card-text mb-2"><b>Industry:</b> @Model.IndustryName</p>
             <p class="card-text mb-2"><b>Company size:</b> @Model.CategoryName &nbsp<i>/@Model.EmployeesCount on <b>BoostUp</b>/</i></p>
-            <p class="card-text mb-2"><b>Location:</b> @Model.AddressCity, @Model.AddressCountry</p>
+            <p class="card-text mb-2"><b>Location:</b> @Model.City, @Model.Country</p>
             @if (Model.AddressText != null)
             {
                 <p class="card-text mb-2"><b>Address:</b> @Model.AddressText</p>

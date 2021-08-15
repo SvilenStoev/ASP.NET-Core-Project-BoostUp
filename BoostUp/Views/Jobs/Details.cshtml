@@ -1,7 +1,7 @@
 ﻿@model JobDetailsServiceModel
 
 @{
-    ViewBag.Title = $"{Model.JobTitle} | {Model.CompanyName}";
+    ViewBag.Title = $"{Model.JobTitle} | {Model.Company.Name}";
 }
 
 <div class="offset-lg-2 col-lg-8">
@@ -10,23 +10,24 @@
             <div class="row">
                 <div class="col-8">
                     <div class="mb-2">
-                        @if (Model.CompanyLogoUrl != null)
+                        @if (Model.Company.LogoUrl != null)
                         {
-                            <img class="rounded-circle mb-2 img-thumbnail shadow" width="100" height="100" src="@Model.CompanyLogoUrl" alt="@Model.CompanyName - Logo">
+                            <img class="rounded-circle mb-2 img-thumbnail shadow" width="100" height="100" src="@Model.Company.LogoUrl" alt="@Model.Company.Name - Logo">
                         }
                         else
                         {
-                            <img class="rounded-circle mb-2 img-thumbnail shadow" width="100" height="100" src="~/default pictures/Company Logo.jpg" alt="@Model.CompanyName - Logo">
+                            <img class="rounded-circle mb-2 img-thumbnail shadow" width="100" height="100" src="~/default pictures/Company Logo.jpg" alt="@Model.Company.Name - Logo">
                         }
                     </div>
                     <h4 class="card-title mt-1 mb-2"><b>@Model.JobTitle</b></h4>
                     <h6 class="text-dark">
                         <a asp-controller="Companies"
                            asp-action="Details"
-                           asp-route-id="@Model.CompanyId">@Model.CompanyName</a> &bull; @Model.City, @Model.Country <b>|</b> <span class="text-info">@Model.RelativeTime</span> &bull; <span class="text-info">Views: @Model.Views</span>
+                           asp-route-information="@Model.Company.CompanyInformation()"
+                           asp-route-id="@Model.Company.Id">@Model.Company.Name</a> &bull; @Model.City, @Model.Country <b>|</b> <span class="text-info">@Model.RelativeTime</span> &bull; <span class="text-info">Views: @Model.Views</span>
                     </h6>
                     <h6 class="card-text mt-4 mb-3">&#x1F4BC; @Model.EmploymentType</h6>
-                    <h6 class="card-text mb-3">&#x1F3E2; @Model.CompanyCategory &bull; @Model.CompanyIndustry</h6>
+                    <h6 class="card-text mb-3">&#x1F3E2; @Model.Company.Category &bull; @Model.Company.Industry</h6>
                     @if (Model.AddressText != null)
                     {
                         <h6 class="card-text mb-3">&#x1F5FA; @Model.AddressText </h6>
@@ -67,7 +68,10 @@
                 <h5 class="card-text mt-2 mb-4"><b><u>Recruiter details</u></b></h5>
                 <p class="card-text mb-2">&#x1F471; <b><a asp-controller="Users" asp-action="Profile" asp-route-id="@Model.UserId">@Model.RecruiterFullName</a></b></p>
                 <p class="card-text mb-2">&#9993; <b><a href="#">@Model.RecruiterEmail</a></b></p>
-                <p class="card-text mb-2">&#x260E; <b>@Model.RecruiterPhoneNumber</b></p>
+                @if (Model.RecruiterPhoneNumber != null)
+                {
+                    <p class="card-text mb-2">&#x260E; <b>@Model.RecruiterPhoneNumber</b></p>
+                }
             </div>
         </div>
     </div>

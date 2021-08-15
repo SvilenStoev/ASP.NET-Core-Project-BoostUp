@@ -64,7 +64,7 @@
                 return View(job);
             }
 
-            int jobId = this.jobs.Create(
+            int id = this.jobs.Create(
                 job.JobTitle,
                 job.Address.Country,
                 job.Address.City,
@@ -76,9 +76,11 @@
                 job.SalaryRangeTo,
                 job.CompanyId);
 
-            TempData[GlobalMessageKey] = "You have add a job successfully.";
+            TempData[GlobalMessageKey] = "You have add the job successfully!";
 
-            return RedirectToAction(nameof(Details));
+            var information = this.jobs.InformationById(id);
+
+            return RedirectToAction(nameof(Details), new { id, information });
         }
 
         public IActionResult All([FromQuery] JobsQueryModel query)
@@ -188,12 +190,14 @@
         }
 
         [Authorize]
-        public IActionResult Details(int id)
+        public IActionResult Details(int id, string information)
         {
             var job = this.jobs.Details(id);
 
-            if (job == null)
+            if (job == null || job.JobInformation() != information)
             {
+                TempData[GlobalMessageKey] = "Oops... The job does not exist!";
+
                 return RedirectToAction(nameof(All));
             }
 

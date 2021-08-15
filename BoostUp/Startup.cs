@@ -10,13 +10,13 @@ namespace BoostUp
     using Microsoft.Extensions.DependencyInjection;
 
     using BoostUp.Data;
+    using BoostUp.Data.Models;
     using BoostUp.Infrastructure;
     using BoostUp.Services.Jobs;
+    using BoostUp.Services.Users;
     using BoostUp.Services.Companies;
     using BoostUp.Services.Statistics;
     using BoostUp.Services.Recruiters;
-    using BoostUp.Data.Models;
-    using BoostUp.Services.Users;
     using BoostUp.Services.Friendships;
 
     public class Startup
@@ -84,6 +84,12 @@ namespace BoostUp
                 .UseEndpoints(endpoints =>
                 {
                     endpoints.MapDefaultAreaRoute();
+
+                    endpoints.MapControllerRoute(
+                        name: "Company Details",
+                        pattern: "/Companies/Details/{id}/{information}",
+                        defaults: new { controller = "Companies", action = "Details"});
+
                     endpoints.MapDefaultControllerRoute();
                     endpoints.MapRazorPages();
                 });

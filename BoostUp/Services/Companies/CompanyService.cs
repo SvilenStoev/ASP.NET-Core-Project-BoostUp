@@ -9,6 +9,7 @@
     using BoostUp.Data.Models;
     using Microsoft.Extensions.Caching.Memory;
     using System;
+    using System.Text;
 
     public class CompanyService : ICompanyService
     {
@@ -66,8 +67,8 @@
                     Name = c.Name,
                     Founded = c.Founded,
                     LogoUrl = c.LogoUrl,
-                    AddressCity = c.Address.City,
-                    AddressCountry = c.Address.Country,
+                    City = c.Address.City,
+                    Country = c.Address.Country,
                     CategoryName = c.Category.Value, //TODO: Show employees count
                     IndustryName = c.Industry.Value
                 })
@@ -169,8 +170,8 @@
                 LogoUrl = c.LogoUrl,
                 WebsiteUrl = c.WebsiteUrl,
                 Overview = c.Overview,
-                AddressCountry = c.Address.Country,
-                AddressCity = c.Address.City,
+                Country = c.Address.Country,
+                City = c.Address.City,
                 AddressText = c.Address.AddressText,
                 CategoryId = c.CategoryId,
                 CategoryName = c.Category.Value,
@@ -202,6 +203,17 @@
             this.data.SaveChanges();
 
             return true;
+        }
+
+        public string InformationById(int id)
+        {
+            var sb = new StringBuilder();
+
+            var company = this.data.Companies.Find(id);
+
+            sb.Append($"{company.Name}-{company.Founded}");
+
+            return sb.ToString();
         }
 
         public bool IsEmployee(string userId, int id)

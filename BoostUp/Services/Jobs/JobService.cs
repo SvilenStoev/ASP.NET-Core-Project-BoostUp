@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using AutoMapper;
-    using AutoMapper.QueryableExtensions;
     using BoostUp.Data;
     using BoostUp.Data.Models;
     using BoostUp.Models.Jobs;
@@ -161,20 +161,24 @@
                     Country = j.Address.Country,
                     City = j.Address.City,
                     AddressText = j.Address.AddressText,
-                    CompanyName = j.Company.Name,
                     Description = j.Description,
                     SalaryRangeFrom = j.SalaryRangeFrom,
                     SalaryRangeTo = j.SalaryRangeTo,
-                    CompanyLogoUrl = j.Company.LogoUrl,
                     EmploymentType = j.EmploymentType.Value,
                     RecruiterId = j.RecruiterId,
                     RecruiterEmail = j.Recruiter.Email,
                     RecruiterPhoneNumber = j.Recruiter.PhoneNumber,
                     RecruiterCompanyName = j.Recruiter.Company.Name,
                     UserId = j.Recruiter.UserId,
-                    CompanyId = j.CompanyId,
-                    CompanyCategory = j.Company.Category.Value,
-                    CompanyIndustry = j.Company.Industry.Value,
+                    Company = new JobCompanyDetailsServiceModel
+                    {
+                        Id = j.CompanyId,
+                        Category = j.Company.Category.Value,
+                        Industry = j.Company.Industry.Value,
+                        Name = j.Company.Name,
+                        Founded = j.Company.Founded,
+                        LogoUrl = j.Company.LogoUrl,
+                    },
                     RelativeTime = CalculateRelativeTime(j.CreatedOn),
                 })
                 .ToList()
@@ -233,6 +237,17 @@
             this.data.SaveChanges();
 
             return jobViews;
+        }
+
+        public string InformationById(int id)
+        {
+            var sb = new StringBuilder();
+
+            var job = this.data.Jobs.Find(id);
+
+            sb.Append($"{job.JobTitle}");
+
+            return sb.ToString();
         }
 
         private static string CalculateRelativeTime(DateTime createdOn)
@@ -301,10 +316,13 @@
                     EmploymentType = j.EmploymentType.Value,
                     SalaryRangeFrom = j.SalaryRangeFrom,
                     SalaryRangeTo = j.SalaryRangeTo,
-                    CompanyName = j.Company.Name,
+                    Company = new JobCompanyDetailsServiceModel
+                    {
+                        Name = j.Company.Name,
+                        LogoUrl = j.Company.LogoUrl,
+                    },
                     Country = j.Address.Country,
                     City = j.Address.City,
-                    CompanyLogoUrl = j.Company.LogoUrl,
                     RelativeTime = CalculateRelativeTime(j.CreatedOn)
                 })
                 .ToList();

@@ -8,25 +8,28 @@
                 <div class="card-body">
                     <div class="mb-2">
                         <a asp-action="Details" asp-controller="Jobs" asp-route-id="@job.Id">
-                            @if (job.CompanyLogoUrl != null)
+                            @if (job.Company.LogoUrl != null)
                             {
-                                <img class="rounded-circle mb-2 img-thumbnail shadow" width="100" height="100" src="@job.CompanyLogoUrl" alt="@job.CompanyName - Logo">
+                                <img class="rounded-circle mb-2 img-thumbnail shadow" width="100" height="100" src="@job.Company.LogoUrl" alt="@job.Company.Name - Logo">
                             }
                             else
                             {
-                                <img class="rounded-circle mb-2 img-thumbnail shadow" width="100" height="100" src="~/default pictures/Company Logo.jpg" alt="@job.CompanyName - Logo">
+                                <img class="rounded-circle mb-2 img-thumbnail shadow" width="100" height="100" src="~/default pictures/Company Logo.jpg" alt="@job.Company.Name - Logo">
                             }
                         </a>
                     </div>
                     <h5 class="card-title mb-1"><b>@job.JobTitle</b></h5>
                     <h6 class="card-text mb-3">@job.EmploymentType</h6>
-                    <h6 class="card-text mb-1">@job.CompanyName</h6>
+                    <h6 class="card-text mb-1">@job.Company.Name</h6>
                     <p class="card-text mb-3"><i>@job.City, @job.Country</i></p>
                     @if (job.SalaryRangeFrom != null)
                     {
                         <h6 class="card-text mb-2">Salary: @job.SalaryRangeFrom @(job.SalaryRangeTo != null ? $"- {job.SalaryRangeTo}" : string.Empty)</h6>
                     }
-                    <a asp-action="Details" asp-controller="Jobs" asp-route-id="@job.Id" class="btn btn-outline-primary shadow mt-2">Details</a>
+                    <a asp-action="Details" 
+                       asp-controller="Jobs" 
+                       asp-route-id="@job.Id" 
+                       asp-route-information="@job.JobInformation()" class="btn btn-outline-primary shadow mt-2">Details</a>
                     @if (ViewBag.AllowJobEdit == true || User.IsAdmin())
                     {
                         <a asp-action="Edit" asp-controller="Jobs" asp-route-id="@job.Id" class="btn btn-outline-warning shadow mt-2">Edit</a>

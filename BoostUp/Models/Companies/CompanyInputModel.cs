@@ -10,7 +10,7 @@
 
     using static Data.DataConstants.Company;
 
-    public class CompanyInputModel
+    public class CompanyInputModel : ICompanyModel
     {
         [Display(Name = "Company name")]
         [Required(ErrorMessage = "{0} is required.")]

@@ -86,9 +86,14 @@ else
                         <h5 class="card-title text-center mb-2"><b>@company.Name</b></h5>
                         <p class="card-text text-center mb-3"><i>@company.CategoryName</i></p>
                         <p class="card-text mb-2"><b>Industry:</b> @company.IndustryName</p>
-                        <p class="card-text mb-2"><b>Location:</b> @company.AddressCity, @company.AddressCountry</p>
+                        <p class="card-text mb-2"><b>Location:</b> @company.City, @company.Country</p>
                         <p class="card-text mb-2"><b>Founded:</b> @company.Founded</p>
-                        <a asp-action="Details" asp-controller="Companies" asp-route-id="@company.Id" class="btn btn-outline-primary shadow">Details</a>
+                        <a asp-action="Details"
+                           asp-controller="Companies"
+                           asp-route-id="@company.Id"
+                           asp-route-information="@company.CompanyInformation()" class="btn btn-outline-primary shadow">
+                            Details
+                        </a>
                     </div>
                 </div>
             </div>

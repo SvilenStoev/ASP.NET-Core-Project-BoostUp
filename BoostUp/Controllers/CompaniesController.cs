@@ -68,7 +68,7 @@
 
             TempData[GlobalMessageKey] = "Your company was added successfully. Now it has to be approved by the administrator.";
 
-            return RedirectToAction(nameof(Details), new { id = companyId });
+            return RedirectToAction(nameof(All));
         }
 
         public IActionResult All([FromQuery] CompaniesQueryModel query)
@@ -93,12 +93,14 @@
         }
 
         [Authorize]
-        public IActionResult Details(int id)
+        public IActionResult Details(int id, string information)
         {
             var company = this.companies.Details(id);
 
-            if (company == null)
+            if (company == null || company.CompanyInformation() != information)
             {
+                TempData[GlobalMessageKey] = "Oops... The company does not exist!";
+
                 return RedirectToAction(nameof(All));
             }
 
@@ -118,15 +120,17 @@
 
         [HttpPost]
         [Authorize]
-        public IActionResult BecomeEmployee(int companyId)
+        public IActionResult BecomeEmployee(int id)
         {
             var userId = this.User.GetId();
 
-            this.companies.BecomeEmployee(userId, companyId);
+            this.companies.BecomeEmployee(userId, id);
 
-            TempData[GlobalMessageKey] = "Your company was changes successfully.";
+            TempData[GlobalMessageKey] = "Your workplace was changed successfully.";
 
-            return RedirectToAction(nameof(Details), new { id = companyId });
+            var information = this.companies.InformationById(id);
+
+            return RedirectToAction(nameof(Details), new { id, information });
         }
 
         [Authorize]
@@ -148,8 +152,8 @@
                 WebsiteUrl = company.WebsiteUrl,
                 Address = new AddressInputModel
                 {
-                    Country = company.AddressCountry,
-                    City = company.AddressCity,
+                    Country = company.Country,
+                    City = company.City,
                     AddressText = company.AddressText,
                 },
                 IndustryId = company.IndustryId,
@@ -199,7 +203,9 @@
                 company.LogoUrl,
                 company.WebsiteUrl);
 
-            return RedirectToAction(nameof(Details), new { id });
+            var information = company.CompanyInformation();
+
+            return RedirectToAction(nameof(Details), new { id, information });
         }
     }
 }

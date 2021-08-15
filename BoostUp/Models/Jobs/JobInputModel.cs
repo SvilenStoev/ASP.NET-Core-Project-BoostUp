@@ -10,7 +10,7 @@
 
     using static Data.DataConstants.Job;
 
-    public class JobInputModel
+    public class JobInputModel : IJobModel
     {
         [Display(Name = "Job title")]
         [Required(ErrorMessage = "{0} is required.")]

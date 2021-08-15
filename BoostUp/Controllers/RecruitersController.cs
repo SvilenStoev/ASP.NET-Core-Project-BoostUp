@@ -8,13 +8,18 @@
     using BoostUp.Services.Recruiters;
 
     using static GlobalConstants;
+    using BoostUp.Services.Companies;
 
     public class RecruitersController : Controller
     {
         private readonly IRecruiterService recruiters;
+        private readonly ICompanyService companies;
 
-        public RecruitersController(IRecruiterService recruiters) 
-            => this.recruiters = recruiters;
+        public RecruitersController(IRecruiterService recruiters, ICompanyService companies)
+        {
+            this.recruiters = recruiters;
+            this.companies = companies;
+        }
 
         [Authorize]
         public IActionResult Become(int companyId)
@@ -48,16 +53,20 @@
                 recruiter.Email,
                 recruiter.PhoneNumber);
 
-            TempData[GlobalMessageKey] = "You have become recruiter. You can post jobs now.";
-
             var companyId = recruiter.CompanyId;
-
+            
             if (companyId != 0)
             {
-                return RedirectToAction("Details", "Companies", new { id = companyId });
+                TempData[GlobalMessageKey] = "You have become recruiter! Now you can post jobs to the company.";
+
+                var information = this.companies.InformationById(companyId);
+
+                return RedirectToAction("Details", "Companies", new { id = companyId, information });
             }
             else
             {
+                TempData[GlobalMessageKey] = "You have become recruiter! Now you can post jobs to any company through its details.";
+
                 return RedirectToAction("All", "Companies");
             }
         }

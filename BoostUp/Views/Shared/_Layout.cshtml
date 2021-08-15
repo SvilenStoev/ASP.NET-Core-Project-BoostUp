@@ -40,8 +40,7 @@
         @if (TempData.ContainsKey(GlobalConstants.GlobalMessageKey))
         {
             <div class="alert alert-success text-center" role="alert">
-                <h4 class="mb-2">Well done!</h4>
-                <h6>@TempData[GlobalConstants.GlobalMessageKey]</h6>
+                <h5 class="mt-2">@TempData[GlobalConstants.GlobalMessageKey]</h5>
             </div>
         }
         <main role="main" class="pb-3">
