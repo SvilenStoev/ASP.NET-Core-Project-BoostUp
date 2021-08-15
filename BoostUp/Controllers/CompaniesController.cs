@@ -9,6 +9,8 @@
     using BoostUp.Services.Companies;
     using BoostUp.Services.Users;
 
+    using static GlobalConstants;
+    using Microsoft.Extensions.Caching.Memory;
 
     public class CompaniesController : Controller
     {
@@ -64,7 +66,9 @@
                 company.LogoUrl,
                 company.WebsiteUrl);
 
-            return RedirectToAction(nameof(All));
+            TempData[GlobalMessageKey] = "Your company was added successfully. Now it has to be approved by the administrator.";
+
+            return RedirectToAction(nameof(Details), new { id = companyId });
         }
 
         public IActionResult All([FromQuery] CompaniesQueryModel query)
@@ -119,6 +123,8 @@
             var userId = this.User.GetId();
 
             this.companies.BecomeEmployee(userId, companyId);
+
+            TempData[GlobalMessageKey] = "Your company was changes successfully.";
 
             return RedirectToAction(nameof(Details), new { id = companyId });
         }
@@ -193,7 +199,7 @@
                 company.LogoUrl,
                 company.WebsiteUrl);
 
-            return RedirectToAction(nameof(All));
+            return RedirectToAction(nameof(Details), new { id });
         }
     }
 }

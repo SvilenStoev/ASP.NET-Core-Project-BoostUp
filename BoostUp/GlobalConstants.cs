@@ -5,6 +5,8 @@
 
     public static class GlobalConstants
     {
+        public const string GlobalMessageKey = "GlobalMessage";
+
         public static string[] AllowedImageExtensions => new[] { "jpg", "jpeg", "png", "gif", "tiff", "psd", "pdf", "eps" };
 
         public static string DefaultCompanyLogoPath => "/default pictures/Company Logo.jpg";

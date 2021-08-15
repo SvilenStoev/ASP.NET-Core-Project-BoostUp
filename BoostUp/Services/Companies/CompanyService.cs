@@ -7,13 +7,19 @@
     using BoostUp.Models.Companies;
     using BoostUp.Services.Companies.Models;
     using BoostUp.Data.Models;
+    using Microsoft.Extensions.Caching.Memory;
+    using System;
 
     public class CompanyService : ICompanyService
     {
         private readonly BoostUpDbContext data;
+        private readonly IMemoryCache cache;
 
-        public CompanyService(BoostUpDbContext data)
-            => this.data = data;
+        public CompanyService(BoostUpDbContext data, IMemoryCache cache)
+        {
+            this.data = data;
+            this.cache = cache;
+        }
 
         public CompanyQueryServiceModel All(
             string country,
@@ -213,24 +219,56 @@
                 .ToList();
 
         public IEnumerable<CompanyIndustryServiceModel> AllIndustries()
-              => this.data
-                  .Industries
-                  .Select(i => new CompanyIndustryServiceModel
-                  {
-                      Id = i.Id,
-                      Value = i.Value
-                  })
-                  .ToList();
+        {
+            const string allIndustriesCacheKey = "allIndustriesCacheKey";
+
+            var industries = this.cache.Get<IEnumerable<CompanyIndustryServiceModel>>(allIndustriesCacheKey);
+
+            if (industries == null)
+            {
+                industries = this.data
+                    .Industries
+                    .Select(i => new CompanyIndustryServiceModel
+                    {
+                        Id = i.Id,
+                        Value = i.Value
+                    })
+                    .ToList();
+
+                var cacheOptions = new MemoryCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromHours(12));
+
+                this.cache.Set(allIndustriesCacheKey, industries, cacheOptions);
+            }
+
+            return industries;
+        }
 
         public IEnumerable<CompanyCategoryServiceModel> AllCategories()
-               => this.data
-                   .Categories
-                   .Select(c => new CompanyCategoryServiceModel
-                   {
-                       Id = c.Id,
-                       Value = c.Value
-                   })
-                   .ToList();
+        {
+            const string allCategoriesCacheKey = "allCategoriesCacheKey";
+
+            var categories = this.cache.Get<IEnumerable<CompanyCategoryServiceModel>>(allCategoriesCacheKey);
+
+            if (categories == null)
+            {
+                categories = this.data
+                    .Categories
+                    .Select(c => new CompanyCategoryServiceModel
+                    {
+                        Id = c.Id,
+                        Value = c.Value
+                    })
+                    .ToList();
+
+                var cacheOptions = new MemoryCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromHours(12));
+
+                this.cache.Set(allCategoriesCacheKey, categories, cacheOptions);
+            }
+
+            return categories;
+        }
 
         public bool IndustryExists(int industryId)
            => this.data

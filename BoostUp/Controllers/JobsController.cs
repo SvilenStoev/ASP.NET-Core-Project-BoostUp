@@ -10,6 +10,8 @@
     using BoostUp.Services.Users;
     using BoostUp.Services.Recruiters;
 
+    using static GlobalConstants;
+
     public class JobsController : Controller
     {
         private readonly IJobService jobs;
@@ -73,6 +75,8 @@
                 job.SalaryRangeFrom,
                 job.SalaryRangeTo,
                 job.CompanyId);
+
+            TempData[GlobalMessageKey] = "You have add a job successfully.";
 
             return RedirectToAction(nameof(Details));
         }
@@ -177,6 +181,8 @@
                   job.SalaryRangeFrom,
                   job.SalaryRangeTo,
                   job.CompanyId);
+
+            TempData[GlobalMessageKey] = "Your job was edited successfully.";
 
             return RedirectToAction(nameof(All));
         }

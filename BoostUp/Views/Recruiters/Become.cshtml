@@ -19,6 +19,7 @@
                     <input asp-for="PhoneNumber" class="form-control shadow" placeholder="(+359)-888-888-888">
                     <span asp-validation-for="PhoneNumber" class="small text-danger"></span>
                 </div>
+                <input type="hidden" asp-route-companyId="@Model.CompanyId" />
                 <input type="submit" class="btn btn-outline-primary shadow" value="Save" />
             </form>
         </div>

@@ -9,16 +9,19 @@
     using BoostUp.Data.Models;
     using BoostUp.Models.Jobs;
     using BoostUp.Services.Jobs.Models;
+    using Microsoft.Extensions.Caching.Memory;
 
     public class JobService : IJobService
     {
         private readonly BoostUpDbContext data;
         private readonly IMapper mapper;
+        private readonly IMemoryCache cache;
 
-        public JobService(BoostUpDbContext data, IMapper mapper)
+        public JobService(BoostUpDbContext data, IMapper mapper, IMemoryCache cache)
         {
             this.data = data;
             this.mapper = mapper;
+            this.cache = cache;
         }
 
         public JobQueryServiceModel All(
@@ -191,14 +194,30 @@
                 .ToList();
 
         public IEnumerable<JobEmploymentTypeServiceModel> AllEmploymentTypes()
-            => this.data
-                 .EmploymentTypes
-                 .Select(et => new JobEmploymentTypeServiceModel
-                 {
-                     Id = et.Id,
-                     Value = et.Value
-                 })
-                 .ToList();
+        {
+            const string allEmploymentTypesCacheKey = "";
+
+            var employmentTypes = this.cache.Get<IEnumerable<JobEmploymentTypeServiceModel>>(allEmploymentTypesCacheKey);
+
+            if (employmentTypes == null)
+            {
+                employmentTypes = this.data
+                    .EmploymentTypes
+                    .Select(et => new JobEmploymentTypeServiceModel
+                    {
+                        Id = et.Id,
+                        Value = et.Value
+                    })
+                    .ToList();
+
+                var cacheOptions = new MemoryCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromHours(12));
+
+                this.cache.Set(allEmploymentTypesCacheKey, employmentTypes, cacheOptions);
+            }
+
+            return employmentTypes;
+        }
 
         public int JobViews(int id)
         {

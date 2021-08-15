@@ -34,6 +34,7 @@ namespace BoostUp
 
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddAutoMapper(typeof(Startup));
+            services.AddMemoryCache();
 
             services
                 .AddDefaultIdentity<User>(options =>
