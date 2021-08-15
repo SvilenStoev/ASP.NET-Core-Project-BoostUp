@@ -3,7 +3,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
 
-    using BoostUp.Infrastructure;
+    using BoostUp.Infrastructure.Extensions;
     using BoostUp.Models.Recruiters;
     using BoostUp.Services.Recruiters;
 

@@ -8,12 +8,13 @@
     public interface ICompanyService
     {
         CompanyQueryServiceModel All(
-            string country,
-            int industryId,
-            string searchTerm,
-            CompanySorting sorting,
-            int currentPage,
-            int companiesPerPage);
+            string country = null,
+            int industryId = 0,
+            string searchTerm = null,
+            CompanySorting sorting = CompanySorting.DateCreated,
+            int currentPage = 1,
+            int companiesPerPage = int.MaxValue,
+            bool publicOnly = true);
 
         int Create(
             string name,
@@ -38,7 +39,8 @@
             string city,
             string addressText,
             string logoUrl,
-            string websiteUrl);
+            string websiteUrl,
+            bool isPublic);
 
         CompanyDetailsServiceModel Details(int id);
 
@@ -47,6 +49,8 @@
         public string InformationById(int id);
 
         bool IsEmployee(string userId, int id);
+
+        void Approve(int id);
 
         IEnumerable<string> AllCountries();
 

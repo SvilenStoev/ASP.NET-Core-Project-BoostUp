@@ -10,27 +10,33 @@
     using Microsoft.Extensions.Caching.Memory;
     using System;
     using System.Text;
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
 
     public class CompanyService : ICompanyService
     {
         private readonly BoostUpDbContext data;
         private readonly IMemoryCache cache;
+        private readonly IMapper mapper;
 
-        public CompanyService(BoostUpDbContext data, IMemoryCache cache)
+
+        public CompanyService(BoostUpDbContext data, IMemoryCache cache, IMapper mapper)
         {
             this.data = data;
             this.cache = cache;
+            this.mapper = mapper;
         }
 
         public CompanyQueryServiceModel All(
-            string country,
-            int industryId,
-            string searchTerm,
-            CompanySorting sorting,
-            int currentPage,
-            int companiesPerPage)
+            string country = null,
+            int industryId = 0,
+            string searchTerm = null,
+            CompanySorting sorting = CompanySorting.DateCreated,
+            int currentPage = 1,
+            int companiesPerPage = int.MaxValue,
+            bool publicOnly = true)
         {
-            var companiesQuery = this.data.Companies.AsQueryable();
+            var companiesQuery = this.data.Companies.Where(c => c.IsPublic == publicOnly).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(country))
             {
@@ -110,7 +116,8 @@
                     AddressText = addressText
                 },
                 LogoUrl = logoUrl,
-                WebsiteUrl = websiteUrl
+                WebsiteUrl = websiteUrl,
+                IsPublic = false
             };
 
             this.data.Companies.Add(companyToAdd);
@@ -131,7 +138,8 @@
                string city,
                string addressText,
                string logoUrl,
-               string websiteUrl)
+               string websiteUrl,
+               bool isPublic)
         {
             var company = this.data.Companies.Find(id);
 
@@ -152,6 +160,7 @@
             companyAddress.AddressText = addressText;
             company.LogoUrl = logoUrl;
             company.WebsiteUrl = websiteUrl;
+            company.IsPublic = isPublic;
 
             this.data.SaveChanges();
 
@@ -203,6 +212,15 @@
             this.data.SaveChanges();
 
             return true;
+        }
+
+        public void Approve(int id)
+        {
+            var company = this.data.Companies.Find(id);
+
+            company.IsPublic = true;
+
+            this.data.SaveChanges();
         }
 
         public string InformationById(int id)
@@ -266,11 +284,7 @@
             {
                 categories = this.data
                     .Categories
-                    .Select(c => new CompanyCategoryServiceModel
-                    {
-                        Id = c.Id,
-                        Value = c.Value
-                    })
+                    .ProjectTo<CompanyCategoryServiceModel>(this.mapper.ConfigurationProvider)
                     .ToList();
 
                 var cacheOptions = new MemoryCacheEntryOptions()

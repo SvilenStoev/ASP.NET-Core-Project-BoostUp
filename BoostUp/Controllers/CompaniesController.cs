@@ -3,7 +3,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
 
-    using BoostUp.Infrastructure;
+    using BoostUp.Infrastructure.Extensions;
     using BoostUp.Models.Addresses;
     using BoostUp.Models.Companies;
     using BoostUp.Services.Companies;
@@ -66,7 +66,7 @@
                 company.LogoUrl,
                 company.WebsiteUrl);
 
-            TempData[GlobalMessageKey] = "Your company was added successfully. Now it has to be approved by the administrator.";
+            TempData[GlobalMessageKey] = "Your company was added successfully and is awaiting for approval by the administrator!";
 
             return RedirectToAction(nameof(All));
         }
@@ -126,7 +126,7 @@
 
             this.companies.BecomeEmployee(userId, id);
 
-            TempData[GlobalMessageKey] = "Your workplace was changed successfully.";
+            TempData[GlobalMessageKey] = "Your workplace was changed successfully!";
 
             var information = this.companies.InformationById(id);
 
@@ -167,7 +167,9 @@
         [Authorize]
         public IActionResult Edit(int id, CompanyInputModel company)
         {
-            if (!this.User.IsAdmin())
+            var userIsAdmin = this.User.IsAdmin();
+
+            if (!userIsAdmin)
             {
                 return Unauthorized();
             }
@@ -201,7 +203,10 @@
                 company.Address.City,
                 company.Address.AddressText,
                 company.LogoUrl,
-                company.WebsiteUrl);
+                company.WebsiteUrl,
+                userIsAdmin);
+
+            TempData[GlobalMessageKey] = "The company was edited successfully!";
 
             var information = company.CompanyInformation();
 

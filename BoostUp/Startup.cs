@@ -11,7 +11,7 @@ namespace BoostUp
 
     using BoostUp.Data;
     using BoostUp.Data.Models;
-    using BoostUp.Infrastructure;
+    using BoostUp.Infrastructure.Extensions;
     using BoostUp.Services.Jobs;
     using BoostUp.Services.Users;
     using BoostUp.Services.Companies;
@@ -88,7 +88,12 @@ namespace BoostUp
                     endpoints.MapControllerRoute(
                         name: "Company Details",
                         pattern: "/Companies/Details/{id}/{information}",
-                        defaults: new { controller = "Companies", action = "Details"});
+                        defaults: new { controller = "Companies", action = "Details" });
+
+                    endpoints.MapControllerRoute(
+                        name: "Job Details",
+                        pattern: "/Jobs/Details/{id}/{information}",
+                        defaults: new { controller = "Jobs", action = "Details" });
 
                     endpoints.MapDefaultControllerRoute();
                     endpoints.MapRazorPages();

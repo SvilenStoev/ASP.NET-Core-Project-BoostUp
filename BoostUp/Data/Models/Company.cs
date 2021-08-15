@@ -24,6 +24,8 @@
 
         public int IndustryId { get; set; }
 
+        public bool IsPublic { get; set; }
+
         public Industry Industry { get; init; }
 
         public int CategoryId { get; set; }

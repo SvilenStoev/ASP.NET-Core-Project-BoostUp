@@ -6,7 +6,7 @@
     using AutoMapper;
     using BoostUp.Models.Jobs;
     using BoostUp.Services.Jobs;
-    using BoostUp.Infrastructure;
+    using BoostUp.Infrastructure.Extensions;
     using BoostUp.Services.Users;
     using BoostUp.Services.Recruiters;
 
@@ -184,9 +184,11 @@
                   job.SalaryRangeTo,
                   job.CompanyId);
 
-            TempData[GlobalMessageKey] = "Your job was edited successfully.";
+            TempData[GlobalMessageKey] = $"{(this.User.IsAdmin() ? "The" : "Your")} job was edited successfully.";
 
-            return RedirectToAction(nameof(All));
+            var information = this.jobs.InformationById(id);
+
+            return RedirectToAction(nameof(Details), new { id, information });
         }
 
         [Authorize]

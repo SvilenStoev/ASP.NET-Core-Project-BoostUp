@@ -1,4 +1,4 @@
-﻿namespace BoostUp.Infrastructure
+﻿namespace BoostUp.Infrastructure.Extensions
 {
     using System.Security.Claims;
 

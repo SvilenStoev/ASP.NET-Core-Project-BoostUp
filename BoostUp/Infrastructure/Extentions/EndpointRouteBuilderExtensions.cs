@@ -1,4 +1,4 @@
-﻿namespace BoostUp.Infrastructure
+﻿namespace BoostUp.Infrastructure.Extensions
 {
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Routing;

@@ -7,11 +7,14 @@
     using BoostUp.Data.Models;
     using BoostUp.Services.Users.Models;
     using System.Linq;
+    using BoostUp.Services.Companies.Models;
 
     public class MappingProfile : Profile
     {
         public MappingProfile()
         {
+            this.CreateMap<Category, CompanyCategoryServiceModel>();
+
             this.CreateMap<JobDetailsServiceModel, JobInputModel>()
               .ForMember(j => j.Address, cfg => cfg.MapFrom(jd => new AddressInputModel
               {

@@ -1,4 +1,4 @@
-﻿namespace BoostUp.Infrastructure
+﻿namespace BoostUp.Infrastructure.Extensions
 {
     using BoostUp.Services.Companies.Models;
     using BoostUp.Services.Jobs.Models;

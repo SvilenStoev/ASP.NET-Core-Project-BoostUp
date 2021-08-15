@@ -1,6 +1,6 @@
 ﻿namespace BoostUp.Controllers
 {
-    using BoostUp.Infrastructure;
+    using BoostUp.Infrastructure.Extensions;
     using BoostUp.Models.Users;
     using BoostUp.Services.Friendships;
     using BoostUp.Services.Users;

@@ -1,6 +1,6 @@
 ﻿namespace BoostUp.Controllers
 {
-    using BoostUp.Infrastructure;
+    using BoostUp.Infrastructure.Extensions;
     using BoostUp.Services.Friendships;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;

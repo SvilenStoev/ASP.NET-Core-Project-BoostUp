@@ -50,11 +50,11 @@
         [MaxLength(EducationMaxLength)]
         public string Education { get; set; }
 
-        [InverseProperty("FromUser")]
-        public IEnumerable<Post> OwnPosts { get; set; } = new List<Post>();
+        //[InverseProperty("FromUser")]
+        //public IEnumerable<Post> OwnPosts { get; set; } = new List<Post>();
 
-        [InverseProperty("FromUser")]
-        public IEnumerable<Comment> OwnComments { get; set; } = new List<Comment>();
+        //[InverseProperty("FromUser")]
+        //public IEnumerable<Comment> OwnComments { get; set; } = new List<Comment>();
 
         [InverseProperty("Requester")]
         public IEnumerable<Friendship> FriendshipRequests { get; set; } = new List<Friendship>();
