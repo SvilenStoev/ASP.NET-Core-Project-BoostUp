@@ -1,24 +1,22 @@
 ﻿namespace BoostUp.Services.Companies
 {
-    using System.Linq;
-    using System.Collections.Generic;
-
-    using BoostUp.Data;
-    using BoostUp.Models.Companies;
-    using BoostUp.Services.Companies.Models;
-    using BoostUp.Data.Models;
-    using Microsoft.Extensions.Caching.Memory;
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
+    using BoostUp.Data;
+    using BoostUp.Data.Models;
+    using BoostUp.Models.Companies;
+    using BoostUp.Services.Companies.Models;
+    using Microsoft.Extensions.Caching.Memory;
 
     public class CompanyService : ICompanyService
     {
         private readonly BoostUpDbContext data;
         private readonly IMemoryCache cache;
         private readonly IMapper mapper;
-
 
         public CompanyService(BoostUpDbContext data, IMemoryCache cache, IMapper mapper)
         {
@@ -67,17 +65,7 @@
             var companies = companiesQuery
                 .Skip((currentPage - 1) * companiesPerPage)
                 .Take(companiesPerPage)
-                .Select(c => new CompanyServiceModel
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Founded = c.Founded,
-                    LogoUrl = c.LogoUrl,
-                    City = c.Address.City,
-                    Country = c.Address.Country,
-                    CategoryName = c.Category.Value, //TODO: Show employees count
-                    IndustryName = c.Industry.Value
-                })
+                .ProjectTo<CompanyServiceModel>(this.mapper.ConfigurationProvider)
                 .ToList();
 
             var totalCompanies = companiesQuery.Count();
@@ -171,24 +159,7 @@
         => this.data
             .Companies
             .Where(c => c.Id == id)
-            .Select(c => new CompanyDetailsServiceModel
-            {
-                Id = c.Id,
-                Name = c.Name,
-                Founded = c.Founded,
-                LogoUrl = c.LogoUrl,
-                WebsiteUrl = c.WebsiteUrl,
-                Overview = c.Overview,
-                Country = c.Address.Country,
-                City = c.Address.City,
-                AddressText = c.Address.AddressText,
-                CategoryId = c.CategoryId,
-                CategoryName = c.Category.Value,
-                IndustryId = c.IndustryId,
-                IndustryName = c.Industry.Value,
-                JobsCount = c.Jobs.Count(),
-                EmployeesCount = c.Employees.Count(),
-            })
+            .ProjectTo<CompanyDetailsServiceModel>(this.mapper.ConfigurationProvider)
             .ToList()
             .FirstOrDefault();
 
@@ -258,11 +229,7 @@
             {
                 industries = this.data
                     .Industries
-                    .Select(i => new CompanyIndustryServiceModel
-                    {
-                        Id = i.Id,
-                        Value = i.Value
-                    })
+                    .ProjectTo<CompanyIndustryServiceModel>(this.mapper.ConfigurationProvider)
                     .ToList();
 
                 var cacheOptions = new MemoryCacheEntryOptions()

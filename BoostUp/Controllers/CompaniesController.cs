@@ -11,16 +11,20 @@
 
     using static GlobalConstants;
     using Microsoft.Extensions.Caching.Memory;
+    using AutoMapper;
+    using BoostUp.Services.Companies.Models;
 
     public class CompaniesController : Controller
     {
         private readonly ICompanyService companies;
         private readonly IUserService users;
+        private readonly IMapper mapper;
 
-        public CompaniesController(ICompanyService companies, IUserService users)
+        public CompaniesController(ICompanyService companies, IUserService users, IMapper mapper)
         {
             this.companies = companies;
             this.users = users;
+            this.mapper = mapper;
         }
 
         [Authorize]
@@ -143,24 +147,12 @@
 
             var company = this.companies.Details(id);
 
-            return View(new CompanyInputModel
-            {
-                Name = company.Name,
-                Founded = company.Founded,
-                Overview = company.Overview,
-                LogoUrl = company.LogoUrl,
-                WebsiteUrl = company.WebsiteUrl,
-                Address = new AddressInputModel
-                {
-                    Country = company.Country,
-                    City = company.City,
-                    AddressText = company.AddressText,
-                },
-                IndustryId = company.IndustryId,
-                Industries = this.companies.AllIndustries(),
-                CategoryId = company.CategoryId,
-                Categories = this.companies.AllCategories(),
-            });
+            var companyInput = this.mapper.Map<CompanyInputModel>(company);
+
+            companyInput.Industries = this.companies.AllIndustries();
+            companyInput.Categories = this.companies.AllCategories();
+
+            return View(companyInput);
         }
 
         [HttpPost]

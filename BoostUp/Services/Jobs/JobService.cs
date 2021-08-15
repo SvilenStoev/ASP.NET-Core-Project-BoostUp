@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using AutoMapper;
+    using AutoMapper.QueryableExtensions;
     using BoostUp.Data;
     using BoostUp.Data.Models;
     using BoostUp.Models.Jobs;
@@ -207,11 +208,7 @@
             {
                 employmentTypes = this.data
                     .EmploymentTypes
-                    .Select(et => new JobEmploymentTypeServiceModel
-                    {
-                        Id = et.Id,
-                        Value = et.Value
-                    })
+                    .ProjectTo<JobEmploymentTypeServiceModel>(this.mapper.ConfigurationProvider)
                     .ToList();
 
                 var cacheOptions = new MemoryCacheEntryOptions()
