@@ -4,6 +4,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using System;
 
     public class BoostUpDbContext : IdentityDbContext<User>
     {
@@ -13,6 +14,11 @@
         }
 
         public DbSet<Company> Companies { get; init; }
+
+        internal bool Any()
+        {
+            throw new NotImplementedException();
+        }
 
         public DbSet<Industry> Industries { get; init; }
 

@@ -12,7 +12,7 @@
 
         public StatisticsServiceModel Total()
         {
-            var totalCompanies = this.data.Companies.Count();
+            var totalCompanies = this.data.Companies.Where(c => c.IsPublic).Count();
             var totalJobs = this.data.Jobs.Count();
             var totalUsers = this.data.Users.Count();
             var totalRecruiters = this.data.Recruiters.Count();

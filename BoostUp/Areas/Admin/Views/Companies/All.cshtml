@@ -19,16 +19,16 @@
     <tbody>
         @foreach (var company in Model)
         {
-            <tr>
+            <tr class="text-center">
                 <th scope="row">@company.Id</th>
                 <td>
                     @if (company.LogoUrl != null)
                     {
-                    <img class="rounded-circle img-thumbnail shadow" width="45" height="45" src="@company.LogoUrl" alt="@company.Name - Logo">
+                    <img class="rounded-circle img-thumbnail shadow" width="40" height="40" src="@company.LogoUrl" alt="@company.Name - Logo">
                     }
                     else
                     {
-                        <img class="rounded-circle img-thumbnail shadow" width="45" height="45" src="~/default pictures/Company Logo.jpg" alt="@company.Name - Logo">
+                        <img class="rounded-circle img-thumbnail shadow" width="40" height="40" src="~/default pictures/Company Logo.jpg" alt="@company.Name - Logo">
                     }
                 </td>
                 <td>@company.Name</td>
