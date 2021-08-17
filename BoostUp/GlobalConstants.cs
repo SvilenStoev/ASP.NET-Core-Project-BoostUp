@@ -1,7 +1,7 @@
 ﻿namespace BoostUp
 {
-    using BoostUp.Data.Models;
     using System;
+    using BoostUp.Data.Models;
 
     public static class GlobalConstants
     {
@@ -80,24 +80,6 @@
             }
 
             return $"{folder}/{imageId}.{imageExtension}";
-        }
-
-        public static int GetAgeByDateOfBirth(DateTime dateOfBirth)
-        {
-            DateTime now = DateTime.Now;
-
-            if (now.Month > dateOfBirth.Month)
-            {
-                return now.Year - dateOfBirth.Year - 1;
-            }
-            else if (now.Day > dateOfBirth.Day)
-            {
-                return now.Year - dateOfBirth.Year - 1;
-            }
-            else
-            {
-                return now.Year - dateOfBirth.Year;
-            }
         }
     }
 }

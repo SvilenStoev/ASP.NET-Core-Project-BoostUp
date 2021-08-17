@@ -10,7 +10,6 @@
 
     public class User : IdentityUser
     {
-        // Own properties
         [Required]
         [MaxLength(NameMaxLength)]
         public string FirstName { get; set; }
@@ -50,24 +49,16 @@
         [MaxLength(EducationMaxLength)]
         public string Education { get; set; }
 
-        //[InverseProperty("FromUser")]
-        //public IEnumerable<Post> OwnPosts { get; set; } = new List<Post>();
-
-        //[InverseProperty("FromUser")]
-        //public IEnumerable<Comment> OwnComments { get; set; } = new List<Comment>();
-
         [InverseProperty("Requester")]
         public IEnumerable<Friendship> FriendshipRequests { get; set; } = new List<Friendship>();
 
         [InverseProperty("Responder")]
         public IEnumerable<Friendship> FriendshipResponses { get; set; } = new List<Friendship>();
 
-        // Audit info
         public DateTime CreatedOn { get; init; } = DateTime.UtcNow;
 
         public DateTime? ModifiedOn { get; set; }
 
-        // Deletable entity
         public bool IsDeleted { get; set; }
 
         public DateTime? DeletedOn { get; set; }
