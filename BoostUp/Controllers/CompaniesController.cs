@@ -1,18 +1,15 @@
 ﻿namespace BoostUp.Controllers
 {
+    using AutoMapper;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
 
     using BoostUp.Infrastructure.Extensions;
-    using BoostUp.Models.Addresses;
     using BoostUp.Models.Companies;
     using BoostUp.Services.Companies;
     using BoostUp.Services.Users;
 
     using static GlobalConstants;
-    using Microsoft.Extensions.Caching.Memory;
-    using AutoMapper;
-    using BoostUp.Services.Companies.Models;
 
     public class CompaniesController : Controller
     {
@@ -117,10 +114,8 @@
         }
 
         [Authorize]
-        public IActionResult BecomeEmployee(CompanyBecomeEmployeeViewModel becomeEmployee)
-        {
-            return View(becomeEmployee);
-        }
+        public IActionResult BecomeEmployee(CompanyBecomeEmployeeViewModel becomeEmployee) 
+            => View(becomeEmployee);
 
         [HttpPost]
         [Authorize]
@@ -128,7 +123,12 @@
         {
             var userId = this.User.GetId();
 
-            this.companies.BecomeEmployee(userId, id);
+            var result = this.companies.BecomeEmployee(userId, id);
+
+            if (!result)
+            {
+                return BadRequest();
+            }
 
             TempData[GlobalMessageKey] = "Your workplace was changed successfully!";
 

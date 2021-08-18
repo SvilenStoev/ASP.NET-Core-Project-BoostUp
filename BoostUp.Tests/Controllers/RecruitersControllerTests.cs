@@ -79,7 +79,7 @@
 
         [Theory]
         [InlineData("recruiter@abv.bg", "+359888888888")]
-        public void PostBecomeShouldBeForAuthorizedUsersAndReturnRedirectToCompaniesAllWhenCompanyIdIsNotValid(
+        public void PostBecomeShouldReturnRedirectToCompaniesAllWhenCompanyIdIsNotValid(
           string email,
           string phonenumber)
           => MyController<RecruitersController>
@@ -92,9 +92,6 @@
                   CompanyId = 0
               }))
               .ShouldHave()
-              .ActionAttributes(attributes => attributes
-                  .RestrictingForHttpMethod(HttpMethod.Post)
-                  .RestrictingForAuthorizedRequests())
               .ValidModelState()
               .Data(data => data
                   .WithSet<Recruiter>(recruiters => recruiters

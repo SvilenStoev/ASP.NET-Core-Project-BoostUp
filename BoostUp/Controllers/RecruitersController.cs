@@ -22,7 +22,7 @@
         }
 
         [Authorize]
-        public IActionResult Become(int companyId)
+        public IActionResult Become(int companyId = 0)
         {
             if (this.recruiters.IsRecruiter(this.User.GetId()))
             {

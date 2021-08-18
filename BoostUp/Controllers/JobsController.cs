@@ -110,7 +110,7 @@
         {
             if (!this.recruiters.IsRecruiter(this.User.GetId()))
             {
-                return RedirectToAction(nameof(RecruitersController.Become), "Recruiters");
+                return BadRequest();
             }
 
             var userId = this.User.GetId();
@@ -127,7 +127,7 @@
 
             if (!this.recruiters.IsRecruiter(userId) && !this.User.IsAdmin())
             {
-                return RedirectToAction(nameof(RecruitersController.Become), "Recruiters");
+                return RedirectToAction(nameof(RecruitersController.Become), "Recruiters", new { companyId = 0 });
             }
 
             var job = this.jobs.Details(id);
