@@ -1,16 +1,19 @@
 ﻿namespace BoostUp.Services.Jobs
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.Collections.Generic;
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
+    using Microsoft.Extensions.Caching.Memory;
+
     using BoostUp.Data;
     using BoostUp.Data.Models;
     using BoostUp.Models.Jobs;
     using BoostUp.Services.Jobs.Models;
-    using Microsoft.Extensions.Caching.Memory;
+
+    using static GlobalConstants.Cache;
 
     public class JobService : IJobService
     {

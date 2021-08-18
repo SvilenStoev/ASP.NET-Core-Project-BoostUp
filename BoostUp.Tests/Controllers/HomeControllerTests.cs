@@ -1,13 +1,8 @@
 ﻿namespace BoostUp.Tests.Controllers
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using BoostUp.Controllers;
-    using BoostUp.Data.Models;
-    using BoostUp.Services.Companies;
-    using BoostUp.Services.Statistics;
-    using Microsoft.AspNetCore.Mvc;
     using Xunit;
+    using BoostUp.Controllers;
+    using Microsoft.AspNetCore.Mvc;
 
     public class HomeControllerTests
     {
@@ -19,6 +14,20 @@
 
             //Act
            var result = homeController.Error();
+
+            //Assert
+            Assert.NotNull(result);
+            Assert.IsType<ViewResult>(result);
+        }
+
+        [Fact]
+        public void IndexShouldReturnView()
+        {
+            //Arrange
+            var homeController = new HomeController();
+
+            //Act
+            var result = homeController.Index();
 
             //Assert
             Assert.NotNull(result);

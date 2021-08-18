@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using BoostUp.Data.Models;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -11,7 +12,7 @@
 
     public class AdministratorSeeder : ISeeder
     {
-        public void Seed(IServiceProvider services)
+        public void Seed(IServiceProvider services, IConfiguration configuration)
         {
             var userManager = services.GetRequiredService<UserManager<User>>();
             var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
@@ -28,8 +29,8 @@
 
                     await roleManager.CreateAsync(role);
 
-                    const string adminEmail = "admin@boostup.com";
-                    const string adminPassword = "admin123";
+                    string adminEmail = configuration["Admin:Email"] ?? "TestAdminEmail";
+                    string adminPassword = configuration["Admin:Password"] ?? "TestAdminPassword";
 
                     var admin = new User
                     {

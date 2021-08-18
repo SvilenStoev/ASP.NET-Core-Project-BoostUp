@@ -11,13 +11,13 @@ namespace BoostUp
 
     using BoostUp.Data;
     using BoostUp.Data.Models;
-    using BoostUp.Infrastructure.Extensions;
     using BoostUp.Services.Jobs;
     using BoostUp.Services.Users;
     using BoostUp.Services.Companies;
     using BoostUp.Services.Statistics;
     using BoostUp.Services.Recruiters;
     using BoostUp.Services.Friendships;
+    using BoostUp.Infrastructure.Extensions;
 
     public class Startup
     {
@@ -62,7 +62,7 @@ namespace BoostUp
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.PrepareDatabase();
+            app.PrepareDatabase(this.Configuration);
 
             if (env.IsDevelopment())
             {

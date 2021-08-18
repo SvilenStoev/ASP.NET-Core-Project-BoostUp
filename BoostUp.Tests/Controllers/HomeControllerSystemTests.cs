@@ -12,6 +12,19 @@
             => this.factory = factory;
 
         [Fact]
+        public async Task ErrorShouldReturnCorrectStatusCode()
+        {
+            // Arrange
+            var client = this.factory.CreateClient();
+
+            // Act
+            var result = await client.GetAsync("/Home/Error");
+
+            // Arrange
+            Assert.True(!result.IsSuccessStatusCode);
+        }
+
+        [Fact]
         public async Task IndexShouldReturnCorrectStatusCode()
         {
             // Arrange

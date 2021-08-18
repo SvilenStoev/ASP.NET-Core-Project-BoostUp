@@ -6,12 +6,13 @@
     using BoostUp.Infrastructure.Seeding;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
     public static class ApplicationBuilderExtensions
     {
         public static IApplicationBuilder PrepareDatabase(
-            this IApplicationBuilder app)
+            this IApplicationBuilder app, IConfiguration configuration)
         {
             using var serviceScope = app.ApplicationServices.CreateScope();
             var services = serviceScope.ServiceProvider;
@@ -30,7 +31,7 @@
 
             foreach (var seeder in seeders)
             {
-                seeder.Seed(services);
+                seeder.Seed(services, configuration);
             }
 
             return app;

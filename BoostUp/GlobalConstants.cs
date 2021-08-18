@@ -7,6 +7,14 @@
     {
         public const string GlobalMessageKey = "GlobalMessage";
 
+        public class Cache
+        {
+            public const string allIndustriesCacheKey = nameof(allIndustriesCacheKey);
+            public const string allCategoriesCacheKey = nameof(allCategoriesCacheKey);
+            public const string allEmploymentTypesCacheKey = nameof(allEmploymentTypesCacheKey);
+
+        }
+
         public static string[] AllowedImageExtensions => new[] { "jpg", "jpeg", "png", "gif", "tiff", "psd", "pdf", "eps" };
 
         public static string DefaultCompanyLogoPath => "/default pictures/Company Logo.jpg";

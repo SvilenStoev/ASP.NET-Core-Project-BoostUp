@@ -6,11 +6,12 @@
     using BoostUp.Data;
     using BoostUp.Data.Models;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
     public class UsersSeeder : ISeeder
     {
-        public void Seed(IServiceProvider services)
+        public void Seed(IServiceProvider services, IConfiguration configuration)
         {
             var data = services.GetRequiredService<BoostUpDbContext>();
 

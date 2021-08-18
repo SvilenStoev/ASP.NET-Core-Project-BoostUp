@@ -12,6 +12,8 @@
     using BoostUp.Services.Companies.Models;
     using Microsoft.Extensions.Caching.Memory;
 
+    using static GlobalConstants.Cache;
+
     public class CompanyService : ICompanyService
     {
         private readonly BoostUpDbContext data;
@@ -221,8 +223,6 @@
 
         public IEnumerable<CompanyIndustryServiceModel> AllIndustries()
         {
-            const string allIndustriesCacheKey = "allIndustriesCacheKey";
-
             var industries = this.cache.Get<IEnumerable<CompanyIndustryServiceModel>>(allIndustriesCacheKey);
 
             if (industries == null)
@@ -243,8 +243,6 @@
 
         public IEnumerable<CompanyCategoryServiceModel> AllCategories()
         {
-            const string allCategoriesCacheKey = "allCategoriesCacheKey";
-
             var categories = this.cache.Get<IEnumerable<CompanyCategoryServiceModel>>(allCategoriesCacheKey);
 
             if (categories == null)
