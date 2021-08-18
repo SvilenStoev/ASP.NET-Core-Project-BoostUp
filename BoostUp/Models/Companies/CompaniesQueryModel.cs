@@ -1,8 +1,9 @@
 ﻿namespace BoostUp.Models.Companies
 {
-    using BoostUp.Services.Companies.Models;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
+    using BoostUp.Services.Companies.Models;
 
     public class CompaniesQueryModel
     {

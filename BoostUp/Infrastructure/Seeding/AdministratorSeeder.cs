@@ -3,10 +3,11 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using BoostUp.Data.Models;
-    using Microsoft.Extensions.Configuration;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+
+    using BoostUp.Data.Models;
 
     using static BoostUp.Areas.Admin.AdminConstants;
 

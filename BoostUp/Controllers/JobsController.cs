@@ -1,9 +1,9 @@
 ﻿namespace BoostUp.Controllers
 {
+    using AutoMapper;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
 
-    using AutoMapper;
     using BoostUp.Models.Jobs;
     using BoostUp.Services.Jobs;
     using BoostUp.Infrastructure.Extensions;
@@ -32,7 +32,7 @@
         {
             if (!this.recruiters.IsRecruiter(this.User.GetId()))
             {
-                return RedirectToAction(nameof(RecruitersController.Become), "Recruiters", new { companyId = companyId });
+                return RedirectToAction(nameof(RecruitersController.Become), "Recruiters", new { companyId });
             }
 
             return View(new JobInputModel

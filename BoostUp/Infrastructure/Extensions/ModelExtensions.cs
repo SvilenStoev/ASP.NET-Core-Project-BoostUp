@@ -1,7 +1,7 @@
 ﻿namespace BoostUp.Infrastructure.Extensions
 {
-    using BoostUp.Services.Companies.Models;
     using BoostUp.Services.Jobs.Models;
+    using BoostUp.Services.Companies.Models;
 
     public static class ModelExtensions
     {
@@ -9,6 +9,6 @@
             => $"{company.Name}-{company.Founded}";
 
         public static string JobInformation(this IJobModel job)
-       => $"{job.JobTitle}";
+            => $"{job.JobTitle}";
     }
 }

@@ -1,8 +1,8 @@
 ﻿namespace BoostUp.Controllers
 {
     using BoostUp.Services.Jobs;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
 
     using static BoostUp.GlobalConstants;
 

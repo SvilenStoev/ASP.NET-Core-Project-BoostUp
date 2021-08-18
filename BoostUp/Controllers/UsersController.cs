@@ -1,11 +1,12 @@
 ﻿namespace BoostUp.Controllers
 {
-    using BoostUp.Infrastructure.Extensions;
-    using BoostUp.Models.Users;
-    using BoostUp.Services.Friendships;
-    using BoostUp.Services.Users;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
+
+    using BoostUp.Models.Users;
+    using BoostUp.Services.Users;
+    using BoostUp.Services.Friendships;
+    using BoostUp.Infrastructure.Extensions;
 
     public class UsersController : Controller
     {

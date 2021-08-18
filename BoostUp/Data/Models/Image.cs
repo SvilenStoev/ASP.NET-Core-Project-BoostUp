@@ -7,9 +7,5 @@
         public string ImageUrl { get; set; }
 
         public string Extension { get; set; }
-
-        //public int? PostId { get; set; }
-
-        //public Post Post { get; set; }
     }
 }

@@ -1,13 +1,14 @@
 ﻿namespace BoostUp.Areas.Admin.Controllers
 {
-    using BoostUp.Services.Companies;
     using Microsoft.AspNetCore.Mvc;
+    using BoostUp.Services.Companies;
 
     public class CompaniesController : AdminController
     {
         private readonly ICompanyService companies;
 
-        public CompaniesController(ICompanyService companies) => this.companies = companies;
+        public CompaniesController(ICompanyService companies) 
+            => this.companies = companies;
 
         public IActionResult All()
         {

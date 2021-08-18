@@ -3,12 +3,12 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
 
-    using BoostUp.Infrastructure.Extensions;
     using BoostUp.Models.Recruiters;
+    using BoostUp.Services.Companies;
     using BoostUp.Services.Recruiters;
+    using BoostUp.Infrastructure.Extensions;
 
     using static GlobalConstants;
-    using BoostUp.Services.Companies;
 
     public class RecruitersController : Controller
     {

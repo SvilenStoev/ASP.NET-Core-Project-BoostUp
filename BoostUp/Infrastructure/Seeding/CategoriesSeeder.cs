@@ -2,10 +2,11 @@
 {
     using System;
     using System.Linq;
-    using BoostUp.Data;
-    using BoostUp.Data.Models;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+
+    using BoostUp.Data;
+    using BoostUp.Data.Models;
 
     public class CategoriesSeeder : ISeeder
     {

@@ -1,10 +1,10 @@
 ﻿namespace BoostUp.Data
 {
-    using BoostUp.Data.Models;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using System;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
+    using BoostUp.Data.Models;
 
     public class BoostUpDbContext : IdentityDbContext<User>
     {
@@ -14,11 +14,6 @@
         }
 
         public DbSet<Company> Companies { get; init; }
-
-        internal bool Any()
-        {
-            throw new NotImplementedException();
-        }
 
         public DbSet<Industry> Industries { get; init; }
 

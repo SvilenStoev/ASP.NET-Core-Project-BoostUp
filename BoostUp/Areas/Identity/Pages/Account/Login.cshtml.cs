@@ -1,29 +1,28 @@
 ﻿namespace BoostUp.Areas.Identity.Pages.Account
 {
-    using BoostUp.Data.Models;
+    using System.Threading.Tasks;
+    using System.ComponentModel.DataAnnotations;
+
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
-    using Microsoft.Extensions.Logging;
-    using System.ComponentModel.DataAnnotations;
-    using System.Threading.Tasks;
+
+    using BoostUp.Data.Models;
 
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        private readonly UserManager<User> userManager;
-        private readonly SignInManager<User> signInManager;
         private readonly ILogger<LoginModel> logger;
+        private readonly SignInManager<User> signInManager;
 
         public LoginModel(SignInManager<User> signInManager,
-            ILogger<LoginModel> logger,
-            UserManager<User> userManager)
+            ILogger<LoginModel> logger)
         {
-            this.userManager = userManager;
-            this.signInManager = signInManager;
             this.logger = logger;
+            this.signInManager = signInManager;
         }
 
         [BindProperty]
@@ -85,7 +84,7 @@
                 }
                 if (result.RequiresTwoFactor)
                 {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, Input.RememberMe });
                 }
                 if (result.IsLockedOut)
                 {

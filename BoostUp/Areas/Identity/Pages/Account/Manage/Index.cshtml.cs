@@ -1,38 +1,29 @@
 ﻿namespace BoostUp.Areas.Identity.Pages.Account.Manage
 {
+    using System;
     using System.Threading.Tasks;
+    using System.ComponentModel.DataAnnotations;
 
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc.RazorPages;
-    using Microsoft.AspNetCore.Mvc;
 
     using BoostUp.Data.Models;
-    using Microsoft.AspNetCore.Hosting;
-    using BoostUp.Services.Users;
-    using System.ComponentModel.DataAnnotations;
 
     using static BoostUp.Data.DataConstants.User;
     using static BoostUp.Data.DataConstants.Address;
-    using System;
-    using BoostUp.Infrastructure;
 
     public partial class IndexModel : PageModel
     {
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
-        private readonly IUserService users;
-        private readonly IWebHostEnvironment environment;
 
         public IndexModel(
             UserManager<User> userManager,
-            SignInManager<User> signInManager,
-            IUserService users,
-            IWebHostEnvironment environment)
+            SignInManager<User> signInManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
-            this.users = users;
-            this.environment = environment;
         }
 
         public string Username { get; set; }
@@ -90,7 +81,6 @@
             return this.Page();
         }
 
-
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await this.userManager.GetUserAsync(User);
@@ -108,7 +98,7 @@
             user.Education = this.Input.Education;
             user.Experience = this.Input.Experience;
 
-            var result = await userManager.UpdateAsync(user);
+            await userManager.UpdateAsync(user);
 
             if (!this.ModelState.IsValid)
             {

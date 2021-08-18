@@ -3,11 +3,12 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using BoostUp.Data;
-    using BoostUp.Data.Models;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+
+    using BoostUp.Data;
+    using BoostUp.Data.Models;
 
     public class UsersSeeder : ISeeder
     {

@@ -2,12 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
-    using BoostUp.Data;
-    using BoostUp.Infrastructure.Seeding;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+
+    using BoostUp.Data;
+    using BoostUp.Infrastructure.Seeding;
 
     public static class ApplicationBuilderExtensions
     {

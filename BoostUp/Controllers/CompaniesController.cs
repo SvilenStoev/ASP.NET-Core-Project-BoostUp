@@ -4,10 +4,10 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
 
-    using BoostUp.Infrastructure.Extensions;
+    using BoostUp.Services.Users;
     using BoostUp.Models.Companies;
     using BoostUp.Services.Companies;
-    using BoostUp.Services.Users;
+    using BoostUp.Infrastructure.Extensions;
 
     using static GlobalConstants;
 

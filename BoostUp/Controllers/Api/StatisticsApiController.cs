@@ -1,7 +1,7 @@
 ﻿namespace BoostUp.Controllers.Api
 {
-    using BoostUp.Services.Statistics;
     using Microsoft.AspNetCore.Mvc;
+    using BoostUp.Services.Statistics;
 
     [ApiController]
     [Route("api/statistics")]
