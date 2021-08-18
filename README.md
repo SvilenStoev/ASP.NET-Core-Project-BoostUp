@@ -55,8 +55,9 @@ The recruiter has the option to edit his own jobs accessing them throught "Mine 
 ## :floppy_disk: Database Diagram
 ![DataBase - Diagram 20210807](https://user-images.githubusercontent.com/64086041/128595832-dafa6a4e-4716-4961-a0d5-f06df9b7d626.png)
 
-## :link: Website Link
-TODO:
+## Initial StartUp
+If you need admin account seeded you should add section Admin in appsettings.json file with 2 properies: Email and Password, like shown below:
+![Screenshot_3](https://user-images.githubusercontent.com/64086041/129956970-0ffec20e-e3d8-4d3f-adf8-2c9bccda28e0.png)
 
 ## 🧑 Author
 
