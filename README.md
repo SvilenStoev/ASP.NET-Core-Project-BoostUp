@@ -50,7 +50,7 @@ The recruiter has the option to edit his own jobs accessing them throught "Mine 
 - AJAX real-time Requests
 
 ## Unit tests Code coverage
-TODO:
+![Screenshot_1](https://user-images.githubusercontent.com/64086041/129948942-4c8e9b1b-99e0-4619-94a5-88aa4fa47ec9.png)
 
 ## :floppy_disk: Database Diagram
 ![DataBase - Diagram 20210807](https://user-images.githubusercontent.com/64086041/128595832-dafa6a4e-4716-4961-a0d5-f06df9b7d626.png)
