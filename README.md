@@ -49,7 +49,7 @@ The recruiter has the option to edit his own jobs accessing them throught "Mine 
 - Bootstrap v4.3.1
 - AJAX real-time Requests
 
-## Unit tests Code coverage
+## Code coverage
 ![Screenshot_1](https://user-images.githubusercontent.com/64086041/129948942-4c8e9b1b-99e0-4619-94a5-88aa4fa47ec9.png)
 
 ## :floppy_disk: Database Diagram
