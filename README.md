@@ -57,6 +57,7 @@ The recruiter has the option to edit his own jobs accessing them throught "Mine 
 
 ## Initial StartUp
 If you need admin account seeded you should add section Admin in appsettings.json file with 2 properies: Email and Password, like shown below:
+
 ![Screenshot_3](https://user-images.githubusercontent.com/64086041/129956970-0ffec20e-e3d8-4d3f-adf8-2c9bccda28e0.png)
 
 ## 🧑 Author
