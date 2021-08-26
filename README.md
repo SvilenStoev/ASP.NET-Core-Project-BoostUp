@@ -1,6 +1,10 @@
 ## &copy; BoostUp - Logo
 ![BoostUp Logo 4](https://user-images.githubusercontent.com/64086041/126073441-3b69f1a2-180e-406e-8f8c-e3e9171c06c5.png)
 
+## Hosted on:
+
+**Azure -** https://boostup.azurewebsites.net/
+
 ## :eyeglasses: Project Introduction
 
 **BoostUp Website** is created as defense project for **ASP.NET Core MVC** course at [SoftUni](https://softuni.bg/ "SoftUni") (June 2021).
@@ -40,14 +44,20 @@ Jobs details page, in addition to showing some details, also provides the number
 The recruiter has the option to edit his own jobs accessing them throught "Mine jobs" button in navbar.
 
 ## :hammer: Built With
-- ASP.NET [CORE 5.0](https://dotnet.microsoft.com/download/dotnet/5.0") MVC pattern
+- [ASP.NET CORE 5.0](https://github.com/dotnet/aspnetcore) MVC pattern
 - ASP.NET CORE razor pages
 - ASP.NET CORE view components
 - ASP.NET CORE areas
-- EntityFrameworkCore
+- [EntityFrameworkCore](https://github.com/dotnet/efcore) 
+- [In-Memmory Cache](https://github.com/aspnet/Caching)
 - MSSQL Server
+- [AutoMapper](https://github.com/AutoMapper/AutoMapper)
+- HTML & CSS
 - Bootstrap v4.3.1
-- AJAX real-time Requests
+- [MyTested.AspNetCore.Mvc](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc)
+- [xUnit](https://github.com/xunit/xunit)
+- Web Api controllers + AJAX real-time Requests
+- jQuery
 
 ## Code coverage
 ![Screenshot_1](https://user-images.githubusercontent.com/64086041/129948942-4c8e9b1b-99e0-4619-94a5-88aa4fa47ec9.png)
