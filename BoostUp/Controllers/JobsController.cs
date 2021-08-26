@@ -196,9 +196,16 @@
         {
             var job = this.jobs.Details(id);
 
-            if (job == null || job.JobInformation() != information)
+            if (job == null)
             {
                 TempData[GlobalMessageKey] = "Oops... The job does not exist!";
+
+                return RedirectToAction(nameof(All));
+            }
+
+            if (job.JobInformation() != information)
+            {
+                TempData[GlobalMessageKey] = "Oops... The job can be accessed only by correct id and details provided!";
 
                 return RedirectToAction(nameof(All));
             }

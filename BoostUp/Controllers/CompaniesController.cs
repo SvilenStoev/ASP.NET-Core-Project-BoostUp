@@ -98,9 +98,16 @@
         {
             var company = this.companies.Details(id);
 
-            if (company == null || company.CompanyInformation() != information)
+            if (company == null)
             {
                 TempData[GlobalMessageKey] = "Oops... The company does not exist!";
+
+                return RedirectToAction(nameof(All));
+            }
+
+            if (company.CompanyInformation() != information)
+            {
+                TempData[GlobalMessageKey] = "Oops... The company can be accessed only by correct id and details provided!";
 
                 return RedirectToAction(nameof(All));
             }

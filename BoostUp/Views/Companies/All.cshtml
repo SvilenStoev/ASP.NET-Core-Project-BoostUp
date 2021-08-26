@@ -70,7 +70,7 @@ else
                 <div class="card bg-light mb-4 shadow" style="max-width: 18rem;">
                     <div class="card-header">
                         <div>
-                            <a asp-action="Details" asp-controller="Companies" asp-route-id="@company.Id">
+                            <a asp-action="Details" asp-controller="Companies" asp-route-id="@company.Id" asp-route-information="@company.CompanyInformation()">
                                 @if (company.LogoUrl != null)
                                 {
                                     <img class="card-img-top rounded-circle mb-2 img-thumbnail shadow" src="@company.LogoUrl" alt="@company.Name - Logo">

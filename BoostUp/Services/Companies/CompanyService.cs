@@ -57,7 +57,7 @@
 
             companiesQuery = sorting switch
             {
-                CompanySorting.DateCreated => companiesQuery.OrderByDescending(c => c.Id),
+                CompanySorting.DateCreated =>  companiesQuery.OrderByDescending(c => c.Id),
                 CompanySorting.YearFounded => companiesQuery.OrderByDescending(c => c.Founded),
                 CompanySorting.Name => companiesQuery.OrderBy(c => c.Name),
                 CompanySorting.EmployeesCount => companiesQuery.OrderByDescending(c => c.Employees.Count()),
