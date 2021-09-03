@@ -1,8 +1,10 @@
 ﻿namespace BoostUp.Models.Jobs
 {
-    using BoostUp.Services.Jobs.Models;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
+    using Common;
+    using BoostUp.Services.Jobs.Models;
 
     public class JobsQueryModel
     {

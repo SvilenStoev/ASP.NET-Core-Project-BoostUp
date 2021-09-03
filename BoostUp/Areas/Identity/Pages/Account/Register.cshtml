@@ -36,7 +36,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Input.Gender"></label>
-                <select asp-for="Input.Gender" class="form-control" asp-items="@Html.GetEnumSelectList<GenderType>()"></select>
+                <select asp-for="Input.Gender" class="form-control" asp-items="@Html.GetEnumSelectList<BoostUp.Common.GenderType>()"></select>
                 <span asp-validation-for="Input.LastName" class="text-danger"></span>
             </div>
             <div class="form-row">
@@ -50,6 +50,11 @@
                     <input asp-for="Input.City" class="form-control shadow" placeholder="London, New York...">
                     <span asp-validation-for="Input.City" class="small text-danger"></span>
                 </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.ProfilePictureUrl"></label>
+                <input asp-for="Input.ProfilePictureUrl" class="form-control" />
+                <span asp-validation-for="Input.ProfilePictureUrl" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Input.DateOfBirth"></label>

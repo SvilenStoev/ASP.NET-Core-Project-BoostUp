@@ -21,7 +21,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Input.Gender"></label>
-                <select asp-for="Input.Gender" class="form-control" asp-items="@Html.GetEnumSelectList<GenderType>()"></select>
+                <select asp-for="Input.Gender" class="form-control" asp-items="@Html.GetEnumSelectList<BoostUp.Common.GenderType>()"></select>
                 <span asp-validation-for="Input.Gender" class="text-danger"></span>
             </div>
             <div class="form-row">

@@ -3,20 +3,19 @@
     using System;
     using System.Text;
     using System.Threading.Tasks;
-    using System.Text.Encodings.Web;
     using System.ComponentModel.DataAnnotations;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Logging;
 
+    using Common;
     using BoostUp.Data.Models;
 
-    using static BoostUp.Data.DataConstants.User;
-    using static BoostUp.Data.DataConstants.Address;
+    using static BoostUp.Common.DataConstants.User;
+    using static BoostUp.Common.DataConstants.Address;
 
     [AllowAnonymous]
     public class RegisterModel : PageModel
@@ -52,6 +51,10 @@
             [Display(Name = "Last name")]
             [StringLength(NameMaxLength, MinimumLength = NameMinLength, ErrorMessage = "{0} must be with a minimum length of {2} and a maximum length of {1}.")]
             public string LastName { get; set; }
+
+            [Url]
+            [Display(Name = "Profile picture Url")]
+            public string ProfilePictureUrl { get; set; }
 
             public GenderType Gender { get; set; }
 
@@ -105,6 +108,10 @@
                     LastName = this.Input.LastName,
                     Gender = this.Input.Gender,
                     DateOfBirth = this.Input.DateOfBirth,
+                    ProfileImage = new Image()
+                    {
+                         ImageUrl = this.Input.ProfilePictureUrl
+                    },
                     Address = new Address()
                     {
                         City = this.Input.City,

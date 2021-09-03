@@ -8,7 +8,7 @@
     using BoostUp.Services.Recruiters;
     using BoostUp.Infrastructure.Extensions;
 
-    using static GlobalConstants;
+    using static WebConstants;
 
     public class RecruitersController : Controller
     {

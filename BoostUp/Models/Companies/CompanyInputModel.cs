@@ -8,7 +8,7 @@
     using BoostUp.Services.Companies.Models;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-    using static Data.DataConstants.Company;
+    using static BoostUp.Common.DataConstants.Company;
 
     public class CompanyInputModel : ICompanyModel
     {

@@ -8,10 +8,11 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc.RazorPages;
 
+    using Common;
     using BoostUp.Data.Models;
 
-    using static BoostUp.Data.DataConstants.User;
-    using static BoostUp.Data.DataConstants.Address;
+    using static BoostUp.Common.DataConstants.User;
+    using static BoostUp.Common.DataConstants.Address;
 
     public partial class IndexModel : PageModel
     {

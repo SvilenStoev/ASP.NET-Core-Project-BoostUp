@@ -9,7 +9,7 @@
     using BoostUp.Services.Companies;
     using BoostUp.Infrastructure.Extensions;
 
-    using static GlobalConstants;
+    using static WebConstants;
 
     public class CompaniesController : Controller
     {

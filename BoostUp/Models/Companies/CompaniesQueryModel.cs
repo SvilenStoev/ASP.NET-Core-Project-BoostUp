@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using Common;
     using BoostUp.Services.Companies.Models;
 
     public class CompaniesQueryModel

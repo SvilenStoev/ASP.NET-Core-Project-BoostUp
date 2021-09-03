@@ -37,10 +37,10 @@
         </nav>
     </header>
     <div class="container">
-        @if (TempData.ContainsKey(GlobalConstants.GlobalMessageKey))
+        @if (TempData.ContainsKey(WebConstants.GlobalMessageKey))
         {
             <div class="alert alert-success text-center" role="alert">
-                <h5 class="mt-2">@TempData[GlobalConstants.GlobalMessageKey]</h5>
+                <h5 class="mt-2">@TempData[WebConstants.GlobalMessageKey]</h5>
             </div>
         }
         <main role="main" class="pb-3">

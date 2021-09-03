@@ -8,7 +8,7 @@
     using BoostUp.Services.Jobs.Models;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-    using static Data.DataConstants.Job;
+    using static BoostUp.Common.DataConstants.Job;
 
     public class JobInputModel : IJobModel
     {

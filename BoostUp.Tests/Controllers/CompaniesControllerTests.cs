@@ -13,7 +13,7 @@
     using static Data.Companies;
     using static Data.Categories;
     using static Data.Industries;
-    using static GlobalConstants;
+    using static WebConstants;
 
     public class CompaniesControllerTests
     {

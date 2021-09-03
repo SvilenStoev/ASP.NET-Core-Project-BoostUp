@@ -7,6 +7,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
+    using Common;
     using BoostUp.Data.Models;
 
     using static BoostUp.Areas.Admin.AdminConstants;

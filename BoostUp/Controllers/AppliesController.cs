@@ -4,7 +4,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
 
-    using static BoostUp.GlobalConstants;
+    using static WebConstants;
 
     public class AppliesController : Controller
     {

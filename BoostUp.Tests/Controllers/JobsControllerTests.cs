@@ -4,18 +4,17 @@
     using Xunit;
     using FluentAssertions;
     using MyTested.AspNetCore.Mvc;
+    using System.Collections.Generic;
 
     using BoostUp.Controllers;
     using BoostUp.Data.Models;
     using BoostUp.Models.Jobs;
+    using BoostUp.Models.Addresses;
+    using BoostUp.Services.Jobs.Models;
 
     using static Data.Jobs;
     using static Data.EmploymentTypes;
-    using static GlobalConstants;
-    using BoostUp.Models.Addresses;
-    using BoostUp.Services.Jobs.Models;
-    using System.Collections.Generic;
-    using BoostUp.Tests.Mocks;
+    using static WebConstants;
 
     public class JobsControllerTests
     {

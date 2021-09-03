@@ -1,14 +1,15 @@
 ﻿namespace BoostUp.Infrastructure
 {
+    using System.Linq;
     using AutoMapper;
+
     using BoostUp.Models.Jobs;
+    using BoostUp.Data.Models;
+    using BoostUp.Models.Companies;
     using BoostUp.Models.Addresses;
     using BoostUp.Services.Jobs.Models;
-    using BoostUp.Data.Models;
     using BoostUp.Services.Users.Models;
-    using System.Linq;
     using BoostUp.Services.Companies.Models;
-    using BoostUp.Models.Companies;
 
     public class MappingProfile : Profile
     {
@@ -62,9 +63,9 @@
                  .ForMember(p => p.Country, cfg => cfg.MapFrom(u => u.Address.Country))
                  .ForMember(p => p.City, cfg => cfg.MapFrom(u => u.Address.City))
                  .ForMember(p => p.ProfileImagePath, cfg => cfg.MapFrom(u =>
-                 GlobalConstants.GetProfileImagePath(u.ProfileImageId, u.ProfileImage.Extension, u.ProfileImage.ImageUrl, u.Gender)))
+                 Common.GlobalConstants.GetProfileImagePath(u.ProfileImageId, u.ProfileImage.Extension, u.ProfileImage.ImageUrl, u.Gender)))
                  .ForMember(p => p.CoverImagePath, cfg => cfg.MapFrom(u =>
-                 GlobalConstants.GetProfileImagePath(u.CoverImageId, u.CoverImage.Extension, u.CoverImage.ImageUrl, u.Gender)))
+                 Common.GlobalConstants.GetProfileImagePath(u.CoverImageId, u.CoverImage.Extension, u.CoverImage.ImageUrl, u.Gender)))
                  .ForMember(p => p.FullName, cfg => cfg.MapFrom(u => u.FirstName + " " + u.LastName))
                  .ForMember(p => p.UserId, cfg => cfg.MapFrom(u => u.Id))
                  .ForMember(p => p.Friends, cfg => cfg.MapFrom(u =>

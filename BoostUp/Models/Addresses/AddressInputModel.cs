@@ -1,11 +1,8 @@
 ﻿namespace BoostUp.Models.Addresses
 {
-    using System;
-    using System.Linq;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using static Data.DataConstants.Address;
+    using static BoostUp.Common.DataConstants.Address;
 
     public class AddressInputModel
     {

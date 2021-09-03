@@ -6,11 +6,11 @@
 
     using BoostUp.Models.Jobs;
     using BoostUp.Services.Jobs;
-    using BoostUp.Infrastructure.Extensions;
     using BoostUp.Services.Users;
     using BoostUp.Services.Recruiters;
+    using BoostUp.Infrastructure.Extensions;
 
-    using static GlobalConstants;
+    using static WebConstants;
 
     public class JobsController : Controller
     {

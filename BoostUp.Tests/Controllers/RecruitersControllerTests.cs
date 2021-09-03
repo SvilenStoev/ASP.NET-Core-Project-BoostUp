@@ -9,7 +9,7 @@
     using BoostUp.Models.Recruiters;
     using BoostUp.Models.Companies;
 
-    using static GlobalConstants;
+    using static WebConstants;
 
     public class RecruitersControllerTests
     {

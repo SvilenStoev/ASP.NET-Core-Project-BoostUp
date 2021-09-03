@@ -1,10 +1,8 @@
 ﻿namespace BoostUp.Models.Recruiters
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using static Data.DataConstants.Recruiter;
+    using static BoostUp.Common.DataConstants.Recruiter;
 
     public class RecruiterInputModel
     {
