@@ -24,7 +24,9 @@
                         <a asp-controller="Companies"
                            asp-action="Details"
                            asp-route-information="@Model.Company.CompanyInformation()"
-                           asp-route-id="@Model.Company.Id">@Model.Company.Name</a> &bull; @Model.City, @Model.Country <b>|</b> <span class="text-info">@Model.RelativeTime</span> &bull; <span class="text-info">Views: @Model.Views</span>
+                           asp-route-id="@Model.Company.Id">
+                            @Model.Company.Name
+                        </a> &bull; @Model.City, @Model.Country <b>|</b> <span class="text-info">@Model.RelativeTime</span> &bull; <span class="text-info">Views: @Model.Views</span>
                     </h6>
                     <h6 class="card-text mt-4 mb-3">&#x1F4BC; @Model.EmploymentType</h6>
                     <h6 class="card-text mb-3">&#x1F3E2; @Model.Company.Category &bull; @Model.Company.Industry</h6>

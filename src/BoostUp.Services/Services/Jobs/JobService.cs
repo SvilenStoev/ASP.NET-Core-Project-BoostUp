@@ -168,6 +168,7 @@
                     Description = j.Description,
                     SalaryRangeFrom = j.SalaryRangeFrom,
                     SalaryRangeTo = j.SalaryRangeTo,
+                    EmploymentTypeId = j.EmploymentTypeId,
                     EmploymentType = j.EmploymentType.Value,
                     RecruiterId = j.RecruiterId,
                     RecruiterEmail = j.Recruiter.Email,
@@ -203,8 +204,6 @@
 
         public IEnumerable<JobEmploymentTypeServiceModel> AllEmploymentTypes()
         {
-            const string allEmploymentTypesCacheKey = "";
-
             var employmentTypes = this.cache.Get<IEnumerable<JobEmploymentTypeServiceModel>>(allEmploymentTypesCacheKey);
 
             if (employmentTypes == null)
